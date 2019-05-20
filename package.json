@@ -5,6 +5,8 @@
   "dependencies": {
     "@craco/craco": "^5.1.0",
     "babel-plugin-styled-components": "^1.10.0",
+    "docz": "^1.2.0",
+    "docz-theme-default": "^1.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -17,7 +19,9 @@
     "react": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build"
   },
   "eslintConfig": {
     "extends": "react-app"
