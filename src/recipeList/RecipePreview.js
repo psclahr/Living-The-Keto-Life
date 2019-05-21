@@ -1,16 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledRecipePreview = styled.figure`
+const Flexbox = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 
-const StyledImg = styled.img`
-  position: relative;
-  left: 35px;
-  height: 150px;
+const StyledRecipePreview = styled.div`
+  background-image: url("https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80");
+  background-size: 150px;
   width: 150px;
+  height: 150px;
+  background-position: center center;
+  background-repeat: no-repeat;
+`;
+
+const Title = styled.span`
+  color: white;
+  background: #3d9970;
 `;
 
 const StyledRecipePreviewCaption = styled.figcaption`
@@ -24,12 +32,10 @@ const StyledRecipePreviewCaption = styled.figcaption`
 
 export default function RecipePreview() {
   return (
-    <StyledRecipePreview>
-      <StyledImg
-        src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-        alt=""
-      />
-      <StyledRecipePreviewCaption>Rezepttitel</StyledRecipePreviewCaption>
-    </StyledRecipePreview>
+    <Flexbox>
+      <StyledRecipePreview>
+        <Title>Rezepttitel</Title>
+      </StyledRecipePreview>
+    </Flexbox>
   );
 }
