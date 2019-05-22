@@ -7,15 +7,25 @@ const StyledSelect = styled.select``;
 
 export default function InputIngredient() {
   function getNutrition(amount, unit, ingredient) {
-    let calories = 0;
-    fetch(
-      `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=1%${amount}${unit}%${amount}${ingredient}`
-    )
-      .then(res => res.json())
-      /*.then(res => console.log(res.totalNutrients.ENERC_KCAL.quantity))*/
-      .then(res => (res.totalNutrients.ENERC_KCAL.quantity = calories))
-      .catch(err => console.log(err));
-    console.log(calories);
+    const caloriesQuery = async () => {
+      let calories = 0;
+      await fetch(
+        `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=1%${amount}${unit}%${amount}${ingredient}`
+      )
+        .then(res => res.json())
+        .then(res => (calories = res.totalNutrients.ENERC_KCAL.quantity));
+      console.log(calories);
+    };
+    caloriesQuery();
+
+    /*fetch(
+            `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=1%${amount}${unit}%${amount}${ingredient}`
+            )
+            .then(res => res.json())
+            .then(res => console.log(res.totalNutrients.ENERC_KCAL.quantity))
+            .then(res => (calories = res.totalNutrients.ENERC_KCAL.quantity))
+            .catch(err => console.log(err));
+            console.log()*/
   }
 
   function handleSubmitButton(event) {
