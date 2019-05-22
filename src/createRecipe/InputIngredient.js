@@ -2,38 +2,65 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form``;
-const StyledAmountInput = styled.input``;
-const StyledSelect = styled.select``;
+const StyledAmountInput = styled.input`
+  border: 1px solid black;
+  width: 30px;
+`;
+const StyledSelect = styled.select`
+  border: 1px solid black;
+`;
+const StyledIngredientInput = styled.input`
+  border: 1px solid black;
+`;
+const StyledButton = styled.button`
+  width: 20px;
+  border: 1px solid black;
+`;
+const inputAmountRef = React.createRef();
 
 export default function InputIngredient() {
   function getNutrition(amount, unit, ingredient) {
-    const nutritionQuery = async () => {
-      //let saturatedFats = 0;
-      //let MonounsaturatedFats = 0;
-      //let PolyunsaturatedFats = 0;
+    try {
+      const nutritionQuery = async () => {
+        let nutritionForIngredient = {};
 
-      let nutritionForIngredient = {};
+        await fetch(
+          `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=${amount}%20${unit}%20${ingredient}`
+        )
+          .then(res => res.json())
+          .then(
+            data =>
+              (nutritionForIngredient = {
+                calories: data.totalNutrients.ENERC_KCAL
+                  ? data.totalNutrients.ENERC_KCAL.quantity
+                  : 0,
+                proteins: data.totalNutrients.PROCNT
+                  ? data.totalNutrients.PROCNT.quantity
+                  : 0,
+                carbs: data.totalNutrients.CHOCDF
+                  ? data.totalNutrients.CHOCDF.quantity
+                  : 0,
+                fats: data.totalNutrients.FAT
+                  ? data.totalNutrients.FAT.quantity
+                  : 0,
+                saturatedFats: data.totalNutrients.FASAT
+                  ? data.totalNutrients.FASAT.quantity
+                  : 0,
+                monounsaturatedFats: data.totalNutrients.FAMS
+                  ? data.totalNutrients.FAMS.quantity
+                  : 0,
+                polyunsaturatedFats: data.totalNutrients.FAPU
+                  ? data.totalNutrients.FAPU.quantity
+                  : 0
+              })
+          );
 
-      await fetch(
-        `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=1%${amount}${unit}%${amount}${ingredient}`
-      )
-        .then(res => res.json())
-        .then(
-          data =>
-            (nutritionForIngredient = {
-              calories: data.totalNutrients.ENERC_KCAL.quantity,
-              proteins: data.totalNutrients.PROCNT.quantity,
-              carbs: data.totalNutrients.CHOCDF.quantity,
-              fats: data.totalNutrients.FAT.quantity,
-              saturatedFats: data.totalNutrients.FASAT.quantity,
-              monounsaturatedFats: data.totalNutrients.FAMS.quantity,
-              polyunsaturatedFats: data.totalNutrients.FAPU.quantity
-            })
-        );
-
-      console.log(nutritionForIngredient);
-    };
-    nutritionQuery();
+        console.log(nutritionForIngredient);
+      };
+      nutritionQuery();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function handleSubmitButton(event) {
@@ -42,18 +69,35 @@ export default function InputIngredient() {
     const unit = event.target.unit.value;
     const ingredient = event.target.ingredient.value;
     getNutrition(amount, unit, ingredient);
+
+    event.target.amount.value = "";
+    event.target.unit.value = "gr";
+    event.target.ingredient.value = "";
+    inputAmountRef.current.focus();
   }
 
   return (
     <StyledForm onSubmit={handleSubmitButton}>
-      <StyledAmountInput placeholder="amount" name="amount" />
-      <StyledSelect name="unit">
-        <option>gr</option>
-        <option>small</option>
-        <option>large</option>
-      </StyledSelect>
-      <input type="search" placeholder="ingredient" name="ingredient" />
-      <button>+</button>
+      <label>
+        Amount:
+        <StyledAmountInput name="amount" ref={inputAmountRef} />
+      </label>
+      <label>
+        Unit:
+        <StyledSelect name="unit">
+          <option>gr</option>
+          <option>kg</option>
+          <option>l</option>
+          <option>ml</option>
+          <option>small</option>
+          <option>large</option>
+        </StyledSelect>
+      </label>
+      <label>
+        Ingredient:
+        <StyledIngredientInput type="search" name="ingredient" />
+      </label>
+      <StyledButton>+</StyledButton>
     </StyledForm>
   );
 }
