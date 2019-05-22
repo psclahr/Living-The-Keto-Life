@@ -7,25 +7,33 @@ const StyledSelect = styled.select``;
 
 export default function InputIngredient() {
   function getNutrition(amount, unit, ingredient) {
-    const caloriesQuery = async () => {
-      let calories = 0;
+    const nutritionQuery = async () => {
+      //let saturatedFats = 0;
+      //let MonounsaturatedFats = 0;
+      //let PolyunsaturatedFats = 0;
+
+      let nutritionForIngredient = {};
+
       await fetch(
         `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=1%${amount}${unit}%${amount}${ingredient}`
       )
         .then(res => res.json())
-        .then(res => (calories = res.totalNutrients.ENERC_KCAL.quantity));
-      console.log(calories);
-    };
-    caloriesQuery();
+        .then(
+          data =>
+            (nutritionForIngredient = {
+              calories: data.totalNutrients.ENERC_KCAL.quantity,
+              proteins: data.totalNutrients.PROCNT.quantity,
+              carbs: data.totalNutrients.CHOCDF.quantity,
+              fats: data.totalNutrients.FAT.quantity,
+              saturatedFats: data.totalNutrients.FASAT.quantity,
+              monounsaturatedFats: data.totalNutrients.FAMS.quantity,
+              polyunsaturatedFats: data.totalNutrients.FAPU.quantity
+            })
+        );
 
-    /*fetch(
-            `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=1%${amount}${unit}%${amount}${ingredient}`
-            )
-            .then(res => res.json())
-            .then(res => console.log(res.totalNutrients.ENERC_KCAL.quantity))
-            .then(res => (calories = res.totalNutrients.ENERC_KCAL.quantity))
-            .catch(err => console.log(err));
-            console.log()*/
+      console.log(nutritionForIngredient);
+    };
+    nutritionQuery();
   }
 
   function handleSubmitButton(event) {
