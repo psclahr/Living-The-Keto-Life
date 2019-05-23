@@ -1,5 +1,7 @@
-import axios from "axios";
-
 export const getIngredients = ingredient => {
-  return axios.get(`/getIngredients/${ingredient}`);
+  return fetch(`/getIngredients/${ingredient}`);
+};
+
+export const getIngredientSuggestion = () => {
+  return fetch("/getIngredients");
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import AsyncSelect from "react-select/lib/Async";
-import { getIngredients } from "../services";
+import { getIngredients, getIngredientSuggestion } from "../services";
 import axios from "axios";
 
 const StyledForm = styled.form``;
@@ -84,16 +84,10 @@ export default function InputIngredient() {
     const newInputValue = newValue;
     setInputValue(newInputValue);
     getIngredients(inputValue);
-    // searchForIngredients();
+    getIngredientSuggestion()
+      .then(res => res.json())
+      .then(data => console.log(data));
   }
-
-  //   function searchForIngredients() {
-  //     fetch(
-  //       `http://api.edamam.com/auto-complete?q=${"apple"}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
-  //     )
-  //       .then(res => res.json())
-  //       .then(data => console.log(data));
-  //   }
 
   return (
     <StyledForm onSubmit={handleSubmitButton}>
