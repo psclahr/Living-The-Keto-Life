@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import AsyncSelect from "react-select/lib/Async";
 
 const StyledForm = styled.form``;
 const StyledAmountInput = styled.input`
   border: 1px solid black;
-  width: 30px;
 `;
 const StyledSelect = styled.select`
   border: 1px solid black;
 `;
-const StyledIngredientInput = styled.input`
+const StyledSelectIngredient = styled(AsyncSelect)`
   border: 1px solid black;
 `;
 const StyledButton = styled.button`
-  width: 20px;
   border: 1px solid black;
 `;
 const inputAmountRef = React.createRef();
 
+const ingredientsOptions = [];
+
 export default function InputIngredient() {
+  const [inputValue, setInputValue] = useState("");
+
   function getNutrition(amount, unit, ingredient) {
     try {
       const nutritionQuery = async () => {
@@ -68,6 +71,7 @@ export default function InputIngredient() {
     const amount = event.target.amount.value;
     const unit = event.target.unit.value;
     const ingredient = event.target.ingredient.value;
+
     getNutrition(amount, unit, ingredient);
 
     event.target.amount.value = "";
@@ -76,11 +80,28 @@ export default function InputIngredient() {
     inputAmountRef.current.focus();
   }
 
+  function handleInputChange(newValue) {
+    const newInputValue = newValue;
+    setInputValue(newInputValue);
+    searchForIngredients();
+  }
+
+  function searchForIngredients() {
+    fetch(
+      `http://api.edamam.com/auto-complete?q=${inputValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`,
+      {
+        mode: "no-cors"
+      }
+    )
+      .then(res => res.json())
+      .then(data => console.log(data));
+  }
+
   return (
     <StyledForm onSubmit={handleSubmitButton}>
       <label>
         Amount:
-        <StyledAmountInput name="amount" ref={inputAmountRef} />
+        <StyledAmountInput name="amount" ref={inputAmountRef} type="number" />
       </label>
       <label>
         Unit:
@@ -95,9 +116,16 @@ export default function InputIngredient() {
       </label>
       <label>
         Ingredient:
-        <StyledIngredientInput type="search" name="ingredient" />
+        <StyledSelectIngredient
+          name="ingredient"
+          cacheOptions
+          //loadOptions={loadOptions}
+          defaultOptions
+          onInputChange={handleInputChange}
+          type="text"
+        />
       </label>
-      <StyledButton>+</StyledButton>
+      <StyledButton type="submit">+</StyledButton>
     </StyledForm>
   );
 }
