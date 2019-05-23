@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import AsyncSelect from "react-select/lib/Async";
-import { getIngredients, getIngredientSuggestion } from "../services";
-import axios from "axios";
 
 const StyledForm = styled.form``;
 const StyledAmountInput = styled.input`
@@ -18,6 +16,8 @@ const StyledButton = styled.button`
   border: 1px solid black;
 `;
 const inputAmountRef = React.createRef();
+
+const ingredientsOptions = [];
 
 export default function InputIngredient() {
   const [inputValue, setInputValue] = useState("");
@@ -83,19 +83,15 @@ export default function InputIngredient() {
   function handleInputChange(newValue) {
     const newInputValue = newValue;
     setInputValue(newInputValue);
-    getIngredient();
-    //getIngredients(inputValue);
-    //getIngredientSuggestion()
-    //.then(res => res.json())
-    //.then(data => console.log(data));
+    searchForIngredients();
+  }
 
-    function getIngredient() {
-      fetch(
-        `http://api.edamam.com/auto-complete?q=${inputValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
-      )
-        .then(res => res.json())
-        .then(data => console.log(data));
-    }
+  function searchForIngredients() {
+    fetch(
+      `http://api.edamam.com/auto-complete?q=${inputValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
+    )
+      .then(res => res.json())
+      .then(data => console.log(data));
   }
 
   return (
