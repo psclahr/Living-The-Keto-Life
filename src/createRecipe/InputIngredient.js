@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AsyncSelect from "react-select/lib/Async";
+import Select from "react-select";
 
 const StyledForm = styled.form``;
 const StyledAmountInput = styled.input`
@@ -9,7 +10,7 @@ const StyledAmountInput = styled.input`
 const StyledSelect = styled.select`
   border: 1px solid black;
 `;
-const StyledSelectIngredient = styled(AsyncSelect)`
+const StyledSelectIngredient = styled(Select)`
   border: 1px solid black;
 `;
 const StyledButton = styled.button`
@@ -95,12 +96,12 @@ export default function InputIngredient() {
 
     event.target.amount.value = "";
     event.target.unit.value = "gr";
-    event.target.ingredient.value = "";
     inputAmountRef.current.focus();
   }
 
   function handleInputChange(newValue) {
     const newInputValue = newValue;
+    console.log(newInputValue);
     setInputValue(newInputValue);
     searchForIngredients();
     configurateOptions();
@@ -238,17 +239,7 @@ export default function InputIngredient() {
       </label>
       <label>
         Ingredient:
-        <StyledSelectIngredient
-          name="ingredient"
-          cacheOptions
-          loadOptions={() => {
-            console.log(options);
-            return options;
-          }}
-          defaultOptions
-          onInputChange={handleInputChange}
-          type="text"
-        />
+        <Select options={options} onInputChange={handleInputChange} />
       </label>
       <StyledButton type="submit">+</StyledButton>
     </StyledForm>
