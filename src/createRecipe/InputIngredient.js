@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import AsyncSelect from "react-select/lib/Async";
 import Select from "react-select";
 
 const StyledForm = styled.form``;
@@ -22,23 +21,6 @@ export default function InputIngredient() {
   const [inputValue, setInputValue] = useState("");
   const [ingredientSuggestion, setIngredientSuggestion] = useState([]);
   const [options, setOptions] = useState([]);
-
-  /*useEffect(() => {
-    return () => {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
-        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
-        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
-        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
-        { value: ingredientSuggestion[8], label: ingredientSuggestion[8] },
-        { value: ingredientSuggestion[9], label: ingredientSuggestion[9] }
-      ]);
-    };
-  });*/
 
   function getNutrition(amount, unit, ingredient) {
     try {
@@ -101,101 +83,20 @@ export default function InputIngredient() {
 
   function handleInputChange(newValue) {
     const newInputValue = newValue;
-    console.log(newInputValue);
     setInputValue(newInputValue);
     searchForIngredients();
-    configurateOptions();
-  }
-
-  function configurateOptions() {
-    if (ingredientSuggestion.length === 0) {
-      setOptions([]);
-    } else if (ingredientSuggestion.length === 1) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] }
-      ]);
-    } else if (ingredientSuggestion.length === 2) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] }
-      ]);
-    } else if (ingredientSuggestion.length === 3) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] }
-      ]);
-    } else if (ingredientSuggestion.length === 4) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] }
-      ]);
-    } else if (ingredientSuggestion.length === 5) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] }
-      ]);
-    } else if (ingredientSuggestion.length === 6) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
-        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] }
-      ]);
-    } else if (ingredientSuggestion.length === 7) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
-        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
-        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] }
-      ]);
-    } else if (ingredientSuggestion.length === 8) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
-        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
-        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
-        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] }
-      ]);
-    } else if (ingredientSuggestion.length === 9) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
-        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
-        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
-        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
-        { value: ingredientSuggestion[8], label: ingredientSuggestion[8] }
-      ]);
-    } else if (ingredientSuggestion.length === 10) {
-      setOptions([
-        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
-        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
-        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
-        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
-        { value: ingredientSuggestion[8], label: ingredientSuggestion[8] },
-        { value: ingredientSuggestion[9], label: ingredientSuggestion[9] }
-      ]);
-    }
+    setOptions([
+      { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+      { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+      { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+      { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+      { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
+      { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
+      { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
+      { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
+      { value: ingredientSuggestion[8], label: ingredientSuggestion[8] },
+      { value: ingredientSuggestion[9], label: ingredientSuggestion[9] }
+    ]);
   }
 
   function searchForIngredients() {
@@ -212,13 +113,6 @@ export default function InputIngredient() {
       console.log(err);
     }
   }
-
-  const loadOptions = () => {
-    console.log(options);
-    setTimeout(() => {
-      return options;
-    }, 1000);
-  };
 
   return (
     <StyledForm onSubmit={handleSubmitButton}>
@@ -239,7 +133,10 @@ export default function InputIngredient() {
       </label>
       <label>
         Ingredient:
-        <Select options={options} onInputChange={handleInputChange} />
+        <StyledSelectIngredient
+          options={options}
+          onInputChange={handleInputChange}
+        />
       </label>
       <StyledButton type="submit">+</StyledButton>
     </StyledForm>
