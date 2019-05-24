@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AsyncSelect from "react-select/lib/Async";
 
@@ -17,10 +17,27 @@ const StyledButton = styled.button`
 `;
 const inputAmountRef = React.createRef();
 
-const ingredientsOptions = [];
-
 export default function InputIngredient() {
   const [inputValue, setInputValue] = useState("");
+  const [ingredientSuggestion, setIngredientSuggestion] = useState([]);
+  const [options, setOptions] = useState([]);
+
+  /*useEffect(() => {
+    return () => {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
+        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
+        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
+        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
+        { value: ingredientSuggestion[8], label: ingredientSuggestion[8] },
+        { value: ingredientSuggestion[9], label: ingredientSuggestion[9] }
+      ]);
+    };
+  });*/
 
   function getNutrition(amount, unit, ingredient) {
     try {
@@ -66,6 +83,8 @@ export default function InputIngredient() {
     }
   }
 
+  //data.map(string => string && {label: string, value: string})
+
   function handleSubmitButton(event) {
     event.preventDefault();
     const amount = event.target.amount.value;
@@ -84,15 +103,121 @@ export default function InputIngredient() {
     const newInputValue = newValue;
     setInputValue(newInputValue);
     searchForIngredients();
+    configurateOptions();
+  }
+
+  function configurateOptions() {
+    if (ingredientSuggestion.length === 0) {
+      setOptions([]);
+    } else if (ingredientSuggestion.length === 1) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] }
+      ]);
+    } else if (ingredientSuggestion.length === 2) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] }
+      ]);
+    } else if (ingredientSuggestion.length === 3) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] }
+      ]);
+    } else if (ingredientSuggestion.length === 4) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] }
+      ]);
+    } else if (ingredientSuggestion.length === 5) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] }
+      ]);
+    } else if (ingredientSuggestion.length === 6) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
+        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] }
+      ]);
+    } else if (ingredientSuggestion.length === 7) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
+        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
+        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] }
+      ]);
+    } else if (ingredientSuggestion.length === 8) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
+        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
+        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
+        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] }
+      ]);
+    } else if (ingredientSuggestion.length === 9) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
+        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
+        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
+        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
+        { value: ingredientSuggestion[8], label: ingredientSuggestion[8] }
+      ]);
+    } else if (ingredientSuggestion.length === 10) {
+      setOptions([
+        { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
+        { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
+        { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
+        { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
+        { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
+        { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
+        { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
+        { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
+        { value: ingredientSuggestion[8], label: ingredientSuggestion[8] },
+        { value: ingredientSuggestion[9], label: ingredientSuggestion[9] }
+      ]);
+    }
   }
 
   function searchForIngredients() {
-    fetch(
-      `https://api.edamam.com/auto-complete?q=${inputValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
-    )
-      .then(res => res.json())
-      .then(data => console.log(data));
+    try {
+      const ingredientQuery = async () => {
+        await fetch(
+          `https://api.edamam.com/auto-complete?q=${inputValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
+        )
+          .then(res => res.json())
+          .then(data => setIngredientSuggestion(data));
+      };
+      ingredientQuery();
+    } catch (err) {
+      console.log(err);
+    }
   }
+
+  const loadOptions = () => {
+    console.log(options);
+    setTimeout(() => {
+      return options;
+    }, 1000);
+  };
 
   return (
     <StyledForm onSubmit={handleSubmitButton}>
@@ -116,7 +241,10 @@ export default function InputIngredient() {
         <StyledSelectIngredient
           name="ingredient"
           cacheOptions
-          //loadOptions={loadOptions}
+          loadOptions={() => {
+            console.log(options);
+            return options;
+          }}
           defaultOptions
           onInputChange={handleInputChange}
           type="text"
