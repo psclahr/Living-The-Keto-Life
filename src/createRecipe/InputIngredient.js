@@ -16,9 +16,10 @@ const StyledButton = styled.button`
   border: 1px solid black;
 `;
 const inputAmountRef = React.createRef();
+const formRef = React.createRef();
 
 export default function InputIngredient() {
-  const [inputValue, setInputValue] = useState("");
+  const [inputIngredientValue, setInputIngredientValue] = useState("");
   const [ingredientSuggestion, setIngredientSuggestion] = useState([]);
   const [options, setOptions] = useState([]);
 
@@ -76,34 +77,31 @@ export default function InputIngredient() {
 
     getNutrition(amount, unit, ingredient);
 
-    event.target.amount.value = "";
-    event.target.unit.value = "gr";
+    //event.target.amount.value = "";
+    //event.target.unit.value = "gr";
+    formRef.current.reset();
     inputAmountRef.current.focus();
   }
 
   function handleInputChange(newValue) {
     const newInputValue = newValue;
-    setInputValue(newInputValue);
+    setInputIngredientValue(newInputValue);
     searchForIngredients();
-    setOptions([
-      { value: ingredientSuggestion[0], label: ingredientSuggestion[0] },
-      { value: ingredientSuggestion[1], label: ingredientSuggestion[1] },
-      { value: ingredientSuggestion[2], label: ingredientSuggestion[2] },
-      { value: ingredientSuggestion[3], label: ingredientSuggestion[3] },
-      { value: ingredientSuggestion[4], label: ingredientSuggestion[4] },
-      { value: ingredientSuggestion[5], label: ingredientSuggestion[5] },
-      { value: ingredientSuggestion[6], label: ingredientSuggestion[6] },
-      { value: ingredientSuggestion[7], label: ingredientSuggestion[7] },
-      { value: ingredientSuggestion[8], label: ingredientSuggestion[8] },
-      { value: ingredientSuggestion[9], label: ingredientSuggestion[9] }
-    ]);
+    setOptions(
+      ingredientSuggestion
+        .filter(word => word.length > 0)
+        .map(suggestion => ({
+          value: suggestion,
+          label: suggestion
+        }))
+    );
   }
 
   function searchForIngredients() {
     try {
       const ingredientQuery = async () => {
         await fetch(
-          `https://api.edamam.com/auto-complete?q=${inputValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
+          `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
         )
           .then(res => res.json())
           .then(data => setIngredientSuggestion(data));
@@ -115,7 +113,7 @@ export default function InputIngredient() {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmitButton}>
+    <StyledForm onSubmit={handleSubmitButton} ref={formRef}>
       <label>
         Amount:
         <StyledAmountInput name="amount" ref={inputAmountRef} type="number" />
@@ -134,6 +132,8 @@ export default function InputIngredient() {
       <label>
         Ingredient:
         <StyledSelectIngredient
+          escapeClearsValue
+          name="ingredient"
           options={options}
           onInputChange={handleInputChange}
         />
