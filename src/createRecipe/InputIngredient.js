@@ -98,18 +98,12 @@ export default function InputIngredient() {
   }
 
   function searchForIngredients() {
-    try {
-      const ingredientQuery = async () => {
-        await fetch(
-          `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
-        )
-          .then(res => res.json())
-          .then(data => setIngredientSuggestion(data));
-      };
-      ingredientQuery();
-    } catch (err) {
-      console.log(err);
-    }
+    fetch(
+      `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
+    )
+      .then(res => res.json())
+      .then(data => setIngredientSuggestion(data))
+      .catch(err => console.log(err));
   }
 
   return (
