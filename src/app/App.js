@@ -1,15 +1,19 @@
 import React from "react";
-import Grid from "./Grid";
-import Navigation from "./Navigation";
+import Navigation from "../Navigation/Navigation";
 import RecipePreviewPage from "../recipeList/RecipePreviewPage";
+import GlobalStyle from "./GlobalStyle";
+import Grid from "./Grid";
 
 function App() {
   return (
-    <Grid>
-      <p>Header</p>
-      <RecipePreviewPage />
-      <Navigation />
-    </Grid>
+    <>
+      <GlobalStyle />
+      <Grid>
+        <p>Header</p>
+        <RecipePreviewPage />
+        <Navigation />
+      </Grid>
+    </>
   );
 }
 
