@@ -67,8 +67,6 @@ export default function InputIngredient() {
     }
   }
 
-  //data.map(string => string && {label: string, value: string})
-
   function handleSubmitButton(event) {
     event.preventDefault();
     const amount = event.target.amount.value;
@@ -76,9 +74,6 @@ export default function InputIngredient() {
     const ingredient = event.target.ingredient.value;
 
     getNutrition(amount, unit, ingredient);
-
-    //event.target.amount.value = "";
-    //event.target.unit.value = "gr";
     formRef.current.reset();
     inputAmountRef.current.focus();
   }
