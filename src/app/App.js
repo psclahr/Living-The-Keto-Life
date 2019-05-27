@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "./Grid";
+import Navigation from "./Navigation";
 import RecipePreviewPage from "../recipeList/RecipePreviewPage";
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
     <Grid>
       <p>Header</p>
       <RecipePreviewPage />
-      <p>Navigation</p>
+      <Navigation />
     </Grid>
   );
 }
