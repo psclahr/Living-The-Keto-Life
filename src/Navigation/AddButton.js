@@ -8,23 +8,10 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-const StyledButton = styled.div`
-  background: #ffffff;
-  box-shadow: -4px 3px 9px 0 rgba(0, 0, 0, 0.5);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export default function AddButton() {
   return (
     <Flex>
-      <StyledButton>
-        <AddIcon />
-      </StyledButton>
+      <AddIcon />
     </Flex>
   );
 }
