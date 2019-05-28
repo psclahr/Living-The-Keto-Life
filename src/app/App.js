@@ -5,13 +5,14 @@ import RecipePreviewPage from "../recipeList/RecipePreviewPage";
 import CreatePage from "../createRecipe/CreatePage";
 import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
+import Header from "../Header/Header";
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
       <Grid>
-        <p>Header</p>
+        <Header />
         <Switch>
           <Route exact path="/" component={RecipePreviewPage} />
           <Route path="/create" component={CreatePage} />

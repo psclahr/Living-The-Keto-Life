@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default styled.body`
+export default styled.main`
   display: grid;
   grid-template-rows: 50px auto 70px;
   height: 100vh;
