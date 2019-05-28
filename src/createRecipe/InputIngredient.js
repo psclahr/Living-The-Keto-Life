@@ -8,13 +8,14 @@ const StyledAmountInput = styled.input`
 const StyledSelect = styled.select`
   border: 1px solid black;
 `;
-const StyledButton = styled.button`
-  border: 1px solid black;
-`;
-
 const StyledIngredientInput = styled.input`
   border: 1px solid black;
 `;
+
+const StyledButton = styled.button`
+  border: 1px solid blue;
+`;
+
 const inputAmountRef = React.createRef();
 const formRef = React.createRef();
 
@@ -77,8 +78,8 @@ export default function InputIngredient() {
     inputAmountRef.current.focus();
   }
 
-  function handleInputChange(newValue) {
-    setInputIngredientValue(newValue);
+  function handleInputChange(event) {
+    setInputIngredientValue(event.target.value);
     searchForIngredients();
   }
 
@@ -91,23 +92,17 @@ export default function InputIngredient() {
       .catch(err => console.log(err));
   }
 
-  function renderOptions() {
-    /* if (options.length === 1) {
-      return <option>{options[0]}</option>;
-    } else if (options.length === 1) {
-      return <option>{options[1]}</option>;
-    }*/
-
-    options.map(suggestion => {
-      return <option>{suggestion}</option>;
-    });
-  }
-
   return (
     <StyledForm onSubmit={handleSubmitButton} ref={formRef}>
       <label>
         Amount:
-        <StyledAmountInput name="amount" ref={inputAmountRef} type="number" />
+        <StyledAmountInput
+          name="amount"
+          ref={inputAmountRef}
+          type="number"
+          autoComplete="off"
+          required
+        />
       </label>
       <label>
         Unit:
@@ -127,8 +122,21 @@ export default function InputIngredient() {
           type="text"
           list="ingredients"
           onChange={handleInputChange}
+          autoComplete="off"
+          required
         />
-        <datalist id="ingredients">{renderOptions}</datalist>
+        <datalist required id="ingredients">
+          <option value={options[0]} />
+          <option value={options[1]} />
+          <option value={options[2]} />
+          <option value={options[3]} />
+          <option value={options[4]} />
+          <option value={options[5]} />
+          <option value={options[6]} />
+          <option value={options[7]} />
+          <option value={options[8]} />
+          <option value={options[9]} />
+        </datalist>
       </label>
       <StyledButton type="submit">+</StyledButton>
     </StyledForm>
