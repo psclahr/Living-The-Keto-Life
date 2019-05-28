@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Select from "react-select";
 
 const StyledForm = styled.form``;
 const StyledAmountInput = styled.input`
@@ -9,18 +8,19 @@ const StyledAmountInput = styled.input`
 const StyledSelect = styled.select`
   border: 1px solid black;
 `;
-const StyledSelectIngredient = styled(Select)`
+const StyledIngredientInput = styled.input`
   border: 1px solid black;
 `;
+
 const StyledButton = styled.button`
-  border: 1px solid black;
+  border: 1px solid blue;
 `;
+
 const inputAmountRef = React.createRef();
 const formRef = React.createRef();
 
 export default function InputIngredient() {
   const [inputIngredientValue, setInputIngredientValue] = useState("");
-  const [ingredientSuggestion, setIngredientSuggestion] = useState([]);
   const [options, setOptions] = useState([]);
 
   function getNutrition(amount, unit, ingredient) {
@@ -78,18 +78,9 @@ export default function InputIngredient() {
     inputAmountRef.current.focus();
   }
 
-  function handleInputChange(newValue) {
-    const newInputValue = newValue;
-    setInputIngredientValue(newInputValue);
+  function handleInputChange(event) {
+    setInputIngredientValue(event.target.value);
     searchForIngredients();
-    setOptions(
-      ingredientSuggestion
-        .filter(word => word.length > 0)
-        .map(suggestion => ({
-          value: suggestion,
-          label: suggestion
-        }))
-    );
   }
 
   function searchForIngredients() {
@@ -97,7 +88,7 @@ export default function InputIngredient() {
       `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
     )
       .then(res => res.json())
-      .then(data => setIngredientSuggestion(data))
+      .then(data => setOptions(data))
       .catch(err => console.log(err));
   }
 
@@ -105,7 +96,13 @@ export default function InputIngredient() {
     <StyledForm onSubmit={handleSubmitButton} ref={formRef}>
       <label>
         Amount:
-        <StyledAmountInput name="amount" ref={inputAmountRef} type="number" />
+        <StyledAmountInput
+          name="amount"
+          ref={inputAmountRef}
+          type="number"
+          autoComplete="off"
+          required
+        />
       </label>
       <label>
         Unit:
@@ -120,12 +117,26 @@ export default function InputIngredient() {
       </label>
       <label>
         Ingredient:
-        <StyledSelectIngredient
-          escapeClearsValue
+        <StyledIngredientInput
           name="ingredient"
-          options={options}
-          onInputChange={handleInputChange}
+          type="text"
+          list="ingredients"
+          onChange={handleInputChange}
+          autoComplete="off"
+          required
         />
+        <datalist required id="ingredients">
+          <option value={options[0]} />
+          <option value={options[1]} />
+          <option value={options[2]} />
+          <option value={options[3]} />
+          <option value={options[4]} />
+          <option value={options[5]} />
+          <option value={options[6]} />
+          <option value={options[7]} />
+          <option value={options[8]} />
+          <option value={options[9]} />
+        </datalist>
       </label>
       <StyledButton type="submit">+</StyledButton>
     </StyledForm>
