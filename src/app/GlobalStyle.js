@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     
     body {
         height: 100vh;
-        margin: 0;
+        margin: 0; 
         padding: 0;
     }
 `;

@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const StyledForm = styled.form``;
+const StyledForm = styled.form`
+  display: grid;
+  grid-template-areas:
+    "h h"
+    "a u"
+    "i b";
+`;
+const StyledHeadline = styled.h3`
+  grid-area: h;
+`;
 const StyledAmountInput = styled.input`
   border: 1px solid black;
+  grid-area: a;
 `;
-const StyledSelect = styled.select`
+const StyledUnitSelect = styled.select`
   border: 1px solid black;
+  grid-area: u;
 `;
 const StyledIngredientInput = styled.input`
   border: 1px solid black;
+  grid-area: i;
 `;
 
 const StyledButton = styled.button`
+  grid-area: b;
   border: 1px solid blue;
 `;
 
@@ -94,50 +107,42 @@ export default function InputIngredient() {
 
   return (
     <StyledForm onSubmit={handleSubmitButton} ref={formRef}>
-      <label>
-        Amount:
-        <StyledAmountInput
-          name="amount"
-          ref={inputAmountRef}
-          type="number"
-          autoComplete="off"
-          required
-        />
-      </label>
-      <label>
-        Unit:
-        <StyledSelect name="unit">
-          <option>gr</option>
-          <option>kg</option>
-          <option>l</option>
-          <option>ml</option>
-          <option>small</option>
-          <option>large</option>
-        </StyledSelect>
-      </label>
-      <label>
-        Ingredient:
-        <StyledIngredientInput
-          name="ingredient"
-          type="text"
-          list="ingredients"
-          onChange={handleInputChange}
-          autoComplete="off"
-          required
-        />
-        <datalist required id="ingredients">
-          <option value={options[0]} />
-          <option value={options[1]} />
-          <option value={options[2]} />
-          <option value={options[3]} />
-          <option value={options[4]} />
-          <option value={options[5]} />
-          <option value={options[6]} />
-          <option value={options[7]} />
-          <option value={options[8]} />
-          <option value={options[9]} />
-        </datalist>
-      </label>
+      <StyledHeadline>Ingredients</StyledHeadline>
+      <StyledAmountInput
+        name="amount"
+        ref={inputAmountRef}
+        type="number"
+        autoComplete="off"
+        required
+      />
+      <StyledUnitSelect name="unit">
+        <option>gr</option>
+        <option>kg</option>
+        <option>l</option>
+        <option>ml</option>
+        <option>small</option>
+        <option>large</option>
+      </StyledUnitSelect>
+      <StyledIngredientInput
+        name="ingredient"
+        type="text"
+        list="ingredients"
+        onChange={handleInputChange}
+        autoComplete="off"
+        required
+      />
+      <datalist id="ingredients">
+        <option value={options[0]} />
+        <option value={options[1]} />
+        <option value={options[2]} />
+        <option value={options[3]} />
+        <option value={options[4]} />
+        <option value={options[5]} />
+        <option value={options[6]} />
+        <option value={options[7]} />
+        <option value={options[8]} />
+        <option value={options[9]} />
+      </datalist>
       <StyledButton type="submit">+</StyledButton>
     </StyledForm>
   );
