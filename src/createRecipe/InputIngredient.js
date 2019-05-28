@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Select from "react-select";
 
 const StyledForm = styled.form``;
 const StyledAmountInput = styled.input`
@@ -9,15 +8,15 @@ const StyledAmountInput = styled.input`
 const StyledSelect = styled.select`
   border: 1px solid black;
 `;
-const StyledSelectIngredient = styled(Select)`
+const StyledButton = styled.button`
   border: 1px solid black;
 `;
-const StyledButton = styled.button`
+
+const StyledIngredientInput = styled.input`
   border: 1px solid black;
 `;
 const inputAmountRef = React.createRef();
 const formRef = React.createRef();
-const inputIngredientRef = React.createRef();
 
 export default function InputIngredient() {
   const [inputIngredientValue, setInputIngredientValue] = useState("");
@@ -75,7 +74,6 @@ export default function InputIngredient() {
 
     getNutrition(amount, unit, ingredient);
     formRef.current.reset();
-    setInputIngredientValue("");
     inputAmountRef.current.focus();
   }
 
@@ -89,17 +87,20 @@ export default function InputIngredient() {
       `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
     )
       .then(res => res.json())
-      .then(data =>
-        setOptions(
-          data
-            .filter(word => word.length > 0)
-            .map(suggestion => ({
-              value: suggestion,
-              label: suggestion
-            }))
-        )
-      )
+      .then(data => setOptions(data))
       .catch(err => console.log(err));
+  }
+
+  function renderOptions() {
+    /* if (options.length === 1) {
+      return <option>{options[0]}</option>;
+    } else if (options.length === 1) {
+      return <option>{options[1]}</option>;
+    }*/
+
+    options.map(suggestion => {
+      return <option>{suggestion}</option>;
+    });
   }
 
   return (
@@ -121,21 +122,13 @@ export default function InputIngredient() {
       </label>
       <label>
         Ingredient:
-        <input type="text" list="cars" />
-        <datalist id="cars">
-          <option>Volvo</option>
-          <option>Mercedes</option>
-          <option>Audi</option>
-          <option>BMW</option>
-        </datalist>
-        <StyledSelectIngredient
-          ref={inputIngredientRef}
-          escapeClearsValue
+        <StyledIngredientInput
           name="ingredient"
-          options={options}
-          onInputChange={handleInputChange}
-          //onKeyDown={handleSubmitButton}
+          type="text"
+          list="ingredients"
+          onChange={handleInputChange}
         />
+        <datalist id="ingredients">{renderOptions}</datalist>
       </label>
       <StyledButton type="submit">+</StyledButton>
     </StyledForm>
