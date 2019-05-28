@@ -1,7 +1,6 @@
 import React from "react";
 import RecipePreview from "./RecipePreview";
 import styled from "styled-components";
-import InputIngredient from "../createRecipe/InputIngredient";
 
 const RecipePreviewGrid = styled.div`
   display: grid;
@@ -19,7 +18,9 @@ export default function RecipePreviewPage() {
       <RecipePreview />
       <RecipePreview />
       <RecipePreview />
-      <InputIngredient />
+      <RecipePreview />
+      <RecipePreview />
+      <RecipePreview />
     </RecipePreviewGrid>
   );
 }

@@ -18,12 +18,12 @@ export default function BookIcon() {
         fillRule="evenodd"
       >
         <g
-          id="NavBar"
-          transform="translate(-29.000000, -25.000000)"
+          id="Book-Nav"
+          transform="translate(-129.000000, 0.000000)"
           stroke="#979797"
         >
-          <g id="Book-Nav" transform="translate(17.000000, 17.000000)">
-            <g id="Book-Symbol" transform="translate(12.000000, 8.000000)">
+          <g id="Book-Symbol" transform="translate(129.000000, 0.000000)">
+            <g>
               <rect
                 id="Rectangle"
                 strokeWidth="2"
