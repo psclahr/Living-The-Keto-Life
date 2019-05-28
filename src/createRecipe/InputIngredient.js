@@ -17,10 +17,10 @@ const StyledButton = styled.button`
 `;
 const inputAmountRef = React.createRef();
 const formRef = React.createRef();
+const inputIngredientRef = React.createRef();
 
 export default function InputIngredient() {
   const [inputIngredientValue, setInputIngredientValue] = useState("");
-  const [ingredientSuggestion, setIngredientSuggestion] = useState([]);
   const [options, setOptions] = useState([]);
 
   function getNutrition(amount, unit, ingredient) {
@@ -75,21 +75,13 @@ export default function InputIngredient() {
 
     getNutrition(amount, unit, ingredient);
     formRef.current.reset();
+    setInputIngredientValue("");
     inputAmountRef.current.focus();
   }
 
   function handleInputChange(newValue) {
-    const newInputValue = newValue;
-    setInputIngredientValue(newInputValue);
+    setInputIngredientValue(newValue);
     searchForIngredients();
-    setOptions(
-      ingredientSuggestion
-        .filter(word => word.length > 0)
-        .map(suggestion => ({
-          value: suggestion,
-          label: suggestion
-        }))
-    );
   }
 
   function searchForIngredients() {
@@ -97,7 +89,16 @@ export default function InputIngredient() {
       `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
     )
       .then(res => res.json())
-      .then(data => setIngredientSuggestion(data))
+      .then(data =>
+        setOptions(
+          data
+            .filter(word => word.length > 0)
+            .map(suggestion => ({
+              value: suggestion,
+              label: suggestion
+            }))
+        )
+      )
       .catch(err => console.log(err));
   }
 
@@ -120,11 +121,20 @@ export default function InputIngredient() {
       </label>
       <label>
         Ingredient:
+        <input type="text" list="cars" />
+        <datalist id="cars">
+          <option>Volvo</option>
+          <option>Mercedes</option>
+          <option>Audi</option>
+          <option>BMW</option>
+        </datalist>
         <StyledSelectIngredient
+          ref={inputIngredientRef}
           escapeClearsValue
           name="ingredient"
           options={options}
           onInputChange={handleInputChange}
+          //onKeyDown={handleSubmitButton}
         />
       </label>
       <StyledButton type="submit">+</StyledButton>
