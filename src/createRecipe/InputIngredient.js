@@ -4,29 +4,35 @@ import styled from "styled-components";
 const StyledForm = styled.form`
   display: grid;
   grid-template-areas:
-    "h h"
-    "a u"
-    "i b";
+    "h h h"
+    "a u i"
+    "b b b ";
+  margin-left: 5%;
 `;
 const StyledHeadline = styled.h3`
   grid-area: h;
+  margin-bottom: 10px;
 `;
 const StyledAmountInput = styled.input`
   border: 1px solid black;
   grid-area: a;
+  width: 60px;
 `;
 const StyledUnitSelect = styled.select`
   border: 1px solid black;
   grid-area: u;
+  width: 40px;
 `;
 const StyledIngredientInput = styled.input`
   border: 1px solid black;
   grid-area: i;
+  width: 200px;
 `;
 
 const StyledButton = styled.button`
   grid-area: b;
   border: 1px solid blue;
+  display: none;
 `;
 
 const inputAmountRef = React.createRef();
@@ -112,6 +118,7 @@ export default function InputIngredient() {
         name="amount"
         ref={inputAmountRef}
         type="number"
+        placeholder="Amount"
         autoComplete="off"
         required
       />
@@ -127,6 +134,7 @@ export default function InputIngredient() {
         name="ingredient"
         type="text"
         list="ingredients"
+        placeholder="Ingredient"
         onChange={handleInputChange}
         autoComplete="off"
         required
