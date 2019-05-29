@@ -1,59 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddImage from "./CreateElements/AddImage";
+import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
+import AddTitle from "./CreateElements/AddTitle";
 
-const CreatePageGrid = styled.form`
+const CreatePageGrid = styled.div`
   display: grid;
   grid-template-rows: 40px 170px auto auto;
   margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
-
-const Flex = styled.section`
-  display: flex;
-  justify-content: center;
-`;
-const StyledInputTitle = styled.input`
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 2px solid lightblue;
-  height: 20px;
-  width: 90%;
-  transition: all 1s ease;
-
-  &:focus {
-    outline: none;
-    border-color: hotpink;
-  }
-`;
-
-const AddDescription = styled.section``;
 
 export default function CreatePage({ onButtonClick }) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [descriptionList, setDescriptionList] = useState([]);
 
   function handleButtonClick(event) {
+    console.log(title);
     event.preventDefault();
     onButtonClick({
-      title
+      title,
+      description: descriptionList
     });
   }
   function handleTitleChange(event) {
     setTitle(event.target.value);
   }
 
+  function handleDescriptionChange(event) {
+    setDescription(event.target.value);
+  }
+
+  function handleSubmitStep(event) {
+    event.preventDefault();
+    setDescriptionList([...descriptionList, description]);
+  }
+
   return (
     <CreatePageGrid>
-      <Flex>
-        <StyledInputTitle
-          placeholder="Give us a recipe title..."
-          onChange={handleTitleChange}
-          required
-        />
-      </Flex>
+      <AddTitle onChange={handleTitleChange} />
       <AddImage />
-      <AddDescription />
+      <AddDescription
+        onSubmit={handleSubmitStep}
+        onChange={handleDescriptionChange}
+      />
       <button onClick={handleButtonClick}>+</button>
     </CreatePageGrid>
   );
