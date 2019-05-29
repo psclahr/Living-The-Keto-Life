@@ -15,7 +15,6 @@ function App() {
     postRecipe(data)
       .then(newRecipe => {
         setRecipes([...recipes, newRecipe]);
-        history.push("/");
       })
       .catch(error => console.log(error));
   };
