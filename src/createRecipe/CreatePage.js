@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddImage from "./CreateElements/AddImage";
 import AddIngredient from "./CreateElements/AddIngredient";
@@ -31,26 +31,30 @@ const StyledInputTitle = styled.input`
 const AddDescription = styled.section``;
 
 export default function CreatePage({ onButtonClick }) {
+  const [title, setTitle] = useState("");
+
   function handleButtonClick(event) {
     event.preventDefault();
-    console.log(event.target.title.value);
     onButtonClick({
-      title: event.target.title.value
+      title
     });
+  }
+  function handleTitleChange(event) {
+    setTitle(event.target.value);
   }
 
   return (
-    <CreatePageGrid onSubmit={handleButtonClick}>
+    <CreatePageGrid>
       <Flex>
         <StyledInputTitle
           placeholder="Give us a recipe title..."
-          name="title"
+          onChange={handleTitleChange}
           required
         />
       </Flex>
       <AddImage />
       <AddDescription />
-      <button>+</button>
+      <button onClick={handleButtonClick}>+</button>
     </CreatePageGrid>
   );
 }
