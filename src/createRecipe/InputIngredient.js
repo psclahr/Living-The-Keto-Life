@@ -14,17 +14,22 @@ const StyledHeadline = styled.h3`
   margin-bottom: 10px;
 `;
 const StyledAmountInput = styled.input`
-  border: 1px solid black;
+  border: 1px solid lightblue;
+  border-radius: 10%;
   grid-area: a;
   width: 60px;
 `;
 const StyledUnitSelect = styled.select`
-  border: 1px solid black;
+  background: white;
+  border: 1px solid lightblue;
+  border-radius: 10%;
   grid-area: u;
   width: 40px;
 `;
 const StyledIngredientInput = styled.input`
-  border: 1px solid black;
+  background: white;
+  border: 1px solid lightblue;
+  border-radius: 10%;
   grid-area: i;
   width: 200px;
 `;

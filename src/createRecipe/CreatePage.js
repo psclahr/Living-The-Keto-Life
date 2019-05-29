@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import AddTitle from "./AddTitle";
-import AddImage from "./AddImage";
-import AddIngredient from "./AddIngredient";
+import AddTitle from "./CreateElements/AddTitle";
+import AddImage from "./CreateElements/AddImage";
+import AddIngredient from "./CreateElements/AddIngredient";
 
 const CreatePageGrid = styled.div`
   display: grid;
@@ -12,13 +12,20 @@ const CreatePageGrid = styled.div`
 
 const AddDescription = styled.section``;
 
-export default function CreatePage() {
+export default function CreatePage({ onButtonClick }) {
+  function handleButtonClick(event) {
+    onButtonClick({
+      title: event.target.value
+    });
+  }
+
   return (
     <CreatePageGrid>
-      <AddTitle />
+      <AddTitle value />
       <AddImage />
       <AddIngredient />
       <AddDescription />
+      <button onClick={handleButtonClick}>+</button>
     </CreatePageGrid>
   );
 }

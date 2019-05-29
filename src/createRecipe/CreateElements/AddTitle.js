@@ -20,10 +20,14 @@ const StyledInputTitle = styled.input`
   }
 `;
 
-export default function AddTitle() {
+export default function AddTitle({ value }) {
   return (
     <Flex>
-      <StyledInputTitle placeholder="Give us a recipe title..." required />
+      <StyledInputTitle
+        placeholder="Give us a recipe title..."
+        required
+        value={value}
+      />
     </Flex>
   );
 }
