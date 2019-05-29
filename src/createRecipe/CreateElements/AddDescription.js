@@ -7,7 +7,7 @@ const StyledInput = styled.input`
   border-radius: 10%;
 `;
 
-export default function AddDescription({ onSubmit, onChange }) {
+export default function AddDescription({ onSubmit, onChange, stepList }) {
   return (
     <StyledForm onSubmit={onSubmit}>
       <label>
@@ -15,6 +15,11 @@ export default function AddDescription({ onSubmit, onChange }) {
         <StyledInput onChange={onChange} />
       </label>
       <button>Add Step</button>
+      <ol>
+        {stepList.map(step => {
+          return <li key={step}>{step}</li>;
+        })}
+      </ol>
     </StyledForm>
   );
 }

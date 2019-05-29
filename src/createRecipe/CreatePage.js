@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
@@ -7,23 +7,26 @@ import AddTitle from "./CreateElements/AddTitle";
 
 const CreatePageGrid = styled.div`
   display: grid;
-  grid-template-rows: 40px 170px auto auto;
+  grid-template-rows: 40px 170px auto auto 30px;
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
+  overflow-y: scroll;
 `;
 
 export default function CreatePage({ onButtonClick }) {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [descriptionList, setDescriptionList] = useState([]);
+  const [step, setStep] = useState("");
+  const [stepList, setStepList] = useState([]);
+  const [ingredient, setIngredient] = useState("");
+  const [ingredients, setIngredients] = useState([]);
 
   function handleButtonClick(event) {
-    console.log(title);
     event.preventDefault();
     onButtonClick({
       title,
-      description: descriptionList
+      steps: stepList,
+      ingredients
     });
   }
   function handleTitleChange(event) {
@@ -31,21 +34,31 @@ export default function CreatePage({ onButtonClick }) {
   }
 
   function handleDescriptionChange(event) {
-    setDescription(event.target.value);
+    setStep(event.target.value);
+  }
+
+  function handleSubmitIngredient(event) {
+    event.preventDefault();
+    setIngredients([...ingredients, ingredient]);
   }
 
   function handleSubmitStep(event) {
     event.preventDefault();
-    setDescriptionList([...descriptionList, description]);
+    setStepList([...stepList, step]);
   }
 
   return (
     <CreatePageGrid>
       <AddTitle onChange={handleTitleChange} />
       <AddImage />
+      <AddIngredient
+        onSubmit={handleSubmitIngredient}
+        ingredients={ingredients}
+      />
       <AddDescription
         onSubmit={handleSubmitStep}
         onChange={handleDescriptionChange}
+        stepList={stepList}
       />
       <button onClick={handleButtonClick}>+</button>
     </CreatePageGrid>
