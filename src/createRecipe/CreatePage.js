@@ -24,6 +24,11 @@ export default function CreatePage({ onButtonClick }) {
   const [ingredients, setIngredients] = useState([]);
   const [options, setOptions] = useState([]);
 
+  const descriptionRef = React.createRef();
+  const descriptionInputRef = React.createRef();
+  const ingredientRef = React.createRef();
+  const ingredientAmountRef = React.createRef();
+
   function handleButtonClick(event) {
     event.preventDefault();
     onButtonClick({
@@ -56,6 +61,8 @@ export default function CreatePage({ onButtonClick }) {
   function handleSubmitStep(event) {
     event.preventDefault();
     setStepList([...stepList, step]);
+    descriptionRef.current.reset();
+    descriptionInputRef.current.focus();
   }
 
   function handleSubmitIngredient(event) {
@@ -101,12 +108,11 @@ export default function CreatePage({ onButtonClick }) {
           );
       };
       nutritionQuery();
+      ingredientRef.current.reset();
+      ingredientAmountRef.current.focus();
     } catch (err) {
       console.log(err);
     }
-
-    //formRef.current.reset();
-    //inputAmountRef.current.focus();
   }
 
   function searchForIngredients() {
@@ -124,19 +130,20 @@ export default function CreatePage({ onButtonClick }) {
       <AddImage />
       <AddIngredient
         ingredients={ingredients}
-        amount={amount}
-        unit={unit}
-        ingredientValue={ingredientValue}
         options={options}
         onSubmit={handleSubmitIngredient}
         onChangeAmount={handleAmountChange}
         onChangeUnit={handleUnitChange}
         onChangeIngredient={handleIngredientChange}
+        ingredientRef={ingredientRef}
+        ingredientAmountRef={ingredientAmountRef}
       />
       <AddDescription
         onSubmit={handleSubmitStep}
         onChange={handleDescriptionChange}
         stepList={stepList}
+        descriptionRef={descriptionRef}
+        descriptionInputRef={descriptionInputRef}
       />
       <button onClick={handleButtonClick}>+</button>
     </CreatePageGrid>

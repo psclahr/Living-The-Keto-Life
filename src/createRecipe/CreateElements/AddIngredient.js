@@ -12,7 +12,9 @@ export default function AddIngredient({
   onChangeAmount,
   onChangeUnit,
   onChangeIngredient,
-  options
+  options,
+  ingredientRef,
+  ingredientAmountRef
 }) {
   return (
     <StyledAddIngredient>
@@ -22,6 +24,8 @@ export default function AddIngredient({
         onChangeUnit={onChangeUnit}
         onChangeIngredient={onChangeIngredient}
         options={options}
+        ingredientRef={ingredientRef}
+        ingredientAmountRef={ingredientAmountRef}
       />
       <ul>
         {ingredients.map(ingredient => {
