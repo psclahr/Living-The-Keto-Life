@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import InputIngredient from "../InputIngredient";
 
@@ -11,7 +11,8 @@ export default function AddIngredient({
   onSubmit,
   onChangeAmount,
   onChangeUnit,
-  onChangeIngredient
+  onChangeIngredient,
+  options
 }) {
   return (
     <StyledAddIngredient>
@@ -20,13 +21,16 @@ export default function AddIngredient({
         onChangeAmount={onChangeAmount}
         onChangeUnit={onChangeUnit}
         onChangeIngredient={onChangeIngredient}
+        options={options}
       />
       <ul>
-        {ingredients
-          .map(ingredient => ingredient.name)
-          .map(ingredient => {
-            return <li key={ingredient}>{ingredient}</li>;
-          })}
+        {ingredients.map(ingredient => {
+          return (
+            <li key={ingredient.name}>
+              {ingredient.amount} {ingredient.unit} {ingredient.name}
+            </li>
+          );
+        })}
       </ul>
     </StyledAddIngredient>
   );

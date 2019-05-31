@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
@@ -40,38 +40,19 @@ const StyledButton = styled.button`
   display: none;
 `;
 
-const inputAmountRef = React.createRef();
-const formRef = React.createRef();
-
 export default function InputIngredient({
   onSubmit,
   onChangeAmount,
   onChangeUnit,
-  onChangeIngredient
+  onChangeIngredient,
+  options
 }) {
-  const [inputIngredientValue, setInputIngredientValue] = useState("");
-  const [options, setOptions] = useState([]);
-
-  function handleInputChange(event) {
-    setInputIngredientValue(event.target.value);
-    searchForIngredients();
-  }
-
-  function searchForIngredients() {
-    fetch(
-      `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
-    )
-      .then(res => res.json())
-      .then(data => setOptions(data))
-      .catch(err => console.log(err));
-  }
-
   return (
-    <StyledForm onSubmit={onSubmit} ref={formRef}>
+    <StyledForm onSubmit={onSubmit} /*ref={formRef}*/>
       <StyledHeadline>Ingredients</StyledHeadline>
       <StyledAmountInput
         name="amount"
-        ref={inputAmountRef}
+        // ref={inputAmountRef}
         type="number"
         placeholder="Amount"
         autoComplete="off"

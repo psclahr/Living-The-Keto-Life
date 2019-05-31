@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
@@ -22,6 +22,7 @@ export default function CreatePage({ onButtonClick }) {
   const [unit, setUnit] = useState("gr");
   const [ingredientValue, setIngredient] = useState("");
   const [ingredients, setIngredients] = useState([]);
+  const [options, setOptions] = useState([]);
 
   function handleButtonClick(event) {
     event.preventDefault();
@@ -49,6 +50,7 @@ export default function CreatePage({ onButtonClick }) {
 
   function handleIngredientChange(event) {
     setIngredient(event.target.value);
+    searchForIngredients();
   }
 
   function handleSubmitStep(event) {
@@ -99,7 +101,6 @@ export default function CreatePage({ onButtonClick }) {
           );
       };
       nutritionQuery();
-      console.log(ingredients);
     } catch (err) {
       console.log(err);
     }
@@ -108,12 +109,25 @@ export default function CreatePage({ onButtonClick }) {
     //inputAmountRef.current.focus();
   }
 
+  function searchForIngredients() {
+    fetch(
+      `https://api.edamam.com/auto-complete?q=${ingredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
+    )
+      .then(res => res.json())
+      .then(data => setOptions(data))
+      .catch(err => console.log(err));
+  }
+
   return (
     <CreatePageGrid>
       <AddTitle onChange={handleTitleChange} />
       <AddImage />
       <AddIngredient
         ingredients={ingredients}
+        amount={amount}
+        unit={unit}
+        ingredientValue={ingredientValue}
+        options={options}
         onSubmit={handleSubmitIngredient}
         onChangeAmount={handleAmountChange}
         onChangeUnit={handleUnitChange}
