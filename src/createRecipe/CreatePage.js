@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
@@ -18,12 +18,17 @@ export default function CreatePage({ onButtonClick }) {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState("");
   const [stepList, setStepList] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const [unit, setUnit] = useState("gr");
+  const [ingredientValue, setIngredient] = useState("");
+  const [ingredients, setIngredients] = useState([]);
 
   function handleButtonClick(event) {
     event.preventDefault();
     onButtonClick({
       title,
-      steps: stepList
+      steps: stepList,
+      ingredients
     });
   }
   function handleTitleChange(event) {
@@ -34,8 +39,16 @@ export default function CreatePage({ onButtonClick }) {
     setStep(event.target.value);
   }
 
-  function handleSubmitIngredient(event) {
-    event.preventDefault();
+  function handleAmountChange(event) {
+    setAmount(event.target.value);
+  }
+
+  function handleUnitChange(event) {
+    setUnit(event.target.value);
+  }
+
+  function handleIngredientChange(event) {
+    setIngredient(event.target.value);
   }
 
   function handleSubmitStep(event) {
@@ -43,11 +56,69 @@ export default function CreatePage({ onButtonClick }) {
     setStepList([...stepList, step]);
   }
 
+  function handleSubmitIngredient(event) {
+    event.preventDefault();
+    try {
+      const nutritionQuery = async () => {
+        await fetch(
+          `https://api.edamam.com/api/nutrition-data?app_id=4bb611c5&app_key=8b9a2b559e7693bf21f151e736db51cc&ingr=${amount}%20${unit}%20${ingredientValue}`
+        )
+          .then(res => res.json())
+          .then(data =>
+            setIngredients([
+              ...ingredients,
+              {
+                amount,
+                unit,
+                name: ingredientValue,
+                calories: data.totalNutrients.ENERC_KCAL
+                  ? data.totalNutrients.ENERC_KCAL.quantity
+                  : 0,
+                proteins: data.totalNutrients.PROCNT
+                  ? data.totalNutrients.PROCNT.quantity
+                  : 0,
+                carbs: data.totalNutrients.CHOCDF
+                  ? data.totalNutrients.CHOCDF.quantity
+                  : 0,
+                fats: data.totalNutrients.FAT
+                  ? data.totalNutrients.FAT.quantity
+                  : 0,
+                fatsDivided: {
+                  saturatedFats: data.totalNutrients.FASAT
+                    ? data.totalNutrients.FASAT.quantity
+                    : 0,
+                  monounsaturatedFats: data.totalNutrients.FAMS
+                    ? data.totalNutrients.FAMS.quantity
+                    : 0,
+                  polyunsaturatedFats: data.totalNutrients.FAPU
+                    ? data.totalNutrients.FAPU.quantity
+                    : 0
+                }
+              }
+            ])
+          );
+      };
+      nutritionQuery();
+      console.log(ingredients);
+    } catch (err) {
+      console.log(err);
+    }
+
+    //formRef.current.reset();
+    //inputAmountRef.current.focus();
+  }
+
   return (
     <CreatePageGrid>
       <AddTitle onChange={handleTitleChange} />
       <AddImage />
-      <AddIngredient onSubmit={handleSubmitIngredient} />
+      <AddIngredient
+        ingredients={ingredients}
+        onSubmit={handleSubmitIngredient}
+        onChangeAmount={handleAmountChange}
+        onChangeUnit={handleUnitChange}
+        onChangeIngredient={handleIngredientChange}
+      />
       <AddDescription
         onSubmit={handleSubmitStep}
         onChange={handleDescriptionChange}

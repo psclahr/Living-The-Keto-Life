@@ -43,78 +43,14 @@ const StyledButton = styled.button`
 const inputAmountRef = React.createRef();
 const formRef = React.createRef();
 
-export default function InputIngredient() {
+export default function InputIngredient({
+  onSubmit,
+  onChangeAmount,
+  onChangeUnit,
+  onChangeIngredient
+}) {
   const [inputIngredientValue, setInputIngredientValue] = useState("");
   const [options, setOptions] = useState([]);
-  const [nutritions, setNutritions] = useState({});
-  const [ingredients, setIngredients] = useState([]);
-  const [ingredient, setIngredient] = useState({});
-
-  function getNutrition(amount, unit, ingr) {
-    try {
-      const nutritionQuery = async () => {
-        await fetch(
-          `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=${amount}%20${unit}%20${ingr}`
-        )
-          .then(res => res.json())
-          .then(data =>
-            setNutritions({
-              calories: data.totalNutrients.ENERC_KCAL
-                ? data.totalNutrients.ENERC_KCAL.quantity
-                : 0,
-              proteins: data.totalNutrients.PROCNT
-                ? data.totalNutrients.PROCNT.quantity
-                : 0,
-              carbs: data.totalNutrients.CHOCDF
-                ? data.totalNutrients.CHOCDF.quantity
-                : 0,
-              fats: data.totalNutrients.FAT
-                ? data.totalNutrients.FAT.quantity
-                : 0,
-              saturatedFats: data.totalNutrients.FASAT
-                ? data.totalNutrients.FASAT.quantity
-                : 0,
-              monounsaturatedFats: data.totalNutrients.FAMS
-                ? data.totalNutrients.FAMS.quantity
-                : 0,
-              polyunsaturatedFats: data.totalNutrients.FAPU
-                ? data.totalNutrients.FAPU.quantity
-                : 0
-            })
-          );
-      };
-      nutritionQuery();
-      setIngredient({
-        name: ingr,
-        amount,
-        unit,
-        calories: nutritions.calories,
-        carbs: nutritions.carbs,
-        proteins: nutritions.proteins,
-        fats: nutritions.fats,
-        fatsDivided: {
-          saturatedFats: nutritions.saturatedFats,
-          monounsaturatedFats: nutritions.monounsaturatedFats,
-          polyunsaturatedFats: nutritions.polyunsaturatedFats
-        }
-      });
-      setIngredients([...ingredients, ingredient]);
-      console.log(ingredient);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  function handleSubmitButton(event) {
-    event.preventDefault();
-    const amount = event.target.amount.value;
-    const unit = event.target.unit.value;
-    const ingr = event.target.ingr.value;
-    getNutrition(amount, unit, ingr);
-
-    formRef.current.reset();
-    inputAmountRef.current.focus();
-  }
 
   function handleInputChange(event) {
     setInputIngredientValue(event.target.value);
@@ -131,11 +67,7 @@ export default function InputIngredient() {
   }
 
   return (
-    <StyledForm
-      onSubmit={handleSubmitButton}
-      ref={formRef}
-      ingredients={ingredients}
-    >
+    <StyledForm onSubmit={onSubmit} ref={formRef}>
       <StyledHeadline>Ingredients</StyledHeadline>
       <StyledAmountInput
         name="amount"
@@ -143,9 +75,10 @@ export default function InputIngredient() {
         type="number"
         placeholder="Amount"
         autoComplete="off"
+        onChange={onChangeAmount}
         required
       />
-      <StyledUnitSelect name="unit">
+      <StyledUnitSelect name="unit" onChange={onChangeUnit}>
         <option>gr</option>
         <option>kg</option>
         <option>l</option>
@@ -158,7 +91,7 @@ export default function InputIngredient() {
         type="text"
         list="ingredients"
         placeholder="Ingredient"
-        onChange={handleInputChange}
+        onChange={onChangeIngredient}
         autoComplete="off"
         required
       />

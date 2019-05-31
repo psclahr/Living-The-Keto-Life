@@ -6,16 +6,28 @@ const StyledAddIngredient = styled.section`
   margin-top: 20px;
 `;
 
-export default function AddIngredient({ ingredients, onSubmit }) {
+export default function AddIngredient({
+  ingredients,
+  onSubmit,
+  onChangeAmount,
+  onChangeUnit,
+  onChangeIngredient
+}) {
   return (
     <StyledAddIngredient>
-      <InputIngredient ingredients={ingredients} onSubmit={onSubmit} />
+      <InputIngredient
+        onSubmit={onSubmit}
+        onChangeAmount={onChangeAmount}
+        onChangeUnit={onChangeUnit}
+        onChangeIngredient={onChangeIngredient}
+      />
+      <ul>
+        {ingredients
+          .map(ingredient => ingredient.name)
+          .map(ingredient => {
+            return <li key={ingredient}>{ingredient}</li>;
+          })}
+      </ul>
     </StyledAddIngredient>
   );
 }
-
-/*<ul>
-        {ingredients.map(ingredient => {
-          return <li>{ingredient}</li>;
-        })}
-      </ul>*/
