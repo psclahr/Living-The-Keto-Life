@@ -84,6 +84,22 @@ export default function InputIngredient() {
           );
       };
       nutritionQuery();
+      setIngredient({
+        name: ingr,
+        amount,
+        unit,
+        calories: nutritions.calories,
+        carbs: nutritions.carbs,
+        proteins: nutritions.proteins,
+        fats: nutritions.fats,
+        fatsDivided: {
+          saturatedFats: nutritions.saturatedFats,
+          monounsaturatedFats: nutritions.monounsaturatedFats,
+          polyunsaturatedFats: nutritions.polyunsaturatedFats
+        }
+      });
+      setIngredients([...ingredients, ingredient]);
+      console.log(ingredient);
     } catch (err) {
       console.log(err);
     }
@@ -95,22 +111,7 @@ export default function InputIngredient() {
     const unit = event.target.unit.value;
     const ingr = event.target.ingr.value;
     getNutrition(amount, unit, ingr);
-    setIngredient({
-      name: ingr,
-      amount,
-      unit,
-      calories: nutritions.calories,
-      carbs: nutritions.carbs,
-      proteins: nutritions.proteins,
-      fats: nutritions.fats,
-      fatsDivided: {
-        saturatedFats: nutritions.saturatedFats,
-        monounsaturatedFats: nutritions.monounsaturatedFats,
-        polyunsaturatedFats: nutritions.polyunsaturatedFats
-      }
-    });
-    console.log(ingredient);
-    setIngredients([...ingredients, ingredient]);
+
     formRef.current.reset();
     inputAmountRef.current.focus();
   }
@@ -130,7 +131,11 @@ export default function InputIngredient() {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmitButton} ref={formRef}>
+    <StyledForm
+      onSubmit={handleSubmitButton}
+      ref={formRef}
+      ingredients={ingredients}
+    >
       <StyledHeadline>Ingredients</StyledHeadline>
       <StyledAmountInput
         name="amount"

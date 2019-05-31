@@ -18,15 +18,12 @@ export default function CreatePage({ onButtonClick }) {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState("");
   const [stepList, setStepList] = useState([]);
-  const [ingredient, setIngredient] = useState("");
-  const [ingredients, setIngredients] = useState([]);
 
   function handleButtonClick(event) {
     event.preventDefault();
     onButtonClick({
       title,
-      steps: stepList,
-      ingredients
+      steps: stepList
     });
   }
   function handleTitleChange(event) {
@@ -39,7 +36,6 @@ export default function CreatePage({ onButtonClick }) {
 
   function handleSubmitIngredient(event) {
     event.preventDefault();
-    setIngredients([...ingredients, ingredient]);
   }
 
   function handleSubmitStep(event) {
@@ -51,10 +47,7 @@ export default function CreatePage({ onButtonClick }) {
     <CreatePageGrid>
       <AddTitle onChange={handleTitleChange} />
       <AddImage />
-      <AddIngredient
-        onSubmit={handleSubmitIngredient}
-        ingredients={ingredients}
-      />
+      <AddIngredient onSubmit={handleSubmitIngredient} />
       <AddDescription
         onSubmit={handleSubmitStep}
         onChange={handleDescriptionChange}

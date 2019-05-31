@@ -9,12 +9,13 @@ const StyledAddIngredient = styled.section`
 export default function AddIngredient({ ingredients, onSubmit }) {
   return (
     <StyledAddIngredient>
-      <InputIngredient onSubmit={onSubmit} />
-      <ul>
-        {ingredients.map(ingredient => {
-          return <li>{ingredient}</li>;
-        })}
-      </ul>
+      <InputIngredient ingredients={ingredients} onSubmit={onSubmit} />
     </StyledAddIngredient>
   );
 }
+
+/*<ul>
+        {ingredients.map(ingredient => {
+          return <li>{ingredient}</li>;
+        })}
+      </ul>*/
