@@ -3,7 +3,11 @@ import styled from "styled-components";
 import InputIngredient from "../InputIngredient";
 
 const StyledAddIngredient = styled.section`
-  margin-top: 20px;
+  height: auto;
+`;
+
+const StyledList = styled.ul`
+  min-height: 75px;
 `;
 
 export default function AddIngredient({
@@ -27,7 +31,7 @@ export default function AddIngredient({
         ingredientRef={ingredientRef}
         ingredientAmountRef={ingredientAmountRef}
       />
-      <ul>
+      <StyledList>
         {ingredients.map(ingredient => {
           return (
             <li key={ingredient.name}>
@@ -35,7 +39,7 @@ export default function AddIngredient({
             </li>
           );
         })}
-      </ul>
+      </StyledList>
     </StyledAddIngredient>
   );
 }

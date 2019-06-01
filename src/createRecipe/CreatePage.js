@@ -14,6 +14,18 @@ const CreatePageGrid = styled.div`
   overflow-y: scroll;
 `;
 
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledSubmitButton = styled.button`
+  width: 150px;
+  height: 25px;
+  background: lightblue;
+  border-radius: 25px;
+`;
+
 export default function CreatePage({ onButtonClick }) {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState("");
@@ -145,7 +157,11 @@ export default function CreatePage({ onButtonClick }) {
         descriptionRef={descriptionRef}
         descriptionInputRef={descriptionInputRef}
       />
-      <button onClick={handleButtonClick}>+</button>
+      <Flex>
+        <StyledSubmitButton onClick={handleButtonClick}>
+          Create Recipe!
+        </StyledSubmitButton>
+      </Flex>
     </CreatePageGrid>
   );
 }

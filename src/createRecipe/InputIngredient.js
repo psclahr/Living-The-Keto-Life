@@ -4,9 +4,8 @@ import styled from "styled-components";
 const StyledForm = styled.form`
   display: grid;
   grid-template-areas:
-    "h h h"
-    "a u i"
-    "b b b ";
+    "h h h h"
+    "a u i b";
   display: flex;
   justify-content: space-around;
 `;
@@ -34,7 +33,6 @@ const StyledAmountInput = styled.input`
 const StyledUnitSelect = styled.select`
   background: white;
   border: 2px solid lightblue;
-  border-radius: 10%;
   grid-area: u;
   width: 40px;
   transition: all 1s ease;
@@ -52,7 +50,7 @@ const StyledIngredientInput = styled.input`
   height: 20px;
   grid-area: i;
   width: 200px;
-  transition: all 1s ease
+  transition: all 1s ease;
 
   &:focus {
     outline: none;
@@ -62,8 +60,9 @@ const StyledIngredientInput = styled.input`
 
 const StyledButton = styled.button`
   grid-area: b;
-  border: 1px solid blue;
-  display: none;
+  background: lightblue;
+  border-color: white;
+  border-radius: 25px;
 `;
 
 export default function InputIngredient({
