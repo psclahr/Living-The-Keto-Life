@@ -19,10 +19,10 @@ const recipeSchema = new mongoose.Schema({
         saturatedFats: Number,
         monounsaturatedFats: Number,
         polyunsaturatedFats: Number
-      },
-      image: String
+      }
     }
-  ]
+  ],
+  image: String
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);

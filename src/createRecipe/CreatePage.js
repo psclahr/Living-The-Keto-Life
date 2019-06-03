@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
@@ -26,7 +27,10 @@ const StyledSubmitButton = styled.button`
   border-radius: 25px;
 `;
 
-export default function CreatePage({ onButtonClick, image }) {
+const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
+const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
+
+export default function CreatePage({ onButtonClick }) {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState("");
   const [stepList, setStepList] = useState([]);
@@ -35,11 +39,18 @@ export default function CreatePage({ onButtonClick, image }) {
   const [ingredientValue, setIngredient] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [options, setOptions] = useState([]);
+  const [image, setImage] = useState("");
 
   const descriptionRef = React.createRef();
   const descriptionInputRef = React.createRef();
   const ingredientRef = React.createRef();
   const ingredientAmountRef = React.createRef();
+
+  useEffect(() => {
+    return () => {
+      console.log(image);
+    };
+  });
 
   function handleButtonClick(event) {
     event.preventDefault();
@@ -137,10 +148,31 @@ export default function CreatePage({ onButtonClick, image }) {
       .catch(err => console.log(err));
   }
 
+  function upload(event) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
+
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    formData.append("upload_preset", PRESET);
+
+    axios
+      .post(url, formData, {
+        headers: {
+          "Content-type": "multipart/form-data"
+        }
+      })
+      .then(onImageSave)
+      .catch(err => console.error(err));
+  }
+
+  function onImageSave(response) {
+    setImage(response.data.url);
+  }
+
   return (
     <CreatePageGrid>
       <AddTitle onChange={handleTitleChange} />
-      <AddImage image={image} />
+      <AddImage image={image} onChangeImageUpload={upload} />
       <AddIngredient
         ingredients={ingredients}
         options={options}
