@@ -17,9 +17,9 @@ const StyledImageContainer = styled.div`
 export default function AddImage({ image, onChangeImageUpload }) {
   const StyledImage = styled.div`
     background-image: url(${image});
+    background-size: 275px;
     width: 150px;
     height: 150px;
-    background-size: 150px;
     background-position: center center;
     background-repeat: no-repeat;
   `;

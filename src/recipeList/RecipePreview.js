@@ -20,9 +20,9 @@ const StyledTitle = styled.h4`
 export default function RecipePreview({ title, image }) {
   const StyledRecipePreview = styled.div`
     background-image: url(${image});
-    background-size: 175px;
-    width: 175px;
-    height: 175px;
+    background-size: 275px;
+    width: 150px;
+    height: 150px;
     background-position: center center;
     background-repeat: no-repeat;
   `;
