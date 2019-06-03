@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
     * {
         box-sizing:border-box; 
+        font-size: 16px; 
     }
     
     body {
@@ -28,6 +29,11 @@ const GlobalStyle = createGlobalStyle`
             font-size: 16px; 
         }
     }
+
+    li {
+        font-size: 18px;
+    }
+
 `;
 
 export default GlobalStyle;

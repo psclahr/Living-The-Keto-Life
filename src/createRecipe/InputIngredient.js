@@ -14,6 +14,7 @@ const StyledHeadline = styled.h3`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  font-size: 20px;
 `;
 const StyledAmountInput = styled.input`
   border-top: 0;
@@ -34,7 +35,7 @@ const StyledUnitSelect = styled.select`
   background: white;
   border: 2px solid lightblue;
   grid-area: u;
-  width: 40px;
+  width: 60px;
   transition: all 1s ease;
 
   &:focus {
@@ -49,7 +50,7 @@ const StyledIngredientInput = styled.input`
   border-bottom: 2px solid lightblue;
   height: 20px;
   grid-area: i;
-  width: 200px;
+  width: 180px;
   transition: all 1s ease;
 
   &:focus {

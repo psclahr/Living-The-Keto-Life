@@ -4,13 +4,13 @@ import styled from "styled-components";
 const DescriptionGrid = styled.div`
   display: grid;
   grid-template-rows: 30px 100px auto;
-  gap: 10px;
 `;
 
 const StyledHeadline = styled.h3`
   display: flex;
   justify-content: center;
   margin: 0;
+  font-size: 20px;
 `;
 
 const StyledForm = styled.form``;
