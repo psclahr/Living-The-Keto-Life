@@ -1,5 +1,5 @@
 import React from "react";
-import RecipePreview from "./RecipePreview";
+import RecipeList from "./RecipeList";
 import styled from "styled-components";
 
 const RecipePreviewGrid = styled.div`
@@ -9,18 +9,10 @@ const RecipePreviewGrid = styled.div`
   overflow-y: scroll;
 `;
 
-export default function RecipePreviewPage() {
+export default function RecipePreviewPage({ recipes }) {
   return (
     <RecipePreviewGrid>
-      <RecipePreview />
-      <RecipePreview />
-      <RecipePreview />
-      <RecipePreview />
-      <RecipePreview />
-      <RecipePreview />
-      <RecipePreview />
-      <RecipePreview />
-      <RecipePreview />
+      <RecipeList recipes={recipes} />
     </RecipePreviewGrid>
   );
 }

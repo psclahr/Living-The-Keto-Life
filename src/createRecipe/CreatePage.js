@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
@@ -45,12 +45,6 @@ export default function CreatePage({ onButtonClick }) {
   const descriptionInputRef = React.createRef();
   const ingredientRef = React.createRef();
   const ingredientAmountRef = React.createRef();
-
-  useEffect(() => {
-    return () => {
-      console.log(image);
-    };
-  });
 
   function handleButtonClick(event) {
     event.preventDefault();
