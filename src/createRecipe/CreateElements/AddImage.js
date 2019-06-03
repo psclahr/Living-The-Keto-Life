@@ -8,7 +8,7 @@ const Flex = styled.section`
   align-items: center;
 `;
 
-const StyledImage = styled.div`
+const StyledImageContainer = styled.div`
   width: 150px;
   height: 150px;
   border: 1px solid lightblue;
@@ -16,6 +16,11 @@ const StyledImage = styled.div`
   justify-content: center;
   align-items: center;
   padding: 15px;
+`;
+
+const StyledImage = styled.img`
+  height: 150px;
+  width: 200px;
 `;
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
@@ -43,17 +48,18 @@ export default function AddImage() {
 
   function onImageSave(response) {
     setImage(response.data.url);
+    console.log(response.data.url);
   }
 
   return (
     <Flex>
-      <StyledImage>
+      <StyledImageContainer>
         {image ? (
-          <img src={image} alt="" />
+          <StyledImage src={image} alt="" />
         ) : (
           <input type="file" name="file" onChange={upload} />
         )}
-      </StyledImage>
+      </StyledImageContainer>
     </Flex>
   );
 }
