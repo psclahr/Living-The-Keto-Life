@@ -26,7 +26,7 @@ const StyledSubmitButton = styled.button`
   border-radius: 25px;
 `;
 
-export default function CreatePage({ onButtonClick }) {
+export default function CreatePage({ onButtonClick, image }) {
   const [title, setTitle] = useState("");
   const [step, setStep] = useState("");
   const [stepList, setStepList] = useState([]);
@@ -46,7 +46,8 @@ export default function CreatePage({ onButtonClick }) {
     onButtonClick({
       title,
       steps: stepList,
-      ingredients
+      ingredients,
+      image
     });
   }
   function handleTitleChange(event) {
@@ -139,7 +140,7 @@ export default function CreatePage({ onButtonClick }) {
   return (
     <CreatePageGrid>
       <AddTitle onChange={handleTitleChange} />
-      <AddImage />
+      <AddImage image={image} />
       <AddIngredient
         ingredients={ingredients}
         options={options}

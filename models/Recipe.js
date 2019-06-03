@@ -19,7 +19,8 @@ const recipeSchema = new mongoose.Schema({
         saturatedFats: Number,
         monounsaturatedFats: Number,
         polyunsaturatedFats: Number
-      }
+      },
+      image: String
     }
   ]
 });

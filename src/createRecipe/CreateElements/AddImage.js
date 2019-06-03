@@ -9,18 +9,10 @@ const Flex = styled.section`
 `;
 
 const StyledImageContainer = styled.div`
+  background-color: white;
   width: 150px;
   height: 150px;
   border: 1px solid lightblue;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-`;
-
-const StyledImage = styled.img`
-  height: 150px;
-  width: 200px;
 `;
 
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
@@ -28,6 +20,15 @@ const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
 
 export default function AddImage() {
   const [image, setImage] = useState("");
+
+  const StyledImage = styled.div`
+    background-image: url(${image});
+    width: 150px;
+    height: 150px;
+    background-size: 150px;
+    background-position: center center;
+    background-repeat: no-repeat;
+  `;
 
   function upload(event) {
     const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
@@ -52,14 +53,14 @@ export default function AddImage() {
   }
 
   return (
-    <Flex>
-      <StyledImageContainer>
-        {image ? (
-          <StyledImage src={image} alt="" />
-        ) : (
+    <Flex image={image}>
+      {image ? (
+        <StyledImage />
+      ) : (
+        <StyledImageContainer>
           <input type="file" name="file" onChange={upload} />
-        )}
-      </StyledImageContainer>
+        </StyledImageContainer>
+      )}
     </Flex>
   );
 }
