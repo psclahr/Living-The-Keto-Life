@@ -1,131 +1,111 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const StyledForm = styled.form``;
-const StyledAmountInput = styled.input`
-  border: 1px solid black;
+const StyledForm = styled.form`
+  display: grid;
+  grid-template-areas:
+    "h h h h"
+    "a u i b";
+  display: flex;
+  justify-content: space-around;
 `;
-const StyledSelect = styled.select`
-  border: 1px solid black;
+const StyledHeadline = styled.h3`
+  grid-area: h;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+`;
+const StyledAmountInput = styled.input`
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 2px solid lightblue;
+  height: 20px;
+  grid-area: a;
+  width: 60px;
+  transition: all 1s ease;
+
+  &:focus {
+    outline: none;
+    border-color: hotpink;
+  }
+`;
+const StyledUnitSelect = styled.select`
+  background: white;
+  border: 2px solid lightblue;
+  grid-area: u;
+  width: 60px;
+  transition: all 1s ease;
+
+  &:focus {
+    outline: none;
+    border-color: hotpink;
+  }
 `;
 const StyledIngredientInput = styled.input`
-  border: 1px solid black;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 2px solid lightblue;
+  height: 20px;
+  grid-area: i;
+  width: 180px;
+  transition: all 1s ease;
+
+  &:focus {
+    outline: none;
+    border-color: hotpink;
+  }
 `;
 
 const StyledButton = styled.button`
-  border: 1px solid blue;
+  grid-area: b;
+  background: lightblue;
+  border-color: white;
+  border-radius: 25px;
 `;
 
-const inputAmountRef = React.createRef();
-const formRef = React.createRef();
-
-export default function InputIngredient() {
-  const [inputIngredientValue, setInputIngredientValue] = useState("");
-  const [options, setOptions] = useState([]);
-
-  function getNutrition(amount, unit, ingredient) {
-    try {
-      const nutritionQuery = async () => {
-        let nutritionForIngredient = {};
-
-        await fetch(
-          `https://api.edamam.com/api/nutrition-data?app_id=702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7&ingr=${amount}%20${unit}%20${ingredient}`
-        )
-          .then(res => res.json())
-          .then(
-            data =>
-              (nutritionForIngredient = {
-                calories: data.totalNutrients.ENERC_KCAL
-                  ? data.totalNutrients.ENERC_KCAL.quantity
-                  : 0,
-                proteins: data.totalNutrients.PROCNT
-                  ? data.totalNutrients.PROCNT.quantity
-                  : 0,
-                carbs: data.totalNutrients.CHOCDF
-                  ? data.totalNutrients.CHOCDF.quantity
-                  : 0,
-                fats: data.totalNutrients.FAT
-                  ? data.totalNutrients.FAT.quantity
-                  : 0,
-                saturatedFats: data.totalNutrients.FASAT
-                  ? data.totalNutrients.FASAT.quantity
-                  : 0,
-                monounsaturatedFats: data.totalNutrients.FAMS
-                  ? data.totalNutrients.FAMS.quantity
-                  : 0,
-                polyunsaturatedFats: data.totalNutrients.FAPU
-                  ? data.totalNutrients.FAPU.quantity
-                  : 0
-              })
-          );
-
-        console.log(nutritionForIngredient);
-      };
-      nutritionQuery();
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  function handleSubmitButton(event) {
-    event.preventDefault();
-    const amount = event.target.amount.value;
-    const unit = event.target.unit.value;
-    const ingredient = event.target.ingredient.value;
-
-    getNutrition(amount, unit, ingredient);
-    formRef.current.reset();
-    inputAmountRef.current.focus();
-  }
-
-  function handleInputChange(event) {
-    setInputIngredientValue(event.target.value);
-    searchForIngredients();
-  }
-
-  function searchForIngredients() {
-    fetch(
-      `https://api.edamam.com/auto-complete?q=${inputIngredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
-    )
-      .then(res => res.json())
-      .then(data => setOptions(data))
-      .catch(err => console.log(err));
-  }
-
+export default function InputIngredient({
+  onSubmit,
+  onChangeAmount,
+  onChangeUnit,
+  onChangeIngredient,
+  options,
+  ingredientRef,
+  ingredientAmountRef
+}) {
   return (
-    <StyledForm onSubmit={handleSubmitButton} ref={formRef}>
-      <label>
-        Amount:
+    <>
+      <StyledHeadline>Ingredients</StyledHeadline>
+      <StyledForm ref={ingredientRef} onSubmit={onSubmit}>
         <StyledAmountInput
           name="amount"
-          ref={inputAmountRef}
           type="number"
+          placeholder="Amount"
           autoComplete="off"
+          onChange={onChangeAmount}
           required
+          ref={ingredientAmountRef}
         />
-      </label>
-      <label>
-        Unit:
-        <StyledSelect name="unit">
+        <StyledUnitSelect name="unit" onChange={onChangeUnit}>
           <option>gr</option>
           <option>kg</option>
           <option>l</option>
           <option>ml</option>
           <option>small</option>
           <option>large</option>
-        </StyledSelect>
-      </label>
-      <label>
-        Ingredient:
+        </StyledUnitSelect>
         <StyledIngredientInput
-          name="ingredient"
+          name="ingr"
           type="text"
           list="ingredients"
-          onChange={handleInputChange}
+          placeholder="Ingredient"
+          onChange={onChangeIngredient}
           autoComplete="off"
           required
         />
-        <datalist required id="ingredients">
+        <datalist id="ingredients">
           <option value={options[0]} />
           <option value={options[1]} />
           <option value={options[2]} />
@@ -137,8 +117,8 @@ export default function InputIngredient() {
           <option value={options[8]} />
           <option value={options[9]} />
         </datalist>
-      </label>
-      <StyledButton type="submit">+</StyledButton>
-    </StyledForm>
+        <StyledButton type="submit">+</StyledButton>
+      </StyledForm>
+    </>
   );
 }
