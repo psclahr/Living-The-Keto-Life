@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const StyledFlexbox = styled.div`
@@ -26,10 +26,6 @@ export default function RecipePreview({ title, image }) {
     background-position: center center;
     background-repeat: no-repeat;
   `;
-
-  useEffect(() => {
-    console.log(title, image);
-  });
 
   return (
     <StyledFlexbox titel={title} image={image}>

@@ -6,6 +6,7 @@ import CreatePage from "../CreateRecipe/CreatePage";
 import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
 import Header from "../Header/Header";
+import RecipeDetailPage from "../RecipeDetail/RecipeDetailPage";
 import { getRecipes, postRecipe } from "../services";
 
 function App() {
@@ -38,6 +39,12 @@ function App() {
             path="/create"
             render={({ history }) => (
               <CreatePage onButtonClick={data => createRecipe(data, history)} />
+            )}
+          />
+          <Route
+            path="/recipes/:_id"
+            render={props => (
+              <RecipeDetailPage props={props} recipes={recipes} />
             )}
           />
         </Switch>

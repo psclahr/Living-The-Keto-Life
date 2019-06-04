@@ -6,8 +6,8 @@ export function postRecipe(data) {
   return fetchRecipe("POST", data);
 }
 
-function fetchRecipe(method, data, id = "") {
-  return fetch("/recipes/" + id, {
+function fetchRecipe(method, data, title = "") {
+  return fetch("/recipes/" + title, {
     method,
     headers: {
       "Content-Type": "application/json"
