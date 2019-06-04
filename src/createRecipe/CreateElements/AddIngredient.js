@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import InputIngredient from "../InputIngredient";
+import InputIngredient from "./InputIngredient";
 
 const StyledAddIngredient = styled.section`
   height: auto;
