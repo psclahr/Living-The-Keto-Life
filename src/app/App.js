@@ -11,6 +11,7 @@ import { getRecipes, postRecipe } from "../services";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
+  const [currentPageTitle, setCurrentPageTitle] = useState("Recipe Book");
 
   useEffect(() => {
     getRecipes().then(data => setRecipes(data));
@@ -24,6 +25,18 @@ function App() {
       .catch(error => console.log(error));
   };
 
+  function handleBookClick() {
+    setCurrentPageTitle("Recipe Book");
+  }
+
+  function handleAddClick() {
+    setCurrentPageTitle("Create A New Recipe");
+  }
+
+  function handleClickOnRecipe(title) {
+    setCurrentPageTitle(title);
+  }
+
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -33,7 +46,12 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => <RecipePreviewPage recipes={recipes} />}
+            render={() => (
+              <RecipePreviewPage
+                recipes={recipes}
+                onClick={handleClickOnRecipe}
+              />
+            )}
           />
           <Route
             path="/create"
@@ -48,7 +66,11 @@ function App() {
             )}
           />
         </Switch>
-        <Navigation />
+        <Navigation
+          onClickBook={handleBookClick}
+          onClickAdd={handleAddClick}
+          currentPageTitle={currentPageTitle}
+        />
       </Grid>
     </BrowserRouter>
   );

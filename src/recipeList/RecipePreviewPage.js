@@ -10,14 +10,18 @@ const StyledRecipeList = styled.div`
   overflow-y: scroll;
 `;
 
-export default function RecipeList({ recipes }) {
+export default function RecipeList({ recipes, onClick }) {
   return (
     <StyledRecipeList>
       {recipes.map(recipe => {
         const target = `/recipes/${recipe._id}`;
         return (
           <Link to={target} key={recipe._id}>
-            <RecipePreview title={recipe.title} image={recipe.image} />
+            <RecipePreview
+              title={recipe.title}
+              image={recipe.image}
+              onClick={() => onClick(recipe.title)}
+            />
           </Link>
         );
       })}

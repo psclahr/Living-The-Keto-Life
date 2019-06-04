@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import BookButton from "./BookButton";
 import AddButton from "./AddButton";
@@ -22,28 +22,23 @@ const StyledNavLinkAdd = styled(NavLink)`
   box-shadow: -4px 3px 9px 0 rgba(0, 0, 0, 0.5);
 `;
 
-export default function Navigation() {
-  const [title, setTitle] = useState("Recipe Book");
-
-  function handleBookClick() {
-    setTitle("Recipe Book");
-  }
-
-  function handleAddClick() {
-    setTitle("Create A New Recipe");
-  }
+export default function Navigation({
+  onClickBook,
+  onClickAdd,
+  currentPageTitle
+}) {
   return (
     <NavigationGrid>
       <Container>
-        <StyledNavLinkBook exact to="/" onClick={handleBookClick}>
+        <StyledNavLinkBook exact to="/" onClick={onClickBook}>
           <BookButton />
         </StyledNavLinkBook>
       </Container>
       <Container>
-        <h3>{title}</h3>
+        <h3>{currentPageTitle}</h3>
       </Container>
       <Container>
-        <StyledNavLinkAdd to="/create" onClick={handleAddClick}>
+        <StyledNavLinkAdd to="/create" onClick={onClickAdd}>
           <AddButton />
         </StyledNavLinkAdd>
       </Container>
