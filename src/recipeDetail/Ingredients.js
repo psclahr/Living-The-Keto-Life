@@ -24,38 +24,31 @@ const StyledListBox = styled.li`
 const StyledListName = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 const StyledNutritions = styled.div`
-  display: flex;
-  align-items: center;
-
-  & b {
-    margin-right: 2px;
-  }
-`;
-
-const StyledLine = styled.div`
-  width: 95%;
-  height: 1px;
-  background: black;
+  border: 1px solid black;
+  background: white;
+  position: absolute;
 `;
 
 export default function Ingredients({ recipe }) {
-  const [ingredients, setIngredients] = useState(recipe.ingredients);
+  const [ingredientsFromRecipe, setIngredientsFromRecipe] = useState(
+    recipe.ingredients
+  );
 
   useEffect(() => {
-    ingredients.map(ingredient => (ingredient.isHidden = false));
-    console.log(ingredients);
+    ingredientsFromRecipe.map(ingredient => (ingredient.isHidden = false));
   });
 
   const toggle = ingredient => {
-    const index = ingredients.indexOf(ingredient);
+    const index = ingredientsFromRecipe.indexOf(ingredient);
 
-    setIngredients([
-      ...ingredients.slice(0, index),
+    setIngredientsFromRecipe([
+      ...ingredientsFromRecipe.slice(0, index),
       { ...ingredient, isHidden: !ingredient.isHidden },
-      ...ingredients.slice(index + 1)
+      ...ingredientsFromRecipe.slice(index + 1)
     ]);
   };
 
@@ -64,21 +57,21 @@ export default function Ingredients({ recipe }) {
       <StyledHeadline>Ingredients</StyledHeadline>
       <Container>
         <StyledIngredientsList>
-          {ingredients.map(ingredient => {
+          {ingredientsFromRecipe.map(ingredient => {
             return (
               <StyledListBox key={ingredient._id}>
                 <StyledListName onClick={() => toggle(ingredient)}>
                   {ingredient.amount}
                   {ingredient.unit} {ingredient.name}
+                  {ingredient.isHidden ? (
+                    <StyledNutritions>
+                      <b>Calories: {Math.round(ingredient.calories)}kcal</b>|
+                      Fats: {Math.round(ingredient.fats)}g | Carbs:{" "}
+                      {Math.round(ingredient.carbs)}g | Proteins:{" "}
+                      {Math.round(ingredient.proteins)}g
+                    </StyledNutritions>
+                  ) : null}
                 </StyledListName>
-                {ingredient.isHidden ? (
-                  <StyledNutritions>
-                    <b>Calories: {Math.round(ingredient.calories)}kcal</b>|
-                    Fats: {Math.round(ingredient.fats)}g | Carbs:{" "}
-                    {Math.round(ingredient.carbs)}g | Proteins:{" "}
-                    {Math.round(ingredient.proteins)}g
-                  </StyledNutritions>
-                ) : null}
               </StyledListBox>
             );
           })}
