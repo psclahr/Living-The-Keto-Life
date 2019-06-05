@@ -7,21 +7,27 @@ import AnalyseNutrition from "./AnalyseNutritions";
 
 const Grid = styled.div`
   display: grid;
-  grid-template-rows: 200px auto auto 300px;
+  grid-template-rows: 264px auto auto 300px;
   overflow-y: scroll;
 `;
 
-export default function RecipeDetailPage({ props, recipes }) {
-  const targetRecipe = recipes.filter(recipe => {
-    return recipe._id === props.match.params._id;
-  });
+export default function RecipeDetailPage({ match, recipes }) {
+  const targetRecipe =
+    recipes &&
+    recipes.find(recipe => {
+      return recipe._id === match.params.id;
+    });
+
+  if (!targetRecipe) {
+    return null;
+  }
 
   return (
     <Grid>
-      <Header targetRecipe={targetRecipe} />
-      <Ingredient />
-      <Steps />
-      <AnalyseNutrition />
+      <Header recipe={targetRecipe} />
+      <Ingredient recipe={targetRecipe} />
+      <Steps recipe={targetRecipe} />
+      <AnalyseNutrition recipe={targetRecipe} />
     </Grid>
   );
 }

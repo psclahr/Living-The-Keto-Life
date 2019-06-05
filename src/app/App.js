@@ -60,10 +60,8 @@ function App() {
             )}
           />
           <Route
-            path="/recipes/:_id"
-            render={props => (
-              <RecipeDetailPage props={props} recipes={recipes} />
-            )}
+            path="/recipes/:id"
+            render={props => <RecipeDetailPage {...props} recipes={recipes} />}
           />
         </Switch>
         <Navigation
