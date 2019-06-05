@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const StyledFlexbox = styled.div`
@@ -17,7 +17,7 @@ const StyledTitle = styled.h4`
   }
 `;
 
-export default function RecipePreview({ title, image }) {
+export default function RecipePreview({ title, image, onClick }) {
   const StyledRecipePreview = styled.div`
     background-image: url(${image});
     background-size: 275px;
@@ -26,13 +26,8 @@ export default function RecipePreview({ title, image }) {
     background-position: center center;
     background-repeat: no-repeat;
   `;
-
-  useEffect(() => {
-    console.log(title, image);
-  });
-
   return (
-    <StyledFlexbox titel={title} image={image}>
+    <StyledFlexbox title={title} image={image} onClick={onClick}>
       <StyledRecipePreview>
         <StyledTitle>
           <span>{title}</span>

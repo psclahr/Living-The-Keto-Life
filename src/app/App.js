@@ -6,10 +6,12 @@ import CreatePage from "../CreateRecipe/CreatePage";
 import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
 import Header from "../Header/Header";
+import RecipeDetailPage from "../RecipeDetail/RecipeDetailPage";
 import { getRecipes, postRecipe } from "../services";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
+  const [currentPageTitle, setCurrentPageTitle] = useState("Recipe Book");
 
   useEffect(() => {
     getRecipes().then(data => setRecipes(data));
@@ -23,6 +25,18 @@ function App() {
       .catch(error => console.log(error));
   };
 
+  function handleBookClick() {
+    setCurrentPageTitle("Recipe Book");
+  }
+
+  function handleAddClick() {
+    setCurrentPageTitle("Create A New Recipe");
+  }
+
+  function handleClickOnRecipe(title) {
+    setCurrentPageTitle(title);
+  }
+
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -32,7 +46,12 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => <RecipePreviewPage recipes={recipes} />}
+            render={() => (
+              <RecipePreviewPage
+                recipes={recipes}
+                onClick={handleClickOnRecipe}
+              />
+            )}
           />
           <Route
             path="/create"
@@ -40,8 +59,18 @@ function App() {
               <CreatePage onButtonClick={data => createRecipe(data, history)} />
             )}
           />
+          <Route
+            path="/recipes/:_id"
+            render={props => (
+              <RecipeDetailPage props={props} recipes={recipes} />
+            )}
+          />
         </Switch>
-        <Navigation />
+        <Navigation
+          onClickBook={handleBookClick}
+          onClickAdd={handleAddClick}
+          currentPageTitle={currentPageTitle}
+        />
       </Grid>
     </BrowserRouter>
   );
