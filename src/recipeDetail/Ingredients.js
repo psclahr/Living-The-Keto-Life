@@ -26,8 +26,6 @@ const StyledListBox = styled.li`
   grid-template-columns: 40px auto;
 `;
 
-const StyledListName = styled.div``;
-
 const StyledNutritionList = styled.ul`
   margin: 0;
   padding: 0;
@@ -35,7 +33,7 @@ const StyledNutritionList = styled.ul`
 
 const StyledLine = styled.div`
   height: 1px;
-  width: 100%;
+  width: 70%;
   background-color: black;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -79,7 +77,7 @@ export default function Ingredients({ recipe }) {
             return (
               <StyledListBox key={ingredient._id}>
                 <InfoButton onClick={() => toggle(ingredient)} />
-                <StyledListName>
+                <div>
                   <span>{ingredient.amount}</span>
                   <span>{ingredient.unit}</span>&nbsp;
                   <span>{ingredient.name}</span>
@@ -100,7 +98,7 @@ export default function Ingredients({ recipe }) {
                       </StyledListItem>
                     </StyledNutritionList>
                   ) : null}
-                </StyledListName>
+                </div>
               </StyledListBox>
             );
           })}
