@@ -50,30 +50,18 @@ const StyledListItem = styled.li`
 `;
 
 export default function Ingredients({ recipe }) {
-  const [ingredientsFromRecipe, setIngredientsFromRecipe] = useState(
-    recipe.ingredients
-  );
+  const [activeIngredient, setActiveIngredient] = useState(null);
 
-  useEffect(() => {
-    ingredientsFromRecipe.map(ingredient => (ingredient.isActive = false));
-  });
-
-  const toggle = ingredient => {
-    const index = ingredientsFromRecipe.indexOf(ingredient);
-
-    setIngredientsFromRecipe([
-      ...ingredientsFromRecipe.slice(0, index),
-      { ...ingredient, isActive: !ingredient.isHidden },
-      ...ingredientsFromRecipe.slice(index + 1)
-    ]);
-  };
+  function toggle(ingredient) {
+    setActiveIngredient(activeIngredient === ingredient ? null : ingredient);
+  }
 
   return (
     <>
       <StyledHeadline>Ingredients</StyledHeadline>
       <Container>
         <StyledIngredientsList>
-          {ingredientsFromRecipe.map(ingredient => {
+          {recipe.ingredients.map(ingredient => {
             return (
               <StyledListBox key={ingredient._id}>
                 <InfoButton onClick={() => toggle(ingredient)} />
@@ -81,7 +69,7 @@ export default function Ingredients({ recipe }) {
                   <span>{ingredient.amount}</span>
                   <span>{ingredient.unit}</span>&nbsp;
                   <span>{ingredient.name}</span>
-                  {ingredient.isActive ? (
+                  {ingredient === activeIngredient ? (
                     <StyledNutritionList>
                       <StyledLine />
                       <StyledListItem>
