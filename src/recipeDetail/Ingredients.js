@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import InfoButton from "./InfoButton";
 
 const Container = styled.section`
   margin-left: 5%;
@@ -12,25 +13,42 @@ const StyledHeadline = styled.h3`
 `;
 
 const StyledIngredientsList = styled.ul`
-  margin: 0;
+  font-size: 16px;
+  margin-top: 0;
+  margin-left: 30px;
   padding: 0;
 `;
 
 const StyledListBox = styled.li`
   list-style: none;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 40px auto;
 `;
 
-const StyledListName = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
+const StyledListName = styled.div``;
+
+const StyledNutritionList = styled.ul`
+  margin: 0;
+  padding: 0;
 `;
 
-const StyledNutritions = styled.div`
-  border: 1px solid black;
-  background: white;
-  position: absolute;
+const StyledLine = styled.div`
+  height: 1px;
+  width: 100%;
+  background-color: black;
+  margin-top: 4px;
+  margin-bottom: 4px;
+`;
+
+const StyledListItem = styled.li`
+  font-size: 16px;
+  list-style: none;
+  margin-top: 3px;
+
+  & b {
+    font-size: 16px;
+  }
 `;
 
 export default function Ingredients({ recipe }) {
@@ -39,7 +57,7 @@ export default function Ingredients({ recipe }) {
   );
 
   useEffect(() => {
-    ingredientsFromRecipe.map(ingredient => (ingredient.isHidden = false));
+    ingredientsFromRecipe.map(ingredient => (ingredient.isActive = false));
   });
 
   const toggle = ingredient => {
@@ -47,7 +65,7 @@ export default function Ingredients({ recipe }) {
 
     setIngredientsFromRecipe([
       ...ingredientsFromRecipe.slice(0, index),
-      { ...ingredient, isHidden: !ingredient.isHidden },
+      { ...ingredient, isActive: !ingredient.isHidden },
       ...ingredientsFromRecipe.slice(index + 1)
     ]);
   };
@@ -60,16 +78,27 @@ export default function Ingredients({ recipe }) {
           {ingredientsFromRecipe.map(ingredient => {
             return (
               <StyledListBox key={ingredient._id}>
-                <StyledListName onClick={() => toggle(ingredient)}>
-                  {ingredient.amount}
-                  {ingredient.unit} {ingredient.name}
-                  {ingredient.isHidden ? (
-                    <StyledNutritions>
-                      <b>Calories: {Math.round(ingredient.calories)}kcal</b>|
-                      Fats: {Math.round(ingredient.fats)}g | Carbs:{" "}
-                      {Math.round(ingredient.carbs)}g | Proteins:{" "}
-                      {Math.round(ingredient.proteins)}g
-                    </StyledNutritions>
+                <InfoButton onClick={() => toggle(ingredient)} />
+                <StyledListName>
+                  <span>{ingredient.amount}</span>
+                  <span>{ingredient.unit}</span>&nbsp;
+                  <span>{ingredient.name}</span>
+                  {ingredient.isActive ? (
+                    <StyledNutritionList>
+                      <StyledLine />
+                      <StyledListItem>
+                        <b>Calories: {Math.round(ingredient.calories)}kcal</b>
+                      </StyledListItem>
+                      <StyledListItem>
+                        Fats: {Math.round(ingredient.fats)}g
+                      </StyledListItem>
+                      <StyledListItem>
+                        Carbs: {Math.round(ingredient.carbs)}g
+                      </StyledListItem>
+                      <StyledListItem>
+                        Proteins: {Math.round(ingredient.proteins)}g
+                      </StyledListItem>
+                    </StyledNutritionList>
                   ) : null}
                 </StyledListName>
               </StyledListBox>
