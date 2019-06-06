@@ -22,6 +22,10 @@ const StyledNavLinkAdd = styled(NavLink)`
   box-shadow: -4px 3px 9px 0 rgba(0, 0, 0, 0.5);
 `;
 
+const StyledCurrentPage = styled.h3`
+  text-align: center;
+`;
+
 export default function Navigation({
   onClickBook,
   onClickAdd,
@@ -35,7 +39,7 @@ export default function Navigation({
         </StyledNavLinkBook>
       </Container>
       <Container>
-        <h3>{currentPageTitle}</h3>
+        <StyledCurrentPage>{currentPageTitle}</StyledCurrentPage>
       </Container>
       <Container>
         <StyledNavLinkAdd to="/create" onClick={onClickAdd}>
