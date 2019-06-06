@@ -20,7 +20,7 @@ export default function AddImage({ image, onChangeImageUpload }) {
     background-size: 275px;
     width: 150px;
     height: 150px;
-    background-position: center center;
+    background-position: center;
     background-repeat: no-repeat;
   `;
 

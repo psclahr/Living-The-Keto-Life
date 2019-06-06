@@ -5,16 +5,13 @@ const StyledHeader = styled.div`
   background-image: url(${props => props.url});
   background-size: 100%;
   height: 231px;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
-  margin-right: 0;
-  margin-left: 0;
-  margin-top: 30px;
+  margin: 30px 0 0 0;
 `;
 
 const StyledTitleContainer = styled.div`
   background-color: #3d9970;
-  color: white;
   height: 42px;
   position: relative;
   top: -10px;

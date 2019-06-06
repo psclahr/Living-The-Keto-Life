@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import InfoButton from "./InfoButton";
 
@@ -19,7 +19,7 @@ const StyledIngredientsList = styled.ul`
   padding: 0;
 `;
 
-const StyledListBox = styled.li`
+const StyledIngredientListItem = styled.li`
   list-style: none;
   margin-bottom: 10px;
   display: grid;
@@ -63,7 +63,7 @@ export default function Ingredients({ recipe }) {
         <StyledIngredientsList>
           {recipe.ingredients.map(ingredient => {
             return (
-              <StyledListBox key={ingredient._id}>
+              <StyledIngredientListItem key={ingredient._id}>
                 <InfoButton onClick={() => toggle(ingredient)} />
                 <div>
                   <span>{ingredient.amount}</span>
@@ -87,7 +87,7 @@ export default function Ingredients({ recipe }) {
                     </StyledNutritionList>
                   ) : null}
                 </div>
-              </StyledListBox>
+              </StyledIngredientListItem>
             );
           })}
         </StyledIngredientsList>
