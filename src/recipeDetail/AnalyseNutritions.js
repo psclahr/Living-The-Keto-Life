@@ -1,24 +1,33 @@
 import React from "react";
-import { Pie } from "react-chartjs-2";
+import Chart from "react-apexcharts";
 
 export default function AnalyseNutritions({ recipe }) {
-  const totalCalories = recipe.totalCalories;
   const totalFats = recipe.totalFats;
-  console.log(totalFats);
   const totalCarbs = recipe.totalCarbs;
   const totalProteins = recipe.totalProteins;
 
-  const data = {
+  const options = {
     labels: ["Fats", "Carbs", "Proteins"],
-    datasets: [
+    responsive: [
       {
-        label: "Nutrition Analyse",
-        backgroundColor: ["yellow", "red", "blue"],
-        borderColor: "black",
-        data: [totalFats, totalCarbs, totalProteins]
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 320
+          },
+          legend: {
+            position: "right",
+            offsetY: 20,
+            itemMargin: {
+              horizontal: 5
+            }
+          }
+        }
       }
     ]
   };
 
-  return <Pie data={data} />;
+  const series = [totalFats, totalCarbs, totalProteins];
+
+  return <Chart options={options} series={series} type="pie" />;
 }
