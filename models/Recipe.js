@@ -22,7 +22,16 @@ const recipeSchema = new mongoose.Schema({
       }
     }
   ],
-  image: String
+  totalCalories: Number,
+  totalFats: Number,
+  totalCarbs: Number,
+  totalProteins: Number,
+  /*fatsTotalDivided: {
+    totalSaturatedFats: Number,
+    totalMonounsaturatedFats: Number,
+    totalPolyunsaturatedFats: Number
+  },
+  image: String*/
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);
