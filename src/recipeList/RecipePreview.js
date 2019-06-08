@@ -26,6 +26,7 @@ export default function RecipePreview({ title, image, onClick }) {
     background-position: center center;
     background-repeat: no-repeat;
   `;
+
   return (
     <StyledFlexbox title={title} image={image} onClick={onClick}>
       <StyledRecipePreview>

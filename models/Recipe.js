@@ -30,8 +30,8 @@ const recipeSchema = new mongoose.Schema({
     totalSaturatedFats: Number,
     totalMonounsaturatedFats: Number,
     totalPolyunsaturatedFats: Number
-  },
-  image: String*/
+  },*/
+  image: String
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);

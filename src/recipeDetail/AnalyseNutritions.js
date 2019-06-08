@@ -1,33 +1,39 @@
 import React from "react";
-import Chart from "react-apexcharts";
+import { PieChart, Pie, Cell, LabelList } from "recharts";
 
 export default function AnalyseNutritions({ recipe }) {
+  const totalCalories = recipe.totalCalories;
   const totalFats = recipe.totalFats;
   const totalCarbs = recipe.totalCarbs;
   const totalProteins = recipe.totalProteins;
 
-  const options = {
-    labels: ["Fats", "Carbs", "Proteins"],
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 320
-          },
-          legend: {
-            position: "right",
-            offsetY: 20,
-            itemMargin: {
-              horizontal: 5
-            }
-          }
-        }
-      }
-    ]
-  };
+  const total = [
+    {
+      name: "Fats",
+      value: totalFats
+    },
+    {
+      name: "Carbs",
+      value: totalCarbs
+    },
+    {
+      name: "Proteins",
+      value: totalProteins
+    }
+  ];
 
-  const series = [totalFats, totalCarbs, totalProteins];
+  const colors = ["yellow", "red", "green"];
 
-  return <Chart options={options} series={series} type="pie" />;
+  return (
+    <div>
+      <p>Calories: {totalCalories}</p>
+      <PieChart width={300} height={300}>
+        <Pie data={total} fill="red" label>
+          {total.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </div>
+  );
 }

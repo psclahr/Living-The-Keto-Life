@@ -183,6 +183,7 @@ export default function CreatePage({ onButtonClick }) {
   function onImageSave(response) {
     setImage(response.data.url);
   }
+
   function getSum(total, num) {
     return total + num;
   }

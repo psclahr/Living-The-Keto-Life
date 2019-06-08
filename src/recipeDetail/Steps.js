@@ -41,7 +41,7 @@ export default function Steps({ recipe }) {
         <StyledStepList>
           {steps.map(step => {
             return (
-              <StyledListItemGrid>
+              <StyledListItemGrid key={step}>
                 <StyledNumber>{stepNumber++}</StyledNumber>
                 <StyledListItem>{step}</StyledListItem>
               </StyledListItemGrid>
