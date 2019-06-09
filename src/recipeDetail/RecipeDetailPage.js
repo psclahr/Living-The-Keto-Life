@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
-import Ingredient from "./Ingredients";
+import Ingredients from "./Ingredients";
 import Steps from "./Steps";
 import AnalyseNutrition from "./AnalyseNutritions";
 
-const Grid = styled.div`
+const Container = styled.div`
   display: grid;
   grid-template-rows: 264px auto auto auto;
   overflow-y: scroll;
@@ -23,11 +23,11 @@ export default function RecipeDetailPage({ match, recipes }) {
   }
 
   return (
-    <Grid>
+    <Container>
       <Header recipe={targetRecipe} />
-      <Ingredient recipe={targetRecipe} />
+      <Ingredients recipe={targetRecipe} />
       <Steps recipe={targetRecipe} />
       <AnalyseNutrition recipe={targetRecipe} />
-    </Grid>
+    </Container>
   );
 }

@@ -1,14 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledHeadline = styled.h4`
-  margin-left: 5%;
-  margin-right: 5%;
-`;
-
-const Container = styled.div`
-  margin-left: 5%;
-  margin-right: 5%;
+const Container = styled.section`
+  padding-left: 5%;
+  padding-right: 5%;
+  border-bottom: 2px solid rgb(120 218 172);
+  border-radius: 15px;
 `;
 
 const StyledListItemGrid = styled.div`
@@ -33,20 +30,18 @@ export default function Steps({ recipe }) {
   let stepNumber = 1;
 
   return (
-    <section>
-      <StyledHeadline>Steps</StyledHeadline>
-      <Container>
-        <ol>
-          {steps.map(step => {
-            return (
-              <StyledListItemGrid key={step}>
-                <StyledNumber>{stepNumber++}</StyledNumber>
-                <StyledListItem>{step}</StyledListItem>
-              </StyledListItemGrid>
-            );
-          })}
-        </ol>
-      </Container>
-    </section>
+    <Container>
+      <h4>Steps</h4>
+      <ol>
+        {steps.map(step => {
+          return (
+            <StyledListItemGrid key={step}>
+              <StyledNumber>{stepNumber++}</StyledNumber>
+              <StyledListItem>{step}</StyledListItem>
+            </StyledListItemGrid>
+          );
+        })}
+      </ol>
+    </Container>
   );
 }

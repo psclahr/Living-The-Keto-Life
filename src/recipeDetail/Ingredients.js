@@ -3,13 +3,10 @@ import styled from "styled-components";
 import InfoButton from "./InfoButton";
 
 const Container = styled.section`
-  margin-left: 5%;
-  margin-right: 5%;
-`;
-
-const StyledHeadline = styled.h4`
-  margin-left: 5%;
-  margin-right: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-bottom: 2px solid rgb(120 218 172);
+  border-radius: 15px;
 `;
 
 const StyledIngredientsList = styled.ul`
@@ -57,41 +54,39 @@ export default function Ingredients({ recipe }) {
   }
 
   return (
-    <>
-      <StyledHeadline>Ingredients</StyledHeadline>
-      <Container>
-        <StyledIngredientsList>
-          {recipe.ingredients.map(ingredient => {
-            return (
-              <StyledIngredientListItem key={ingredient._id}>
-                <InfoButton onClick={() => toggle(ingredient)} />
-                <div>
-                  <span>{ingredient.amount}</span>
-                  <span>{ingredient.unit}</span>&nbsp;
-                  <span>{ingredient.name}</span>
-                  {ingredient === activeIngredient ? (
-                    <StyledNutritionList>
-                      <StyledLine />
-                      <StyledListItem>
-                        <b>Calories: {Math.round(ingredient.calories)}kcal</b>
-                      </StyledListItem>
-                      <StyledListItem>
-                        Fats: {Math.round(ingredient.fats)}g
-                      </StyledListItem>
-                      <StyledListItem>
-                        Carbs: {Math.round(ingredient.carbs)}g
-                      </StyledListItem>
-                      <StyledListItem>
-                        Proteins: {Math.round(ingredient.proteins)}g
-                      </StyledListItem>
-                    </StyledNutritionList>
-                  ) : null}
-                </div>
-              </StyledIngredientListItem>
-            );
-          })}
-        </StyledIngredientsList>
-      </Container>
-    </>
+    <Container>
+      <h4>Ingredients</h4>
+      <StyledIngredientsList>
+        {recipe.ingredients.map(ingredient => {
+          return (
+            <StyledIngredientListItem key={ingredient._id}>
+              <InfoButton onClick={() => toggle(ingredient)} />
+              <div>
+                <span>{ingredient.amount}</span>
+                <span>{ingredient.unit}</span>&nbsp;
+                <span>{ingredient.name}</span>
+                {ingredient === activeIngredient ? (
+                  <StyledNutritionList>
+                    <StyledLine />
+                    <StyledListItem>
+                      <b>Calories: {Math.round(ingredient.calories)}kcal</b>
+                    </StyledListItem>
+                    <StyledListItem>
+                      Fats: {Math.round(ingredient.fats)}g
+                    </StyledListItem>
+                    <StyledListItem>
+                      Carbs: {Math.round(ingredient.carbs)}g
+                    </StyledListItem>
+                    <StyledListItem>
+                      Proteins: {Math.round(ingredient.proteins)}g
+                    </StyledListItem>
+                  </StyledNutritionList>
+                ) : null}
+              </div>
+            </StyledIngredientListItem>
+          );
+        })}
+      </StyledIngredientsList>
+    </Container>
   );
 }

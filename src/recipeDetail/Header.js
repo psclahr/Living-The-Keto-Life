@@ -4,14 +4,15 @@ import styled from "styled-components";
 const StyledHeader = styled.div`
   background-image: url(${props => props.url});
   background-size: 100%;
-  height: 231px;
   background-position: center;
   background-repeat: no-repeat;
+  height: 231px;
   margin: 30px 0 0 0;
+  border-radius: 15px;
 `;
 
 const StyledTitle = styled.h3`
-  position: relative;
+  position: sticky;
   top: -10px;
   padding: 10px;
   display: flex;
