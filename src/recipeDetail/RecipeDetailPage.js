@@ -7,7 +7,7 @@ import AnalyseNutrition from "./AnalyseNutritions";
 
 const Grid = styled.div`
   display: grid;
-  grid-template-rows: 264px auto auto 300px;
+  grid-template-rows: 264px auto auto auto;
   overflow-y: scroll;
 `;
 

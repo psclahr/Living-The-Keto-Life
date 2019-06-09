@@ -48,11 +48,32 @@ export default function CreatePage({ onButtonClick }) {
 
   function handleButtonClick(event) {
     event.preventDefault();
+
+    const totalCalories = ingredients
+      .map(ingredient => ingredient.calories)
+      .reduce(getSum);
+
+    const totalFats = ingredients
+      .map(ingredient => ingredient.fats)
+      .reduce(getSum);
+
+    const totalCarbs = ingredients
+      .map(ingredient => ingredient.carbs)
+      .reduce(getSum);
+
+    const totalProteins = ingredients
+      .map(ingredient => ingredient.proteins)
+      .reduce(getSum);
+
     onButtonClick({
       title,
       steps: stepList,
       ingredients,
-      image
+      image,
+      totalCalories,
+      totalFats,
+      totalCarbs,
+      totalProteins
     });
   }
   function handleTitleChange(event) {
@@ -161,6 +182,10 @@ export default function CreatePage({ onButtonClick }) {
 
   function onImageSave(response) {
     setImage(response.data.url);
+  }
+
+  function getSum(total, num) {
+    return total + num;
   }
 
   return (
