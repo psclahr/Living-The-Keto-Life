@@ -6,12 +6,10 @@ const StyledHeadline = styled.h3`
   margin-right: 5%;
 `;
 
-const Container = styled.section`
+const Container = styled.div`
   margin-left: 5%;
   margin-right: 5%;
 `;
-
-const StyledStepList = styled.ol``;
 
 const StyledListItemGrid = styled.div`
   display: grid;
@@ -35,10 +33,10 @@ export default function Steps({ recipe }) {
   let stepNumber = 1;
 
   return (
-    <div>
+    <section>
       <StyledHeadline>Steps</StyledHeadline>
       <Container>
-        <StyledStepList>
+        <ol>
           {steps.map(step => {
             return (
               <StyledListItemGrid key={step}>
@@ -47,8 +45,8 @@ export default function Steps({ recipe }) {
               </StyledListItemGrid>
             );
           })}
-        </StyledStepList>
+        </ol>
       </Container>
-    </div>
+    </section>
   );
 }
