@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledHeadline = styled.h3`
+const StyledHeadline = styled.h4`
   margin-left: 5%;
   margin-right: 5%;
 `;

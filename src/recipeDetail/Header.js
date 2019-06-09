@@ -10,27 +10,18 @@ const StyledHeader = styled.div`
   margin: 30px 0 0 0;
 `;
 
-const StyledTitleContainer = styled.div`
-  background-color: #3d9970;
-  height: 42px;
+const StyledTitle = styled.h3`
   position: relative;
   top: -10px;
-  margin: 0;
-  padding-left: 15px;
+  padding: 10px;
   display: flex;
   align-items: center;
-`;
-
-const StyledTitle = styled.h3`
-  color: white;
 `;
 
 export default function Header({ recipe }) {
   return (
     <StyledHeader url={recipe.image}>
-      <StyledTitleContainer>
-        <StyledTitle>{recipe.title}</StyledTitle>
-      </StyledTitleContainer>
+      <StyledTitle>{recipe.title}</StyledTitle>
     </StyledHeader>
   );
 }

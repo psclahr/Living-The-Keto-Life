@@ -7,7 +7,7 @@ const Container = styled.section`
   margin-right: 5%;
 `;
 
-const StyledHeadline = styled.h3`
+const StyledHeadline = styled.h4`
   margin-left: 5%;
   margin-right: 5%;
 `;

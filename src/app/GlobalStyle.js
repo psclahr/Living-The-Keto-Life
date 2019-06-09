@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 18px;
         @import url('https://fonts.googleapis.com/css?family=Roboto:300&display=swap');
         font-family: 'Roboto', sans-serif;
+        background: #FBFFFD;
         
     }
     
@@ -15,11 +16,26 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
 
+    h2 {
+        font-family: "Dancing Script", cursive;
+        font-size: 22px;
+    }
 
     h3 {
-        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-;
-        color: #3D9970;
-        font-size: 17px; 
+        background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
+        color: #434644;
+        padding: 5px;
+        margin: 0;
+        font-size: 20px;
+    }
+
+    h4 {
+        font-size: 20px;
+        color: #434644;
+    }
+
+    a {
+        text-decoration: none;
     }
 
 `;

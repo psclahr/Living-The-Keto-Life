@@ -15,14 +15,14 @@ const Container = styled.div`
   align-items: center;
 `;
 const StyledNavLinkBook = styled(NavLink)`
-  box-shadow: 4px 3px 9px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.5);
 `;
 
 const StyledNavLinkAdd = styled(NavLink)`
-  box-shadow: -4px 3px 9px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.5);
 `;
 
-const StyledCurrentPage = styled.h3`
+const StyledCurrentPage = styled.h2`
   text-align: center;
 `;
 

@@ -8,31 +8,26 @@ const StyledFlexbox = styled.div`
   margin: 5px;
 `;
 
-const StyledTitle = styled.h4`
-  margin: 0px;
-
-  span {
-    background-color: #3d9970;
-    color: white;
-  }
+const StyledTitle = styled.h3`
+  width: 312px;
 `;
 
 export default function RecipePreview({ title, image, onClick }) {
   const StyledRecipePreview = styled.div`
     background-image: url(${image});
-    background-size: 275px;
-    width: 150px;
-    height: 150px;
+    background-size: 320px;
+    width: 312px;
+    height: 187px;
     background-position: center center;
     background-repeat: no-repeat;
+    border-radius: 10px;
+    margin-top: 20px;
   `;
 
   return (
     <StyledFlexbox title={title} image={image} onClick={onClick}>
       <StyledRecipePreview>
-        <StyledTitle>
-          <span>{title}</span>
-        </StyledTitle>
+        <StyledTitle>{title}</StyledTitle>
       </StyledRecipePreview>
     </StyledFlexbox>
   );
