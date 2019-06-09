@@ -5,9 +5,11 @@ import InfoButton from "./InfoButton";
 const Container = styled.section`
   padding-left: 5%;
   padding-right: 5%;
-  border-bottom: 2px solid rgb(120 218 172);
   border-radius: 15px;
+  border-bottom: 2px solid rgb(120 218 172);
 `;
+
+const StyledHeader = styled.h4``;
 
 const StyledIngredientsList = styled.ul`
   font-size: 16px;
@@ -55,7 +57,7 @@ export default function Ingredients({ recipe }) {
 
   return (
     <Container>
-      <h4>Ingredients</h4>
+      <StyledHeader>Ingredients</StyledHeader>
       <StyledIngredientsList>
         {recipe.ingredients.map(ingredient => {
           return (
@@ -69,7 +71,7 @@ export default function Ingredients({ recipe }) {
                   <StyledNutritionList>
                     <StyledLine />
                     <StyledListItem>
-                      <b>Calories: {Math.round(ingredient.calories)}kcal</b>
+                      <b>Calories: {Math.round(ingredient.calories)}cal</b>
                     </StyledListItem>
                     <StyledListItem>
                       Fats: {Math.round(ingredient.fats)}g

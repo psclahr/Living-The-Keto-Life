@@ -14,7 +14,7 @@ const StyledListItemGrid = styled.div`
 `;
 
 const StyledNumber = styled.span`
-  color: #3d9970;
+  color: rgb(120 218 172);
   font-weight: bold;
   font-size: 20px;
 `;
