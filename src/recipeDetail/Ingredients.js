@@ -9,8 +9,6 @@ const Container = styled.section`
   border-bottom: 2px solid rgb(120 218 172);
 `;
 
-const StyledHeader = styled.h4``;
-
 const StyledIngredientsList = styled.ul`
   font-size: 16px;
   margin-top: 0;
@@ -33,7 +31,7 @@ const StyledNutritionList = styled.ul`
 const StyledLine = styled.div`
   height: 1px;
   width: 70%;
-  background-color: black;
+  background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
   margin-top: 4px;
   margin-bottom: 4px;
 `;
@@ -57,7 +55,7 @@ export default function Ingredients({ recipe }) {
 
   return (
     <Container>
-      <StyledHeader>Ingredients</StyledHeader>
+      <h4>Ingredients</h4>
       <StyledIngredientsList>
         {recipe.ingredients.map(ingredient => {
           return (

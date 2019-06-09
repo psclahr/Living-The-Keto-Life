@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { PieChart, Pie, Cell, Legend } from "recharts";
 import styled from "styled-components";
 import { Hints } from "./Hints";
@@ -24,16 +24,54 @@ const Flex = styled.div`
   justify-content: space-around;
 `;
 
-export default function AnalyseNutritions({ recipe }) {
-  const [isKeto, setIsKeto] = useState("Everthing good");
+const Light = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-top: 10px;
+`;
 
+const GreenLight = styled(Light)`
+  background: green;
+`;
+const YellowLight = styled(Light)`
+  background: yellow;
+`;
+const RedLight = styled(Light)`
+  background: red;
+`;
+
+export default function AnalyseNutritions({ recipe }) {
   const totalCalories = Math.round(recipe.totalCalories);
   const totalFats = Math.round(recipe.totalFats);
   const totalCarbs = Math.round(recipe.totalCarbs);
   const totalProteins = Math.round(recipe.totalProteins);
   const totalFatsInCalories = totalFats * 9.3;
   const totalCarbsInCalories = totalCarbs * 4.1;
+  const percentageCarbs = totalCarbsInCalories / totalCalories;
   const totalProteinsInCalories = totalProteins * 4.1;
+  const percentageProteins = totalProteinsInCalories / totalCalories;
+
+  let evaluationCarbs = "";
+  let evaluationProteins = "";
+  let ketoLight = "";
+
+  if (percentageCarbs <= 0.05) {
+    evaluationCarbs = "Everthing good";
+    ketoLight = "green";
+  } else if (percentageCarbs > 0.05 && percentageCarbs <= 0.15) {
+    evaluationCarbs = "Little bit to much carbs";
+    ketoLight = "yellow";
+  } else {
+    evaluationCarbs = "Too much carbs";
+    ketoLight = "red";
+  }
+  if (percentageProteins > 0.3) {
+    evaluationProteins = "Too much proteins";
+  }
+  if (ketoLight === "green" && evaluationProteins === "Too much proteins") {
+    ketoLight = "yellow";
+  }
 
   const total = [
     {
@@ -85,7 +123,9 @@ export default function AnalyseNutritions({ recipe }) {
 
   return (
     <Container>
-      <h4>Is it Keto?</h4>
+      <Flex>
+        <h4>Keto Analyse</h4>
+      </Flex>
       <Box>
         <Flex>
           <p>
@@ -114,6 +154,34 @@ export default function AnalyseNutritions({ recipe }) {
           </Pie>
         </PieChart>
       </Flex>
+      <Flex>
+        <h4>Keto-Score:</h4>
+      </Flex>
+      <Flex>
+        {ketoLight === "green" ? <GreenLight /> : null}
+        {ketoLight === "yellow" ? <YellowLight /> : null}
+        {ketoLight === "red" ? <RedLight /> : null}
+      </Flex>
+      {evaluationCarbs === "Everthing good" ? (
+        <p>
+          <i>"{Hints[0].hint}"</i>
+        </p>
+      ) : null}
+      {evaluationCarbs === "Little bit to much carbs" ? (
+        <p>
+          <i>"{Hints[1].hint}"</i>
+        </p>
+      ) : null}
+      {evaluationCarbs === "Too much carbs" ? (
+        <p>
+          <i>"{Hints[2].hint}"</i>
+        </p>
+      ) : null}
+      {evaluationProteins === "Too much proteins" ? (
+        <p>
+          <i>"{Hints[3].hint}"</i>
+        </p>
+      ) : null}
     </Container>
   );
 }
