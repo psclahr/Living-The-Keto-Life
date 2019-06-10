@@ -9,14 +9,14 @@ const StyledInputTitle = styled.input`
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  border-bottom: 2px solid lightblue;
-  height: 20px;
+  border-bottom: 2px solid rgba(120, 218, 172, 0.3);
+  height: 25px;
   width: 90%;
   transition: all 1s ease;
 
   &:focus {
     outline: none;
-    border-color: hotpink;
+    border-color: rgba(120, 218, 172, 1);
   }
 `;
 
@@ -24,7 +24,9 @@ export default function AddTitle({ onChange }) {
   return (
     <Flex>
       <StyledInputTitle
-        placeholder="Give us a recipe title..."
+        type="text"
+        maxLength="45"
+        placeholder="Title..."
         onChange={onChange}
         required
       />

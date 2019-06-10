@@ -2,68 +2,50 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-  display: grid;
-  grid-template-areas:
-    "h h h h"
-    "a u i b";
   display: flex;
-  justify-content: space-around;
-`;
-const StyledHeadline = styled.h3`
-  grid-area: h;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-  font-size: 20px;
+  justify-content: space-between;
 `;
 const StyledAmountInput = styled.input`
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  border-bottom: 2px solid lightblue;
-  height: 20px;
-  grid-area: a;
-  width: 60px;
+  border-bottom: 2px solid rgba(120, 218, 172, 0.3);
+
+  width: 70px;
   transition: all 1s ease;
 
   &:focus {
     outline: none;
-    border-color: hotpink;
+    border-color: rgba(120, 218, 172, 1);
   }
 `;
 const StyledUnitSelect = styled.select`
   background: white;
-  border: 2px solid lightblue;
-  grid-area: u;
-  width: 60px;
+  border: 2px solid rgba(120, 218, 172, 0.3);
+  width: 70px;
   transition: all 1s ease;
 
   &:focus {
     outline: none;
-    border-color: hotpink;
+    border-color: rgba(120, 218, 172, 1);
   }
 `;
 const StyledIngredientInput = styled.input`
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  border-bottom: 2px solid lightblue;
-  height: 20px;
-  grid-area: i;
+  border-bottom: 2px solid rgba(120, 218, 172, 0.3);
   width: 180px;
   transition: all 1s ease;
 
   &:focus {
     outline: none;
-    border-color: hotpink;
+    border-color: rgba(120, 218, 172, 1);
   }
 `;
 
 const StyledButton = styled.button`
-  grid-area: b;
-  background: lightblue;
-  border-color: white;
-  border-radius: 25px;
+  display: none;
 `;
 
 export default function InputIngredient({
@@ -77,7 +59,7 @@ export default function InputIngredient({
 }) {
   return (
     <>
-      <StyledHeadline>Ingredients</StyledHeadline>
+      <h4>Ingredients</h4>
       <StyledForm ref={ingredientRef} onSubmit={onSubmit}>
         <StyledAmountInput
           name="amount"

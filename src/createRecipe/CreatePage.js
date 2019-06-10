@@ -8,10 +8,10 @@ import AddTitle from "./CreateElements/AddTitle";
 
 const CreatePageGrid = styled.div`
   display: grid;
-  grid-template-rows: 40px 170px auto auto 30px;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  grid-template-rows: 40px 187px auto auto 30px;
+  margin-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   overflow-y: scroll;
 `;
 
@@ -22,8 +22,8 @@ const Flex = styled.div`
 
 const StyledSubmitButton = styled.button`
   width: 150px;
-  height: 25px;
-  background: lightblue;
+  height: 30px;
+  background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
   border-radius: 25px;
 `;
 
