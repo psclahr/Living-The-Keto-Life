@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import BookButton from "./BookButton";
-import AddButton from "./AddButton";
 import NavLink from "./NavLink";
+import AddIcon from "./icons/AddIcon";
+import BookIcon from "./icons/BookIcon";
 
 const NavigationGrid = styled.nav`
   width: 100vw;
@@ -16,6 +16,8 @@ const Container = styled.div`
 `;
 const StyledNavLinkBook = styled(NavLink)`
   box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
 `;
 
 const StyledNavLinkAdd = styled(NavLink)`
@@ -35,7 +37,7 @@ export default function Navigation({
     <NavigationGrid>
       <Container>
         <StyledNavLinkBook exact to="/" onClick={onClickBook}>
-          <BookButton />
+          <BookIcon />
         </StyledNavLinkBook>
       </Container>
       <Container>
@@ -43,7 +45,7 @@ export default function Navigation({
       </Container>
       <Container>
         <StyledNavLinkAdd to="/create" onClick={onClickAdd}>
-          <AddButton />
+          <AddIcon />
         </StyledNavLinkAdd>
       </Container>
     </NavigationGrid>

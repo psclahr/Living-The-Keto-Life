@@ -1,10 +1,15 @@
 import React from "react";
+import styled from "styled-components";
+
+const StyledSvgContainer = styled.svg`
+  background: none;
+`;
 
 export default function BookIcon() {
   return (
-    <svg
-      width="21px"
-      height="28px"
+    <StyledSvgContainer
+      width="25px"
+      height="32px"
       viewBox="0 0 21 28"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -17,18 +22,13 @@ export default function BookIcon() {
         fill="none"
         fillRule="evenodd"
       >
-        <g
-          id="Book-Nav"
-          transform="translate(-129.000000, 0.000000)"
-          stroke="#979797"
-        >
-          <g id="Book-Symbol" transform="translate(129.000000, 0.000000)">
+        <g id="Book-Nav" stroke="#434644">
+          <g id="Book-Symbol">
             <g>
               <rect
                 id="Rectangle"
                 strokeWidth="2"
                 fillOpacity="0"
-                fill="#D8D8D8"
                 x="1"
                 y="1"
                 width="19"
@@ -55,6 +55,6 @@ export default function BookIcon() {
           </g>
         </g>
       </g>
-    </svg>
+    </StyledSvgContainer>
   );
 }

@@ -1,8 +1,13 @@
 import React from "react";
+import styled from "styled-components";
+
+const StyledSvgContainer = styled.svg`
+  background: none;
+`;
 
 export default function AddIcon() {
   return (
-    <svg
+    <StyledSvgContainer
       width="30px"
       height="30px"
       viewBox="0 0 30 30"
@@ -21,7 +26,7 @@ export default function AddIcon() {
         <g
           id="NavBar"
           transform="translate(-321.000000, -24.000000)"
-          stroke="#979797"
+          stroke="#434644"
           strokeWidth="2"
         >
           <g id="Add-Nav" transform="translate(313.000000, 17.000000)">
@@ -32,6 +37,6 @@ export default function AddIcon() {
           </g>
         </g>
       </g>
-    </svg>
+    </StyledSvgContainer>
   );
 }

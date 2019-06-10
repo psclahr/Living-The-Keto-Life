@@ -28,7 +28,7 @@ const Light = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-top: 10px;
+  margin-top: 15px;
 `;
 
 const GreenLight = styled(Light)`
@@ -123,9 +123,8 @@ export default function AnalyseNutritions({ recipe }) {
 
   return (
     <Container>
-      <Flex>
-        <h4>Keto Analyse</h4>
-      </Flex>
+      <h4>Keto Analyse</h4>
+
       <Box>
         <Flex>
           <p>
