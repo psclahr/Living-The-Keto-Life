@@ -62,7 +62,7 @@ export default function Ingredients({ recipe }) {
             <StyledIngredientListItem key={ingredient._id}>
               <InfoButton onClick={() => toggle(ingredient)} />
               <div>
-                <span>{ingredient.amount}</span>
+                <span>{ingredient.amount}</span>&nbsp;
                 <span>{ingredient.unit}</span>&nbsp;
                 <span>{ingredient.name}</span>
                 {ingredient === activeIngredient ? (

@@ -22,7 +22,7 @@ const StyledAmountInput = styled.input`
 const StyledUnitSelect = styled.select`
   background: white;
   border: 2px solid rgba(120, 218, 172, 0.3);
-  width: 70px;
+  width: 90px;
   transition: all 1s ease;
 
   &:focus {
@@ -75,7 +75,12 @@ export default function InputIngredient({
           <option>kg</option>
           <option>l</option>
           <option>ml</option>
+          <option>oz</option>
+          <option>lb</option>
+          <option>tsp</option>
+          <option>tbsp</option>
           <option>small</option>
+          <option>medium</option>
           <option>large</option>
         </StyledUnitSelect>
         <StyledIngredientInput

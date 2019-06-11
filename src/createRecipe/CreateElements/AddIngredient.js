@@ -56,8 +56,7 @@ export default function AddIngredient({
           {ingredients.map(ingredient => {
             return (
               <StyledListItems key={ingredient.name}>
-                {ingredient.amount}
-                {ingredient.unit} {ingredient.name}
+                {ingredient.amount} {ingredient.unit} {ingredient.name}
               </StyledListItems>
             );
           })}
