@@ -5,6 +5,7 @@ import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
 import AddTitle from "./CreateElements/AddTitle";
+import { set } from "mongoose";
 
 const CreatePageGrid = styled.div`
   display: grid;
@@ -148,6 +149,7 @@ export default function CreatePage({ onButtonClick }) {
       };
       nutritionQuery();
       ingredientRef.current.reset();
+      setUnit("gr");
       ingredientAmountRef.current.focus();
     } catch (err) {
       console.log(err);
