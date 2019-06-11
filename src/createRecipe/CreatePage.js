@@ -5,7 +5,6 @@ import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
 import AddTitle from "./CreateElements/AddTitle";
-import { set } from "mongoose";
 
 const CreatePageGrid = styled.div`
   display: grid;
