@@ -27,6 +27,10 @@ const StyledSubmitButton = styled.button`
   border-radius: 25px;
 `;
 
+const DisabledButton = styled(StyledSubmitButton)`
+  opacity: 0.3;
+`;
+
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
 
@@ -211,9 +215,13 @@ export default function CreatePage({ onButtonClick }) {
         descriptionInputRef={descriptionInputRef}
       />
       <Flex>
-        <StyledSubmitButton onClick={handleButtonClick}>
-          Create Recipe!
-        </StyledSubmitButton>
+        {title && stepList.length && ingredients.length && image ? (
+          <StyledSubmitButton onClick={handleButtonClick}>
+            Create Recipe!
+          </StyledSubmitButton>
+        ) : (
+          <DisabledButton disabled>Create Recipe!</DisabledButton>
+        )}
       </Flex>
     </CreatePageGrid>
   );

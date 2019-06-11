@@ -21,6 +21,7 @@ function App() {
     postRecipe(data)
       .then(newRecipe => {
         setRecipes([...recipes, newRecipe]);
+        history.push(`/recipes/${recipes[recipes.length - 1]._id}`);
       })
       .catch(error => console.log(error));
   };

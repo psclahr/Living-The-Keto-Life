@@ -50,7 +50,7 @@ export default function AddImage({ image, onChangeImageUpload }) {
         <StyledImage />
       ) : (
         <Container>
-          <StyledImageLabel for="file">
+          <StyledImageLabel htmlFor="file">
             Add Image
             <StyledImageInput
               type="file"
