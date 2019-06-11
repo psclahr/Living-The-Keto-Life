@@ -4,33 +4,25 @@ import styled from "styled-components";
 const StyledHeader = styled.div`
   background-image: url(${props => props.url});
   background-size: 100%;
-  height: 231px;
   background-position: center;
   background-repeat: no-repeat;
+  height: 231px;
   margin: 30px 0 0 0;
-`;
-
-const StyledTitleContainer = styled.div`
-  background-color: #3d9970;
-  height: 42px;
-  position: relative;
-  top: -10px;
-  margin: 0;
-  padding-left: 15px;
-  display: flex;
-  align-items: center;
+  border-radius: 15px;
 `;
 
 const StyledTitle = styled.h3`
-  color: white;
+  position: sticky;
+  top: -10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 `;
 
 export default function Header({ recipe }) {
   return (
     <StyledHeader url={recipe.image}>
-      <StyledTitleContainer>
-        <StyledTitle>{recipe.title}</StyledTitle>
-      </StyledTitleContainer>
+      <StyledTitle>{recipe.title}</StyledTitle>
     </StyledHeader>
   );
 }

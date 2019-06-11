@@ -4,10 +4,30 @@ import InputIngredient from "./InputIngredient";
 
 const StyledAddIngredient = styled.section`
   height: auto;
+  margin-top: 1em;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const StyledList = styled.ul`
-  min-height: 75px;
+  min-height: 100px;
+  width: 90%;
+  list-style: none;
+`;
+
+const StyledListItems = styled.li`
+  margin-top: 10px;
+
+  &::before {
+    content: "•";
+    color: rgb(120 218 172);
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
 `;
 
 export default function AddIngredient({
@@ -31,15 +51,18 @@ export default function AddIngredient({
         ingredientRef={ingredientRef}
         ingredientAmountRef={ingredientAmountRef}
       />
-      <StyledList>
-        {ingredients.map(ingredient => {
-          return (
-            <li key={ingredient.name}>
-              {ingredient.amount} {ingredient.unit} {ingredient.name}
-            </li>
-          );
-        })}
-      </StyledList>
+      <Flex>
+        <StyledList>
+          {ingredients.map(ingredient => {
+            return (
+              <StyledListItems key={ingredient.name}>
+                {ingredient.amount}
+                {ingredient.unit} {ingredient.name}
+              </StyledListItems>
+            );
+          })}
+        </StyledList>
+      </Flex>
     </StyledAddIngredient>
   );
 }

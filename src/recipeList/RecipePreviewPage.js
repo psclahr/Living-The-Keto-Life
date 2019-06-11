@@ -3,10 +3,9 @@ import styled from "styled-components";
 import RecipePreview from "./RecipePreview";
 import { Link } from "react-router-dom";
 
-const StyledRecipeList = styled.div`
+const StyledRecipeList = styled.section`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
   overflow-y: scroll;
 `;
 

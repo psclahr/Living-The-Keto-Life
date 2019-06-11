@@ -10,7 +10,7 @@ const NavLink = styled(RRDNavLink)`
   align-items: center;
 
   &.active {
-    background: skyblue;
+    background: rgb(120, 218, 172);
   }
 `;
 
