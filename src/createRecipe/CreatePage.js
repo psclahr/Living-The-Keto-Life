@@ -35,9 +35,13 @@ const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
 
 export default function CreatePage({ onButtonClick }) {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(
+    localStorage.getItem("titleInLocalStorage") || ""
+  );
   const [step, setStep] = useState("");
-  const [stepList, setStepList] = useState([]);
+  const [stepList, setStepList] = useState(
+    localStorage.getItem("stepListInLocalStorage") || []
+  );
   const [amount, setAmount] = useState(0);
   const [unit, setUnit] = useState("gr");
   const [ingredientValue, setIngredient] = useState("");
@@ -81,6 +85,7 @@ export default function CreatePage({ onButtonClick }) {
     });
   }
   function handleTitleChange(event) {
+    localStorage.setItem("titleInLocalStorage", event.target.value);
     setTitle(event.target.value);
   }
 
@@ -103,6 +108,7 @@ export default function CreatePage({ onButtonClick }) {
 
   function handleSubmitStep(event) {
     event.preventDefault();
+    localStorage.setItem("stepListInLocalStorage", [...stepList, step]);
     setStepList([...stepList, step]);
     descriptionRef.current.reset();
     descriptionInputRef.current.focus();
@@ -195,7 +201,7 @@ export default function CreatePage({ onButtonClick }) {
 
   return (
     <CreatePageGrid>
-      <AddTitle onChange={handleTitleChange} />
+      <AddTitle value={title} onChange={handleTitleChange} />
       <AddImage image={image} onChangeImageUpload={upload} />
       <AddIngredient
         ingredients={ingredients}

@@ -20,10 +20,11 @@ const StyledInputTitle = styled.input`
   }
 `;
 
-export default function AddTitle({ onChange }) {
+export default function AddTitle({ onChange, value }) {
   return (
     <Flex>
       <StyledInputTitle
+        value={value}
         type="text"
         maxLength="45"
         placeholder="Title..."
