@@ -45,9 +45,14 @@ export default function CreatePage({ onButtonClick }) {
   const [amount, setAmount] = useState(0);
   const [unit, setUnit] = useState("gr");
   const [ingredientValue, setIngredient] = useState("");
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState(
+    //JSON.parse(localStorage.getItem("ingredientsInLocalStorage")) ||
+    []
+  );
   const [options, setOptions] = useState([]);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(
+    localStorage.getItem("imageUrlInLocalStorage") || ""
+  );
 
   const descriptionRef = React.createRef();
   const descriptionInputRef = React.createRef();
@@ -195,6 +200,7 @@ export default function CreatePage({ onButtonClick }) {
   }
 
   function onImageSave(response) {
+    localStorage.setItem("imageUrlInLocalStorage", response.data.url);
     setImage(response.data.url);
   }
 
