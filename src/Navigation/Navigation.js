@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import NavLink from "./NavLink";
-import AddIcon from "./icons/AddIcon";
-import BookIcon from "./icons/BookIcon";
+import AddIcon from "../icons/AddIcon";
+import BookIcon from "../icons/BookIcon";
 
 const NavigationGrid = styled.nav`
   width: 100vw;
