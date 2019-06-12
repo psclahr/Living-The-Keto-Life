@@ -40,7 +40,7 @@ export default function CreatePage({ onButtonClick }) {
   );
   const [step, setStep] = useState("");
   const [stepList, setStepList] = useState(
-    localStorage.getItem("stepListInLocalStorage") || []
+    JSON.parse(localStorage.getItem("stepListInLocalStorage")) || []
   );
   const [amount, setAmount] = useState(0);
   const [unit, setUnit] = useState("gr");
@@ -108,7 +108,10 @@ export default function CreatePage({ onButtonClick }) {
 
   function handleSubmitStep(event) {
     event.preventDefault();
-    localStorage.setItem("stepListInLocalStorage", [...stepList, step]);
+    localStorage.setItem(
+      "stepListInLocalStorage",
+      JSON.stringify([...stepList, step])
+    );
     setStepList([...stepList, step]);
     descriptionRef.current.reset();
     descriptionInputRef.current.focus();
