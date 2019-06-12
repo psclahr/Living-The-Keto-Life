@@ -36,6 +36,7 @@ export default function AddIngredient({
   onChangeAmount,
   onChangeUnit,
   onChangeIngredient,
+  onDeleteClick,
   options,
   ingredientRef,
   ingredientAmountRef
@@ -57,6 +58,7 @@ export default function AddIngredient({
             return (
               <StyledListItems key={ingredient.name}>
                 {ingredient.amount} {ingredient.unit} {ingredient.name}
+                <button onClick={onDeleteClick}>Delete!</button>
               </StyledListItems>
             );
           })}

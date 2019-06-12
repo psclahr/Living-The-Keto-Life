@@ -190,6 +190,16 @@ export default function CreatePage({ onButtonClick }) {
       .catch(err => console.log(err));
   }
 
+  function handleIngredientDelete(ingredient) {
+    const index = ingredients.indexOf(ingredient);
+
+    setIngredients([
+      ...ingredients.slice(0, index),
+      ...ingredients.slice(1 - index)
+    ]);
+    console.log(ingredients);
+  }
+
   function upload(event) {
     const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
 
@@ -227,6 +237,7 @@ export default function CreatePage({ onButtonClick }) {
         onChangeAmount={handleAmountChange}
         onChangeUnit={handleUnitChange}
         onChangeIngredient={handleIngredientChange}
+        onDeleteClick={handleIngredientDelete}
         ingredientRef={ingredientRef}
         ingredientAmountRef={ingredientAmountRef}
       />
