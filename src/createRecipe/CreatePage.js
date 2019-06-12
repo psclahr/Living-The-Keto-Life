@@ -190,14 +190,12 @@ export default function CreatePage({ onButtonClick }) {
       .catch(err => console.log(err));
   }
 
-  function handleIngredientDelete(ingredient) {
-    const index = ingredients.indexOf(ingredient);
-
+  function handleDeleteIngredient(ingredient) {
+    const index = ingredients.indexOf(ingredient) + 1;
     setIngredients([
-      ...ingredients.slice(0, index),
-      ...ingredients.slice(1 - index)
+      ...ingredients.slice(0, index - 1),
+      ...ingredients.slice(index)
     ]);
-    console.log(ingredients);
   }
 
   function upload(event) {
@@ -237,7 +235,7 @@ export default function CreatePage({ onButtonClick }) {
         onChangeAmount={handleAmountChange}
         onChangeUnit={handleUnitChange}
         onChangeIngredient={handleIngredientChange}
-        onDeleteClick={handleIngredientDelete}
+        onDeleteClick={handleDeleteIngredient}
         ingredientRef={ingredientRef}
         ingredientAmountRef={ingredientAmountRef}
       />

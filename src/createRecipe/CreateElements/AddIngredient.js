@@ -58,7 +58,9 @@ export default function AddIngredient({
             return (
               <StyledListItems key={ingredient.name}>
                 {ingredient.amount} {ingredient.unit} {ingredient.name}
-                <button onClick={onDeleteClick}>Delete!</button>
+                <button onClick={() => onDeleteClick(ingredient)}>
+                  Delete!
+                </button>
               </StyledListItems>
             );
           })}
