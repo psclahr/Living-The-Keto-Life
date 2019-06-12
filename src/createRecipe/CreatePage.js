@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
@@ -27,24 +27,43 @@ const StyledSubmitButton = styled.button`
   border-radius: 25px;
 `;
 
+const DisabledButton = styled(StyledSubmitButton)`
+  opacity: 0.3;
+`;
+
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
 
 export default function CreatePage({ onButtonClick }) {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(
+    localStorage.getItem("titleInLocalStorage") || ""
+  );
   const [step, setStep] = useState("");
-  const [stepList, setStepList] = useState([]);
+  const [stepList, setStepList] = useState(
+    JSON.parse(localStorage.getItem("stepListInLocalStorage")) || []
+  );
   const [amount, setAmount] = useState(0);
   const [unit, setUnit] = useState("gr");
   const [ingredientValue, setIngredient] = useState("");
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState(
+    JSON.parse(localStorage.getItem("ingredientsInLocalStorage")) || []
+  );
   const [options, setOptions] = useState([]);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(
+    localStorage.getItem("imageUrlInLocalStorage") || ""
+  );
 
   const descriptionRef = React.createRef();
   const descriptionInputRef = React.createRef();
   const ingredientRef = React.createRef();
   const ingredientAmountRef = React.createRef();
+
+  useEffect(() => {
+    localStorage.setItem(
+      "ingredientsInLocalStorage",
+      JSON.stringify(ingredients)
+    );
+  }, [ingredients]);
 
   function handleButtonClick(event) {
     event.preventDefault();
@@ -75,8 +94,11 @@ export default function CreatePage({ onButtonClick }) {
       totalCarbs,
       totalProteins
     });
+
+    localStorage.clear();
   }
   function handleTitleChange(event) {
+    localStorage.setItem("titleInLocalStorage", event.target.value);
     setTitle(event.target.value);
   }
 
@@ -99,6 +121,10 @@ export default function CreatePage({ onButtonClick }) {
 
   function handleSubmitStep(event) {
     event.preventDefault();
+    localStorage.setItem(
+      "stepListInLocalStorage",
+      JSON.stringify([...stepList, step])
+    );
     setStepList([...stepList, step]);
     descriptionRef.current.reset();
     descriptionInputRef.current.focus();
@@ -182,6 +208,7 @@ export default function CreatePage({ onButtonClick }) {
   }
 
   function onImageSave(response) {
+    localStorage.setItem("imageUrlInLocalStorage", response.data.url);
     setImage(response.data.url);
   }
 
@@ -191,7 +218,7 @@ export default function CreatePage({ onButtonClick }) {
 
   return (
     <CreatePageGrid>
-      <AddTitle onChange={handleTitleChange} />
+      <AddTitle value={title} onChange={handleTitleChange} />
       <AddImage image={image} onChangeImageUpload={upload} />
       <AddIngredient
         ingredients={ingredients}
@@ -211,9 +238,13 @@ export default function CreatePage({ onButtonClick }) {
         descriptionInputRef={descriptionInputRef}
       />
       <Flex>
-        <StyledSubmitButton onClick={handleButtonClick}>
-          Create Recipe!
-        </StyledSubmitButton>
+        {title && stepList.length && ingredients.length && image ? (
+          <StyledSubmitButton onClick={handleButtonClick}>
+            Create Recipe!
+          </StyledSubmitButton>
+        ) : (
+          <DisabledButton disabled>Create Recipe!</DisabledButton>
+        )}
       </Flex>
     </CreatePageGrid>
   );

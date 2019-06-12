@@ -62,6 +62,7 @@ export default function AddDescription({
   descriptionInputRef
 }) {
   let stepNumber = 1;
+  let keyNumber = 1;
 
   return (
     <section>
@@ -80,9 +81,9 @@ export default function AddDescription({
       <StyledList>
         {stepList.map(step => {
           return (
-            <StyledListItemGrid>
+            <StyledListItemGrid key={keyNumber++}>
               <StyledListNumber>{stepNumber++}</StyledListNumber>
-              <StyledListItems key={step}>{step}</StyledListItems>
+              <StyledListItems>{step}</StyledListItems>
             </StyledListItemGrid>
           );
         })}

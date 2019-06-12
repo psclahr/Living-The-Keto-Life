@@ -17,13 +17,15 @@ function App() {
     getRecipes().then(data => setRecipes(data));
   }, []);
 
-  const createRecipe = (data, history) => {
-    postRecipe(data)
-      .then(newRecipe => {
-        setRecipes([...recipes, newRecipe]);
-      })
-      .catch(error => console.log(error));
-  };
+  async function createRecipe(data, history) {
+    try {
+      const newRecipe = await postRecipe(data);
+      setRecipes([...recipes, newRecipe]);
+      history.push(`/recipes/${newRecipe._id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   function handleBookClick() {
     setCurrentPageTitle("Recipe Book");
