@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
@@ -46,8 +46,7 @@ export default function CreatePage({ onButtonClick }) {
   const [unit, setUnit] = useState("gr");
   const [ingredientValue, setIngredient] = useState("");
   const [ingredients, setIngredients] = useState(
-    //JSON.parse(localStorage.getItem("ingredientsInLocalStorage")) ||
-    []
+    JSON.parse(localStorage.getItem("ingredientsInLocalStorage")) || []
   );
   const [options, setOptions] = useState([]);
   const [image, setImage] = useState(
@@ -58,6 +57,13 @@ export default function CreatePage({ onButtonClick }) {
   const descriptionInputRef = React.createRef();
   const ingredientRef = React.createRef();
   const ingredientAmountRef = React.createRef();
+
+  useEffect(() => {
+    localStorage.setItem(
+      "ingredientsInLocalStorage",
+      JSON.stringify(ingredients)
+    );
+  }, [ingredients]);
 
   function handleButtonClick(event) {
     event.preventDefault();
@@ -88,6 +94,8 @@ export default function CreatePage({ onButtonClick }) {
       totalCarbs,
       totalProteins
     });
+
+    localStorage.clear();
   }
   function handleTitleChange(event) {
     localStorage.setItem("titleInLocalStorage", event.target.value);
