@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
-import RecipePreviewPage from "../RecipeList/RecipePreviewPage";
+import RecipePreviewPage from "../Home/RecipePreviewPage";
 import CreatePage from "../CreateRecipe/CreatePage";
 import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
 import Header from "../Header/Header";
 import RecipeDetailPage from "../RecipeDetail/RecipeDetailPage";
-import { getRecipes, postRecipe } from "../services";
+import { getRecipes, postRecipe, deleteRecipe } from "../services";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -25,6 +25,11 @@ function App() {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  function deleteRecipeOnClick(recipe) {
+    deleteRecipe(recipe._id);
+    getRecipes().then(data => setRecipes(data));
   }
 
   function handleBookClick() {
@@ -52,6 +57,7 @@ function App() {
               <RecipePreviewPage
                 recipes={recipes}
                 onClick={handleClickOnRecipe}
+                onDeleteClick={recipe => deleteRecipeOnClick(recipe)}
               />
             )}
           />

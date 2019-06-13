@@ -71,8 +71,8 @@ export default function AddIngredient({
         <StyledList>
           {ingredients.map(ingredient => {
             return (
-              <ListItemGrid>
-                <StyledListItems key={ingredient.name}>
+              <ListItemGrid key={ingredient.name}>
+                <StyledListItems>
                   {ingredient.amount} {ingredient.unit} {ingredient.name}
                 </StyledListItems>
                 <StyledDeleteButton onClick={() => onDeleteClick(ingredient)}>

@@ -1,8 +1,13 @@
 import React from "react";
+import styled from "styled-components";
+
+const StyledSvgContainer = styled.svg`
+  background: none;
+`;
 
 export default function TrashIcon() {
   return (
-    <svg
+    <StyledSvgContainer
       width="14px"
       height="18px"
       viewBox="0 0 24 28"
@@ -28,6 +33,6 @@ export default function TrashIcon() {
           />
         </g>
       </g>
-    </svg>
+    </StyledSvgContainer>
   );
 }

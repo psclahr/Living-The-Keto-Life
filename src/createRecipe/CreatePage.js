@@ -21,6 +21,7 @@ const Flex = styled.div`
 `;
 
 const StyledSubmitButton = styled.button`
+  outline: none;
   width: 150px;
   height: 30px;
   background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
