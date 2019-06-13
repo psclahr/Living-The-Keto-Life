@@ -12,6 +12,7 @@ import { getRecipes, postRecipe, deleteRecipe } from "../services";
 function App() {
   const [recipes, setRecipes] = useState([]);
   const [currentPageTitle, setCurrentPageTitle] = useState("Recipe Book");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getRecipes().then(data => setRecipes(data));
@@ -30,6 +31,7 @@ function App() {
   function deleteRecipeOnClick(recipe) {
     deleteRecipe(recipe._id);
     getRecipes().then(data => setRecipes(data));
+    setShowModal(false);
   }
 
   function handleBookClick() {
@@ -42,6 +44,14 @@ function App() {
 
   function handleClickOnRecipe(title) {
     setCurrentPageTitle(title);
+  }
+
+  function handleOpenModal() {
+    setShowModal(true);
+  }
+
+  function handleCloseModal() {
+    setShowModal(false);
   }
 
   return (
@@ -58,6 +68,9 @@ function App() {
                 recipes={recipes}
                 onClick={handleClickOnRecipe}
                 onDeleteClick={recipe => deleteRecipeOnClick(recipe)}
+                onOpenModal={handleOpenModal}
+                onCloseModal={handleCloseModal}
+                showModal={showModal}
               />
             )}
           />
