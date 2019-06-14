@@ -7,7 +7,6 @@ export function postRecipe(data) {
 }
 
 export function deleteRecipe(id) {
-  //return fetchRecipe("DELETE", id);
   return fetch("/recipes/" + id, {
     method: "DELETE",
     headers: {

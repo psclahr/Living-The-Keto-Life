@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import RecipePreview from "./RecipePreview";
 import { Link } from "react-router-dom";
@@ -26,8 +26,9 @@ const StyledDeleteButton = styled.button`
   top: 32px;
 `;
 const StyledReactModal = styled(ReactModal)`
+  outline: none;
   width: 80%;
-  height: 200px;
+  border: 3px solid rgb(120, 218, 172);
   position: absolute;
   top: 35%;
   left: 10%;
