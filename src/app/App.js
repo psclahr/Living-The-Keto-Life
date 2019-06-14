@@ -8,7 +8,7 @@ import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
 import Header from "../Header/Header";
 import RecipeDetailPage from "../RecipeDetail/RecipeDetailPage";
-import { getRecipes, postRecipe, deleteRecipe } from "../services";
+import { getRecipes, postRecipe, patchRecipe, deleteRecipe } from "../services";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -26,6 +26,26 @@ function App() {
       const newRecipe = await postRecipe(data);
       setRecipes([...recipes, newRecipe]);
       history.push(`/recipes/${newRecipe._id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function editedRecipe(data, history) {
+    try {
+      const newEditedRecipe = await patchRecipe(data, data._id);
+      //const index = recipes.indexOf(newEditedRecipe);
+      const index = recipes.findIndex(
+        recipe => recipe._id === newEditedRecipe._id
+      );
+
+      setRecipes([
+        ...recipes.slice(0, index),
+        newEditedRecipe,
+        ...recipes.slice(index + 1)
+      ]);
+      history.push(`/recipes/${newEditedRecipe._id}`);
+      setShowEdit(false);
     } catch (err) {
       console.log(err);
     }
@@ -71,10 +91,13 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => (
+            render={({ history }) => (
               <>
                 {showEdit ? (
-                  <EditPage editRecipe={editRecipe} />
+                  <EditPage
+                    editRecipe={editRecipe}
+                    onButtonClickToEdit={data => editedRecipe(data, history)}
+                  />
                 ) : (
                   <RecipePreviewPage
                     recipes={recipes}

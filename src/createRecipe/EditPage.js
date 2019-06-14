@@ -31,7 +31,7 @@ const DisabledButton = styled(StyledSubmitButton)`
   opacity: 0.3;
 `;
 
-export default function EditPage({ editRecipe, onButtonClick }) {
+export default function EditPage({ editRecipe, onButtonClickToEdit }) {
   const [title, setTitle] = useState(editRecipe.title);
   const [step, setStep] = useState("");
   const [stepList, setStepList] = useState(editRecipe.steps);
@@ -47,7 +47,7 @@ export default function EditPage({ editRecipe, onButtonClick }) {
   const ingredientRef = React.createRef();
   const ingredientAmountRef = React.createRef();
 
-  function handleButtonClick(event) {
+  function handleEditClick(event) {
     event.preventDefault();
 
     const totalCalories = ingredients
@@ -66,7 +66,8 @@ export default function EditPage({ editRecipe, onButtonClick }) {
       .map(ingredient => ingredient.proteins)
       .reduce(getSum);
 
-    onButtonClick({
+    onButtonClickToEdit({
+      _id: editRecipe._id,
       title,
       steps: stepList,
       ingredients,
@@ -201,11 +202,11 @@ export default function EditPage({ editRecipe, onButtonClick }) {
       />
       <Flex>
         {title && stepList.length && ingredients.length && image ? (
-          <StyledSubmitButton onClick={handleButtonClick}>
-            Create Recipe!
+          <StyledSubmitButton onClick={handleEditClick}>
+            Save Changes
           </StyledSubmitButton>
         ) : (
-          <DisabledButton disabled>Create Recipe!</DisabledButton>
+          <DisabledButton disabled>Save Changes</DisabledButton>
         )}
       </Flex>
     </CreatePageGrid>
