@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import RecipePreviewPage from "../Home/RecipePreviewPage";
 import CreatePage from "../CreateRecipe/CreatePage";
+import EditPage from "../CreateRecipe/EditPage";
 import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
 import Header from "../Header/Header";
@@ -13,6 +14,8 @@ function App() {
   const [recipes, setRecipes] = useState([]);
   const [currentPageTitle, setCurrentPageTitle] = useState("Recipe Book");
   const [showModal, setShowModal] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [editRecipe, setEditRecipe] = useState([]);
 
   useEffect(() => {
     getRecipes().then(data => setRecipes(data));
@@ -32,6 +35,11 @@ function App() {
     deleteRecipe(recipe._id);
     getRecipes().then(data => setRecipes(data));
     setShowModal(false);
+  }
+
+  function handleEditClick(recipe) {
+    setShowEdit(true);
+    setEditRecipe(recipe);
   }
 
   function handleBookClick() {
@@ -64,14 +72,21 @@ function App() {
             exact
             path="/"
             render={() => (
-              <RecipePreviewPage
-                recipes={recipes}
-                onClick={handleClickOnRecipe}
-                onDeleteClick={recipe => deleteRecipeOnClick(recipe)}
-                onOpenModal={handleOpenModal}
-                onCloseModal={handleCloseModal}
-                showModal={showModal}
-              />
+              <>
+                {showEdit ? (
+                  <EditPage editRecipe={editRecipe} />
+                ) : (
+                  <RecipePreviewPage
+                    recipes={recipes}
+                    onClick={handleClickOnRecipe}
+                    onDeleteClick={recipe => deleteRecipeOnClick(recipe)}
+                    onEditClick={recipe => handleEditClick(recipe)}
+                    onOpenModal={handleOpenModal}
+                    onCloseModal={handleCloseModal}
+                    showModal={showModal}
+                  />
+                )}
+              </>
             )}
           />
           <Route

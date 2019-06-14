@@ -15,6 +15,8 @@ const StyledRecipeList = styled.section`
   overflow-y: scroll;
 `;
 
+const StyledEditButton = styled.button``;
+
 const StyledDeleteButton = styled.button`
   background: none;
   border: none;
@@ -70,6 +72,7 @@ export default function RecipeList({
   recipes,
   onClick,
   onDeleteClick,
+  onEditClick,
   onOpenModal,
   onCloseModal,
   showModal
@@ -80,6 +83,9 @@ export default function RecipeList({
         const target = `/recipes/${recipe._id}`;
         return (
           <Container key={recipe._id}>
+            <StyledEditButton onClick={() => onEditClick(recipe)}>
+              Edit
+            </StyledEditButton>
             <StyledDeleteButton onClick={onOpenModal}>
               <TrashIcon />
             </StyledDeleteButton>
