@@ -21,3 +21,10 @@ app.delete("/recipes/:id", (req, res) => {
     .then(recipe => res.status(201).json(recipe))
     .catch(err => res.status(500).json(err));
 });
+
+app.patch("/recipes/:id", (req, res) => {
+  const { id } = req.params;
+  Recipe.findByIdAndUpdate(id, req.body, { new: true })
+    .then(recipe => res.json(recipe))
+    .catch(err => res.json(err));
+});

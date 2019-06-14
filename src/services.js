@@ -6,6 +6,10 @@ export function postRecipe(data) {
   return fetchRecipe("POST", data);
 }
 
+export function patchRecipe(data, id) {
+  return fetchRecipe("PATCH", data, id);
+}
+
 export function deleteRecipe(id) {
   return fetch("/recipes/" + id, {
     method: "DELETE",

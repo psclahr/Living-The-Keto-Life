@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import TrashIcon from "../icons/TrashIcon";
 
 const StyledFlexbox = styled.div`
   display: flex;
