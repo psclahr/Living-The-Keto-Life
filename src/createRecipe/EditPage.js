@@ -174,6 +174,11 @@ export default function EditPage({ editRecipe, onButtonClickToEdit }) {
     ]);
   }
 
+  function handleDeleteStep(step) {
+    const index = stepList.indexOf(step) + 1;
+    setStepList([...stepList.slice(0, index - 1), ...stepList.slice(index)]);
+  }
+
   function getSum(total, num) {
     return total + num;
   }
@@ -196,6 +201,7 @@ export default function EditPage({ editRecipe, onButtonClickToEdit }) {
       <AddDescription
         onSubmit={handleSubmitStep}
         onChange={handleDescriptionChange}
+        onDeleteClick={handleDeleteStep}
         stepList={stepList}
         descriptionRef={descriptionRef}
         descriptionInputRef={descriptionInputRef}

@@ -66,6 +66,10 @@ export default function CreatePage({ onButtonClick }) {
     );
   }, [ingredients]);
 
+  useEffect(() => {
+    localStorage.setItem("stepListInLocalStorage", JSON.stringify(stepList));
+  });
+
   function handleButtonClick(event) {
     event.preventDefault();
 
@@ -199,6 +203,11 @@ export default function CreatePage({ onButtonClick }) {
     ]);
   }
 
+  function handleDeleteStep(step) {
+    const index = stepList.indexOf(step) + 1;
+    setStepList([...stepList.slice(0, index - 1), ...stepList.slice(index)]);
+  }
+
   function upload(event) {
     const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
 
@@ -243,6 +252,7 @@ export default function CreatePage({ onButtonClick }) {
       <AddDescription
         onSubmit={handleSubmitStep}
         onChange={handleDescriptionChange}
+        onDeleteClick={handleDeleteStep}
         stepList={stepList}
         descriptionRef={descriptionRef}
         descriptionInputRef={descriptionInputRef}

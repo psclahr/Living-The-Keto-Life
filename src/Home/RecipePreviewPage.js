@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import RecipePreview from "./RecipePreview";
 import { Link } from "react-router-dom";
 import TrashIcon from "../icons/TrashIcon";
+import MoreIcon from "../icons/MoreIcon";
 import ReactModal from "react-modal";
 
 const Container = styled.div`
@@ -14,6 +15,20 @@ const StyledRecipeList = styled.section`
   grid-template-rows: 1fr 1fr 1fr;
   overflow-y: scroll;
 `;
+
+const StyledMoreButton = styled.button`
+  height: 30px;
+  background: none;
+  border: none;
+  position: absolute;
+  right: 12%;
+  top: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledMenu = styled.menu``;
 
 const StyledEditButton = styled.button``;
 
@@ -77,18 +92,32 @@ export default function RecipeList({
   onCloseModal,
   showModal
 }) {
+  const [showMore, setShowMore] = useState(null);
+
+  function toggleMoreButton(recipe) {
+    console.log(recipe);
+    setShowMore(showMore === recipe ? null : recipe);
+  }
+
   return (
     <StyledRecipeList>
       {recipes.map(recipe => {
         const target = `/recipes/${recipe._id}`;
         return (
           <Container key={recipe._id}>
-            <StyledEditButton onClick={() => onEditClick(recipe)}>
-              Edit
-            </StyledEditButton>
-            <StyledDeleteButton onClick={onOpenModal}>
-              <TrashIcon />
-            </StyledDeleteButton>
+            <StyledMoreButton onClick={() => toggleMoreButton(recipe)}>
+              <MoreIcon />
+            </StyledMoreButton>
+            {recipe === showMore ? (
+              <StyledMenu>
+                <StyledEditButton onClick={() => onEditClick(recipe)}>
+                  Edit
+                </StyledEditButton>
+                <StyledDeleteButton onClick={onOpenModal}>
+                  <TrashIcon />
+                </StyledDeleteButton>
+              </StyledMenu>
+            ) : null}
             <StyledReactModal isOpen={showModal} contentLabel="Delete Modal">
               <StyledQuestion>
                 Do you really want to delete "{recipe.title}" as a recipe?

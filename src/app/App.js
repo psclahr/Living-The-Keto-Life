@@ -34,11 +34,9 @@ function App() {
   async function editedRecipe(data, history) {
     try {
       const newEditedRecipe = await patchRecipe(data, data._id);
-      //const index = recipes.indexOf(newEditedRecipe);
       const index = recipes.findIndex(
         recipe => recipe._id === newEditedRecipe._id
       );
-
       setRecipes([
         ...recipes.slice(0, index),
         newEditedRecipe,

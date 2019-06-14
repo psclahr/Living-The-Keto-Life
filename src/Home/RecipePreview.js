@@ -22,8 +22,8 @@ const StyledTitle = styled.h3`
 export default function RecipePreview({ title, image, onClick }) {
   const StyledRecipePreview = styled.div`
     background-image: url(${image});
-    background-size: 320px;
-    width: 312px;
+    background-size: 100%;
+    width: 80%;
     height: 187px;
     background-position: center center;
     background-repeat: no-repeat;
