@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import RecipePreview from "./RecipePreview";
 import { Link } from "react-router-dom";
-import TrashIcon from "../icons/TrashIcon";
+import BigTrashIcon from "../icons/BigTrashIcon";
+import EditIcon from "../icons/EditIcon";
 import MoreIcon from "../icons/MoreIcon";
 import ReactModal from "react-modal";
 
 const Container = styled.div`
   position: relative;
+  transition: all 10s ease;
 `;
 
 const StyledRecipeList = styled.section`
@@ -17,6 +19,7 @@ const StyledRecipeList = styled.section`
 `;
 
 const StyledMoreButton = styled.button`
+  outline: none;
   height: 30px;
   background: none;
   border: none;
@@ -28,26 +31,36 @@ const StyledMoreButton = styled.button`
   align-items: center;
 `;
 
-const StyledMenu = styled.menu``;
+const StyledMenu = styled.div`
+  background: rgba(120, 218, 172, 1);
+  width: 40px;
+  height: 153px;
+  border-bottom-right-radius: 10px;
+  position: absolute;
+  top: 59px;
+  right: 11%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
 
-const StyledEditButton = styled.button``;
-
-const StyledDeleteButton = styled.button`
+const StyledEditButton = styled.button`
+  outline: none;
   background: none;
   border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 32px;
-  top: 32px;
+`;
+
+const StyledDeleteButton = styled.button`
+  outline: none;
+  background: none;
+  border: none;
 `;
 const StyledReactModal = styled(ReactModal)`
   outline: none;
   width: 80%;
   border: 3px solid rgb(120, 218, 172);
   position: absolute;
-  top: 35%;
+  top: 30%;
   left: 10%;
   display: grid;
   grid-template-rows: 150px 50px;
@@ -95,7 +108,6 @@ export default function RecipeList({
   const [showMore, setShowMore] = useState(null);
 
   function toggleMoreButton(recipe) {
-    console.log(recipe);
     setShowMore(showMore === recipe ? null : recipe);
   }
 
@@ -111,10 +123,10 @@ export default function RecipeList({
             {recipe === showMore ? (
               <StyledMenu>
                 <StyledEditButton onClick={() => onEditClick(recipe)}>
-                  Edit
+                  <EditIcon />
                 </StyledEditButton>
                 <StyledDeleteButton onClick={onOpenModal}>
-                  <TrashIcon />
+                  <BigTrashIcon />
                 </StyledDeleteButton>
               </StyledMenu>
             ) : null}
