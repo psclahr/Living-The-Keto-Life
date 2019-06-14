@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import InputIngredient from "./InputIngredient";
+import TrashIcon from "../../icons/TrashIcon";
 
 const StyledAddIngredient = styled.section`
   height: auto;
@@ -30,12 +31,27 @@ const StyledListItems = styled.li`
   }
 `;
 
+const ListItemGrid = styled.div`
+  display: grid;
+  grid-template-columns: auto 90px;
+`;
+
+const StyledDeleteButton = styled.button`
+  outline: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+`;
+
 export default function AddIngredient({
   ingredients,
   onSubmit,
   onChangeAmount,
   onChangeUnit,
   onChangeIngredient,
+  onDeleteClick,
   options,
   ingredientRef,
   ingredientAmountRef
@@ -55,9 +71,14 @@ export default function AddIngredient({
         <StyledList>
           {ingredients.map(ingredient => {
             return (
-              <StyledListItems key={ingredient.name}>
-                {ingredient.amount} {ingredient.unit} {ingredient.name}
-              </StyledListItems>
+              <ListItemGrid key={ingredient.name}>
+                <StyledListItems>
+                  {ingredient.amount} {ingredient.unit} {ingredient.name}
+                </StyledListItems>
+                <StyledDeleteButton onClick={() => onDeleteClick(ingredient)}>
+                  <TrashIcon />
+                </StyledDeleteButton>
+              </ListItemGrid>
             );
           })}
         </StyledList>

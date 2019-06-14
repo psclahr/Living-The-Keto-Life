@@ -21,6 +21,7 @@ const Flex = styled.div`
 `;
 
 const StyledSubmitButton = styled.button`
+  outline: none;
   width: 150px;
   height: 30px;
   background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
@@ -190,6 +191,14 @@ export default function CreatePage({ onButtonClick }) {
       .catch(err => console.log(err));
   }
 
+  function handleDeleteIngredient(ingredient) {
+    const index = ingredients.indexOf(ingredient) + 1;
+    setIngredients([
+      ...ingredients.slice(0, index - 1),
+      ...ingredients.slice(index)
+    ]);
+  }
+
   function upload(event) {
     const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
 
@@ -227,6 +236,7 @@ export default function CreatePage({ onButtonClick }) {
         onChangeAmount={handleAmountChange}
         onChangeUnit={handleUnitChange}
         onChangeIngredient={handleIngredientChange}
+        onDeleteClick={handleDeleteIngredient}
         ingredientRef={ingredientRef}
         ingredientAmountRef={ingredientAmountRef}
       />

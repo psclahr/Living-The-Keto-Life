@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import TrashIcon from "../icons/TrashIcon";
 
 const StyledFlexbox = styled.div`
   display: flex;
@@ -8,8 +9,15 @@ const StyledFlexbox = styled.div`
   margin: 5px;
 `;
 
+const StyledHead = styled.div`
+  background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
+  display: grid;
+  grid-template-columns: auto 40px;
+`;
+
 const StyledTitle = styled.h3`
-  width: 312px;
+  background: none;
+  width: 272px;
 `;
 
 export default function RecipePreview({ title, image, onClick }) {
@@ -27,7 +35,9 @@ export default function RecipePreview({ title, image, onClick }) {
   return (
     <StyledFlexbox title={title} image={image} onClick={onClick}>
       <StyledRecipePreview>
-        <StyledTitle>{title}</StyledTitle>
+        <StyledHead>
+          <StyledTitle>{title}</StyledTitle>
+        </StyledHead>
       </StyledRecipePreview>
     </StyledFlexbox>
   );

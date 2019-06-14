@@ -14,3 +14,10 @@ app.post("/recipes", (req, res) => {
     .then(recipe => res.json(recipe))
     .catch(err => res.json(err));
 });
+
+app.delete("/recipes/:id", (req, res) => {
+  const { id } = req.params;
+  Recipe.findByIdAndDelete(id)
+    .then(recipe => res.status(201).json(recipe))
+    .catch(err => res.status(500).json(err));
+});

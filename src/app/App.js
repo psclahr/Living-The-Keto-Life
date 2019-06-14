@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
-import RecipePreviewPage from "../RecipeList/RecipePreviewPage";
+import RecipePreviewPage from "../Home/RecipePreviewPage";
 import CreatePage from "../CreateRecipe/CreatePage";
 import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
 import Header from "../Header/Header";
 import RecipeDetailPage from "../RecipeDetail/RecipeDetailPage";
-import { getRecipes, postRecipe } from "../services";
+import { getRecipes, postRecipe, deleteRecipe } from "../services";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
   const [currentPageTitle, setCurrentPageTitle] = useState("Recipe Book");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getRecipes().then(data => setRecipes(data));
@@ -27,6 +28,12 @@ function App() {
     }
   }
 
+  function deleteRecipeOnClick(recipe) {
+    deleteRecipe(recipe._id);
+    getRecipes().then(data => setRecipes(data));
+    setShowModal(false);
+  }
+
   function handleBookClick() {
     setCurrentPageTitle("Recipe Book");
   }
@@ -37,6 +44,14 @@ function App() {
 
   function handleClickOnRecipe(title) {
     setCurrentPageTitle(title);
+  }
+
+  function handleOpenModal() {
+    setShowModal(true);
+  }
+
+  function handleCloseModal() {
+    setShowModal(false);
   }
 
   return (
@@ -52,6 +67,10 @@ function App() {
               <RecipePreviewPage
                 recipes={recipes}
                 onClick={handleClickOnRecipe}
+                onDeleteClick={recipe => deleteRecipeOnClick(recipe)}
+                onOpenModal={handleOpenModal}
+                onCloseModal={handleCloseModal}
+                showModal={showModal}
               />
             )}
           />
