@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
@@ -8,11 +9,16 @@ import BackIcon from "../icons/BackIcon";
 
 const CreatePageGrid = styled.div`
   display: grid;
-  grid-template-rows: 40px 40px 187px auto auto 30px;
+  grid-template-rows: 50px 50px 187px 50px auto auto 30px;
   margin-top: 20px;
   padding-left: 10px;
   padding-right: 10px;
   overflow-y: scroll;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const StyledBackButton = styled.button`
@@ -27,9 +33,24 @@ const StyledBackButton = styled.button`
   align-items: center;
 `;
 
-const Flex = styled.div`
+const StyledImageLabel = styled.label`
+  background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
+  height: 30px;
+  border-radius: 25px;
+  margin-top: 20px;
+  padding: 7px;
   display: flex;
   justify-content: center;
+  align-items: center;
+`;
+
+const StyledImageInput = styled.input`
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 `;
 
 const StyledSubmitButton = styled.button`
@@ -38,11 +59,15 @@ const StyledSubmitButton = styled.button`
   height: 30px;
   background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
   border-radius: 25px;
+  border: none;
 `;
 
 const DisabledButton = styled(StyledSubmitButton)`
   opacity: 0.3;
 `;
+
+const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
+const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
 
 export default function EditPage({
   editRecipe,
@@ -57,7 +82,7 @@ export default function EditPage({
   const [ingredientValue, setIngredient] = useState("");
   const [ingredients, setIngredients] = useState(editRecipe.ingredients);
   const [options, setOptions] = useState([]);
-  const image = editRecipe.image;
+  const [image, setImage] = useState(editRecipe.image);
 
   const descriptionRef = React.createRef();
   const descriptionInputRef = React.createRef();
@@ -196,6 +221,28 @@ export default function EditPage({
     setStepList([...stepList.slice(0, index - 1), ...stepList.slice(index)]);
   }
 
+  function upload(event) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
+
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    formData.append("upload_preset", PRESET);
+
+    axios
+      .post(url, formData, {
+        headers: {
+          "Content-type": "multipart/form-data"
+        }
+      })
+      .then(onImageSave)
+      .catch(err => console.error(err));
+  }
+
+  function onImageSave(response) {
+    localStorage.setItem("imageUrlInLocalStorage", response.data.url);
+    setImage(response.data.url);
+  }
+
   function getSum(total, num) {
     return total + num;
   }
@@ -210,6 +257,17 @@ export default function EditPage({
       </Flex>
       <AddTitle value={title} onChange={handleTitleChange} />
       <AddImage image={image} />
+      <Flex>
+        <StyledImageLabel htmlFor="file">
+          New Image
+          <StyledImageInput
+            onChange={upload}
+            type="file"
+            name="file"
+            id="file"
+          />
+        </StyledImageLabel>
+      </Flex>
       <AddIngredient
         ingredients={ingredients}
         options={options}

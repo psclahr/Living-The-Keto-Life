@@ -26,6 +26,7 @@ const StyledSubmitButton = styled.button`
   height: 30px;
   background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
   border-radius: 25px;
+  border: none;
 `;
 
 const DisabledButton = styled(StyledSubmitButton)`
