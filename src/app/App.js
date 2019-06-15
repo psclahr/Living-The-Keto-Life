@@ -60,6 +60,10 @@ function App() {
     setEditRecipe(recipe);
   }
 
+  function handleBackClick() {
+    setShowEdit(false);
+  }
+
   function handleBookClick() {
     setCurrentPageTitle("Recipe Book");
   }
@@ -94,6 +98,7 @@ function App() {
                 {showEdit ? (
                   <EditPage
                     editRecipe={editRecipe}
+                    onBackClick={handleBackClick}
                     onButtonClickToEdit={data => editedRecipe(data, history)}
                   />
                 ) : (

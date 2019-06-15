@@ -33,12 +33,12 @@ const StyledMoreButton = styled.button`
 
 const StyledMenu = styled.div`
   background: rgba(120, 218, 172, 1);
-  width: 40px;
-  height: 153px;
+  width: 39px;
+  height: 154px;
   border-bottom-right-radius: 10px;
   position: absolute;
-  top: 59px;
-  right: 11%;
+  top: 58px;
+  right: 11.1%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -81,6 +81,7 @@ const Flex = styled.div`
 `;
 
 const StyledCancelButtonModal = styled.button`
+  border: 1px solid lightgray;
   border-radius: 25px;
   width: 75px;
   height: 30px;
@@ -89,6 +90,7 @@ const StyledCancelButtonModal = styled.button`
 const StyledDeleteButtonModal = styled.button`
   background: red;
   color: white;
+  border: none;
   border-radius: 25px;
   width: 75px;
   height: 30px;

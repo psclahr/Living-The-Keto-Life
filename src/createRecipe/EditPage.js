@@ -4,14 +4,27 @@ import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
 import AddTitle from "./CreateElements/AddTitle";
+import BackIcon from "../icons/BackIcon";
 
 const CreatePageGrid = styled.div`
   display: grid;
-  grid-template-rows: 40px 187px auto auto 30px;
+  grid-template-rows: 40px 40px 187px auto auto 30px;
   margin-top: 20px;
   padding-left: 10px;
   padding-right: 10px;
   overflow-y: scroll;
+`;
+
+const StyledBackButton = styled.button`
+  outline: none;
+  border: none;
+  width: 100px;
+  height: 30px;
+  background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const Flex = styled.div`
@@ -31,7 +44,11 @@ const DisabledButton = styled(StyledSubmitButton)`
   opacity: 0.3;
 `;
 
-export default function EditPage({ editRecipe, onButtonClickToEdit }) {
+export default function EditPage({
+  editRecipe,
+  onBackClick,
+  onButtonClickToEdit
+}) {
   const [title, setTitle] = useState(editRecipe.title);
   const [step, setStep] = useState("");
   const [stepList, setStepList] = useState(editRecipe.steps);
@@ -185,6 +202,12 @@ export default function EditPage({ editRecipe, onButtonClickToEdit }) {
 
   return (
     <CreatePageGrid>
+      <Flex>
+        <StyledBackButton onClick={onBackClick}>
+          <BackIcon />
+          Back
+        </StyledBackButton>
+      </Flex>
       <AddTitle value={title} onChange={handleTitleChange} />
       <AddImage image={image} />
       <AddIngredient

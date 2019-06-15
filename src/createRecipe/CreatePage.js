@@ -68,7 +68,7 @@ export default function CreatePage({ onButtonClick }) {
 
   useEffect(() => {
     localStorage.setItem("stepListInLocalStorage", JSON.stringify(stepList));
-  });
+  }, [stepList]);
 
   function handleButtonClick(event) {
     event.preventDefault();
