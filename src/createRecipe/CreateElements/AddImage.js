@@ -35,7 +35,7 @@ const StyledImageInput = styled.input`
 export default function AddImage({ image, onChangeImageUpload }) {
   const StyledImage = styled.div`
     background-image: url(${image});
-    background-size: 320px;
+    background-size: 100%;
     width: 90%;
     height: 187px;
     background-position: center;
