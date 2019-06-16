@@ -8,8 +8,8 @@ const StyledSvgContainer = styled.svg`
 export default function BigTrashIcon() {
   return (
     <StyledSvgContainer
-      width="20px"
-      height="24px"
+      width="30px"
+      height="34px"
       viewBox="0 0 24 28"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"

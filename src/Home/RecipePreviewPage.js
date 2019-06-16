@@ -23,23 +23,27 @@ const StyledMoreButton = styled.button`
   background: none;
   border: none;
   position: absolute;
-  right: 12%;
-  top: 28px;
+  right: 11%;
+  top: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const StyledMenu = styled.div`
-  background: rgba(120, 218, 172, 1);
-  width: 150px;
-  height: 50px;
+  background: none;
+  width: 180px;
+  height: 75px;
   position: absolute;
-  top: 40%;
-  right: 30%;
+  top: 88px;
+  right: 26%;
   z-index: 1;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+`;
+
+const StyledMenuOpacity = styled(StyledMenu)`
+  opacity: 0.2;
 `;
 
 const StyledEditButton = styled.button`
@@ -122,14 +126,25 @@ export default function RecipeList({
             </StyledMoreButton>
             {recipe === showMore ? (
               <>
-                <StyledMenu>
-                  <StyledEditButton onClick={() => onEditClick(recipe)}>
-                    <EditIcon />
-                  </StyledEditButton>
-                  <StyledDeleteButton onClick={onOpenModal}>
-                    <BigTrashIcon />
-                  </StyledDeleteButton>
-                </StyledMenu>
+                {showModal ? (
+                  <StyledMenuOpacity>
+                    <StyledEditButton>
+                      <EditIcon />
+                    </StyledEditButton>
+                    <StyledDeleteButton>
+                      <BigTrashIcon />
+                    </StyledDeleteButton>
+                  </StyledMenuOpacity>
+                ) : (
+                  <StyledMenu>
+                    <StyledEditButton onClick={() => onEditClick(recipe)}>
+                      <EditIcon />
+                    </StyledEditButton>
+                    <StyledDeleteButton onClick={onOpenModal}>
+                      <BigTrashIcon />
+                    </StyledDeleteButton>
+                  </StyledMenu>
+                )}
                 <StyledReactModal
                   isOpen={showModal}
                   contentLabel="Delete Modal"
