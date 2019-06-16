@@ -121,28 +121,35 @@ export default function RecipeList({
               <MoreIcon />
             </StyledMoreButton>
             {recipe === showMore ? (
-              <StyledMenu>
-                <StyledEditButton onClick={() => onEditClick(recipe)}>
-                  <EditIcon />
-                </StyledEditButton>
-                <StyledDeleteButton onClick={onOpenModal}>
-                  <BigTrashIcon />
-                </StyledDeleteButton>
-              </StyledMenu>
+              <>
+                <StyledMenu>
+                  <StyledEditButton onClick={() => onEditClick(recipe)}>
+                    <EditIcon />
+                  </StyledEditButton>
+                  <StyledDeleteButton onClick={onOpenModal}>
+                    <BigTrashIcon />
+                  </StyledDeleteButton>
+                </StyledMenu>
+                <StyledReactModal
+                  isOpen={showModal}
+                  contentLabel="Delete Modal"
+                >
+                  <StyledQuestion>
+                    Do you really want to delete "{recipe.title}" as a recipe?
+                  </StyledQuestion>
+                  <Flex>
+                    <StyledCancelButtonModal onClick={onCloseModal}>
+                      Cancel
+                    </StyledCancelButtonModal>
+                    <StyledDeleteButtonModal
+                      onClick={() => onDeleteClick(recipe)}
+                    >
+                      Delete
+                    </StyledDeleteButtonModal>
+                  </Flex>
+                </StyledReactModal>
+              </>
             ) : null}
-            <StyledReactModal isOpen={showModal} contentLabel="Delete Modal">
-              <StyledQuestion>
-                Do you really want to delete "{recipe.title}" as a recipe?
-              </StyledQuestion>
-              <Flex>
-                <StyledCancelButtonModal onClick={onCloseModal}>
-                  Cancel
-                </StyledCancelButtonModal>
-                <StyledDeleteButtonModal onClick={() => onDeleteClick(recipe)}>
-                  Delete
-                </StyledDeleteButtonModal>
-              </Flex>
-            </StyledReactModal>
             {showMore ? (
               <RecipePreview
                 title={recipe.title}
