@@ -37,6 +37,7 @@ function App() {
       const index = recipes.findIndex(
         recipe => recipe._id === newEditedRecipe._id
       );
+      console.log(index);
       setRecipes([
         ...recipes.slice(0, index),
         newEditedRecipe,
@@ -49,10 +50,15 @@ function App() {
     }
   }
 
-  function deleteRecipeOnClick(recipe) {
-    deleteRecipe(recipe._id);
-    getRecipes().then(data => setRecipes(data));
-    setShowModal(false);
+  async function deleteRecipeOnClick(recipe) {
+    try {
+      const index = recipes.indexOf(recipe);
+      await deleteRecipe(recipe._id);
+      setRecipes([...recipes.slice(0, index - 1), ...recipes.slice(index)]);
+      setShowModal(false);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function handleEditClick(recipe) {

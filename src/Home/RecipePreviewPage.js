@@ -9,7 +9,6 @@ import ReactModal from "react-modal";
 
 const Container = styled.div`
   position: relative;
-  transition: all 10s ease;
 `;
 
 const StyledRecipeList = styled.section`
@@ -33,14 +32,13 @@ const StyledMoreButton = styled.button`
 
 const StyledMenu = styled.div`
   background: rgba(120, 218, 172, 1);
-  width: 39px;
-  height: 154px;
-  border-bottom-right-radius: 10px;
+  width: 150px;
+  height: 50px;
   position: absolute;
-  top: 58px;
-  right: 11.1%;
+  top: 40%;
+  right: 30%;
+  z-index: 1;
   display: flex;
-  flex-direction: column;
   justify-content: space-around;
 `;
 
@@ -145,13 +143,25 @@ export default function RecipeList({
                 </StyledDeleteButtonModal>
               </Flex>
             </StyledReactModal>
-            <Link to={target}>
+            {showMore ? (
               <RecipePreview
                 title={recipe.title}
                 image={recipe.image}
+                recipe={recipe}
+                showMore={showMore}
                 onClick={() => onClick(recipe.title)}
               />
-            </Link>
+            ) : (
+              <Link to={target}>
+                <RecipePreview
+                  title={recipe.title}
+                  image={recipe.image}
+                  recipe={recipe}
+                  showMore={showMore}
+                  onClick={() => onClick(recipe.title)}
+                />
+              </Link>
+            )}
           </Container>
         );
       })}
