@@ -4,11 +4,10 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing:border-box; 
         font-size: 18px;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto Light', sans-serif;
         src: font-url("https://fonts.googleapis.com/css?family=Roboto:300&display=swap");
         background: #FBFFFD;
         color: #434644;
-        
     }
     
     body {
