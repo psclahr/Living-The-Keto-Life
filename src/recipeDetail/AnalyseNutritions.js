@@ -55,6 +55,13 @@ export default function AnalyseNutritions({ recipe }) {
   let evaluationCarbs = "";
   let evaluationProteins = "";
   let ketoLight = "";
+  let portions = 0;
+
+  if (totalCalories / 800 <= 0.5) {
+    portions = 1;
+  } else {
+    portions = Math.round(totalCalories / 800);
+  }
 
   if (percentageCarbs <= 0.05) {
     evaluationCarbs = "Everthing good";
@@ -127,6 +134,9 @@ export default function AnalyseNutritions({ recipe }) {
 
       <Box>
         <Flex>
+          <p>
+            <b>Portions: {portions}</b>
+          </p>
           <p>
             <b>Calories: {totalCalories}cal</b>
           </p>
