@@ -2,6 +2,9 @@
   "name": "living-the-keto-life",
   "proxy": "http://localhost:4000",
   "version": "0.1.0",
+  "engines": {
+    "node": "10.15.3"
+  },
   "private": true,
   "dependencies": {
     "@craco/craco": "^5.1.0",
