@@ -4,8 +4,8 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing:border-box; 
         font-size: 18px;
-        @import url('https://fonts.googleapis.com/css?family=Roboto:300&display=swap');
         font-family: 'Roboto', sans-serif;
+        src: font-url("https://fonts.googleapis.com/css?family=Roboto:300&display=swap");
         background: #FBFFFD;
         color: #434644;
         
