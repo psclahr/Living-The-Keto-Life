@@ -2,10 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas:
+    "a u"
+    "i i";
+  gap: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
 `;
+
 const StyledAmountInput = styled.input`
+  grid-area: a;
   border-top: 0;
   border-left: 0;
   border-right: 0;
@@ -20,6 +27,7 @@ const StyledAmountInput = styled.input`
   }
 `;
 const StyledUnitSelect = styled.select`
+  grid-area: u;
   background: white;
   border: 2px solid rgba(120, 218, 172, 0.3);
   width: 90px;
@@ -30,12 +38,13 @@ const StyledUnitSelect = styled.select`
     border-color: rgba(120, 218, 172, 1);
   }
 `;
+
 const StyledIngredientInput = styled.input`
+  grid-area: i;
   border-top: 0;
   border-left: 0;
   border-right: 0;
   border-bottom: 2px solid rgba(120, 218, 172, 0.3);
-  width: 180px;
   transition: all 1s ease;
 
   &:focus {
@@ -70,6 +79,7 @@ export default function InputIngredient({
           required
           ref={ingredientAmountRef}
         />
+
         <StyledUnitSelect name="unit" onChange={onChangeUnit}>
           <option>gr</option>
           <option>kg</option>
@@ -92,6 +102,7 @@ export default function InputIngredient({
           autoComplete="off"
           required
         />
+
         <datalist id="ingredients">
           <option value={options[0]} />
           <option value={options[1]} />
