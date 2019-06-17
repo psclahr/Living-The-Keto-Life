@@ -74,6 +74,7 @@ function App() {
 
   function handleAddClick() {
     setCurrentPageTitle("Create A New Recipe");
+    setShowEdit(false);
   }
 
   function handleClickOnRecipe(title) {
