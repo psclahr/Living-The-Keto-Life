@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
 import AddTitle from "./CreateElements/AddTitle";
+import BackIcon from "../icons/BackIcon";
 
 const CreatePageGrid = styled.div`
   display: grid;
-  grid-template-rows: 40px 187px auto auto 30px;
+  grid-template-rows: 50px 50px 187px 50px auto auto 30px;
   margin-top: 20px;
   padding-left: 10px;
   padding-right: 10px;
@@ -18,6 +19,38 @@ const CreatePageGrid = styled.div`
 const Flex = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+const StyledBackButton = styled.button`
+  outline: none;
+  border: none;
+  width: 100px;
+  height: 30px;
+  background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const StyledImageLabel = styled.label`
+  background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
+  height: 30px;
+  border-radius: 25px;
+  margin-top: 20px;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledImageInput = styled.input`
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 `;
 
 const StyledSubmitButton = styled.button`
@@ -36,42 +69,27 @@ const DisabledButton = styled(StyledSubmitButton)`
 const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
 const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
 
-export default function CreatePage({ onButtonClick }) {
-  const [title, setTitle] = useState(
-    localStorage.getItem("titleInLocalStorage") || ""
-  );
+export default function EditPage({
+  editRecipe,
+  onBackClick,
+  onButtonClickToEdit
+}) {
+  const [title, setTitle] = useState(editRecipe.title);
   const [step, setStep] = useState("");
-  const [stepList, setStepList] = useState(
-    JSON.parse(localStorage.getItem("stepListInLocalStorage")) || []
-  );
+  const [stepList, setStepList] = useState(editRecipe.steps);
   const [amount, setAmount] = useState(0);
   const [unit, setUnit] = useState("gr");
   const [ingredientValue, setIngredient] = useState("");
-  const [ingredients, setIngredients] = useState(
-    JSON.parse(localStorage.getItem("ingredientsInLocalStorage")) || []
-  );
+  const [ingredients, setIngredients] = useState(editRecipe.ingredients);
   const [options, setOptions] = useState([]);
-  const [image, setImage] = useState(
-    localStorage.getItem("imageUrlInLocalStorage") || ""
-  );
+  const [image, setImage] = useState(editRecipe.image);
 
   const descriptionRef = React.createRef();
   const descriptionInputRef = React.createRef();
   const ingredientRef = React.createRef();
   const ingredientAmountRef = React.createRef();
 
-  useEffect(() => {
-    localStorage.setItem(
-      "ingredientsInLocalStorage",
-      JSON.stringify(ingredients)
-    );
-  }, [ingredients]);
-
-  useEffect(() => {
-    localStorage.setItem("stepListInLocalStorage", JSON.stringify(stepList));
-  }, [stepList]);
-
-  function handleButtonClick(event) {
+  function handleEditClick(event) {
     event.preventDefault();
 
     const totalCalories = ingredients
@@ -90,7 +108,8 @@ export default function CreatePage({ onButtonClick }) {
       .map(ingredient => ingredient.proteins)
       .reduce(getSum);
 
-    onButtonClick({
+    onButtonClickToEdit({
+      _id: editRecipe._id,
       title,
       steps: stepList,
       ingredients,
@@ -100,11 +119,8 @@ export default function CreatePage({ onButtonClick }) {
       totalCarbs,
       totalProteins
     });
-
-    localStorage.clear();
   }
   function handleTitleChange(event) {
-    localStorage.setItem("titleInLocalStorage", event.target.value);
     setTitle(event.target.value);
   }
 
@@ -127,10 +143,6 @@ export default function CreatePage({ onButtonClick }) {
 
   function handleSubmitStep(event) {
     event.preventDefault();
-    localStorage.setItem(
-      "stepListInLocalStorage",
-      JSON.stringify([...stepList, step])
-    );
     setStepList([...stepList, step]);
     descriptionRef.current.reset();
     descriptionInputRef.current.focus();
@@ -237,8 +249,25 @@ export default function CreatePage({ onButtonClick }) {
 
   return (
     <CreatePageGrid>
+      <Flex>
+        <StyledBackButton onClick={onBackClick}>
+          <BackIcon />
+          Back
+        </StyledBackButton>
+      </Flex>
       <AddTitle value={title} onChange={handleTitleChange} />
-      <AddImage image={image} onChangeImageUpload={upload} />
+      <AddImage image={image} />
+      <Flex>
+        <StyledImageLabel htmlFor="file">
+          New Image
+          <StyledImageInput
+            onChange={upload}
+            type="file"
+            name="file"
+            id="file"
+          />
+        </StyledImageLabel>
+      </Flex>
       <AddIngredient
         ingredients={ingredients}
         options={options}
@@ -260,11 +289,11 @@ export default function CreatePage({ onButtonClick }) {
       />
       <Flex>
         {title && stepList.length && ingredients.length && image ? (
-          <StyledSubmitButton onClick={handleButtonClick}>
-            Create Recipe!
+          <StyledSubmitButton onClick={handleEditClick}>
+            Save Changes
           </StyledSubmitButton>
         ) : (
-          <DisabledButton disabled>Create Recipe!</DisabledButton>
+          <DisabledButton disabled>Save Changes</DisabledButton>
         )}
       </Flex>
     </CreatePageGrid>

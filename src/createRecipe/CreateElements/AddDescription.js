@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import TrashIcon from "../../icons/TrashIcon";
 
 const Flex = styled.div`
   display: flex;
@@ -30,7 +31,7 @@ const StyledButton = styled.button`
   width: 100px;
   height: 30px;
   border-radius: 25px;
-  border-color: white;
+  border: none;
 `;
 
 const StyledList = styled.ol`
@@ -39,7 +40,8 @@ const StyledList = styled.ol`
 
 const StyledListItemGrid = styled.div`
   display: grid;
-  grid-template-columns: 30px auto;
+  grid-template-columns: 30px auto 90px;
+  margin-right: 18px;
 `;
 
 const StyledListNumber = styled.span`
@@ -54,9 +56,19 @@ const StyledListItems = styled.li`
   list-style: none;
 `;
 
+const StyledDeleteButton = styled.button`
+  outline: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+`;
+
 export default function AddDescription({
   onSubmit,
   onChange,
+  onDeleteClick,
   stepList,
   descriptionRef,
   descriptionInputRef
@@ -84,6 +96,9 @@ export default function AddDescription({
             <StyledListItemGrid key={keyNumber++}>
               <StyledListNumber>{stepNumber++}</StyledListNumber>
               <StyledListItems>{step}</StyledListItems>
+              <StyledDeleteButton onClick={() => onDeleteClick(step)}>
+                <TrashIcon />
+              </StyledDeleteButton>
             </StyledListItemGrid>
           );
         })}

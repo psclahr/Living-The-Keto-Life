@@ -3,16 +3,19 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import RecipePreviewPage from "../Home/RecipePreviewPage";
 import CreatePage from "../CreateRecipe/CreatePage";
+import EditPage from "../CreateRecipe/EditPage";
 import GlobalStyle from "./GlobalStyle";
 import Grid from "./Grid";
 import Header from "../Header/Header";
 import RecipeDetailPage from "../RecipeDetail/RecipeDetailPage";
-import { getRecipes, postRecipe, deleteRecipe } from "../services";
+import { getRecipes, postRecipe, patchRecipe, deleteRecipe } from "../services";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
   const [currentPageTitle, setCurrentPageTitle] = useState("Recipe Book");
   const [showModal, setShowModal] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [editRecipe, setEditRecipe] = useState([]);
 
   useEffect(() => {
     getRecipes().then(data => setRecipes(data));
@@ -28,10 +31,41 @@ function App() {
     }
   }
 
-  function deleteRecipeOnClick(recipe) {
-    deleteRecipe(recipe._id);
-    getRecipes().then(data => setRecipes(data));
-    setShowModal(false);
+  async function editedRecipe(data, history) {
+    try {
+      const newEditedRecipe = await patchRecipe(data, data._id);
+      const index = recipes.findIndex(
+        recipe => recipe._id === newEditedRecipe._id
+      );
+      setRecipes([
+        ...recipes.slice(0, index),
+        newEditedRecipe,
+        ...recipes.slice(index + 1)
+      ]);
+      history.push(`/recipes/${newEditedRecipe._id}`);
+      setShowEdit(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function deleteRecipeOnClick(recipe) {
+    try {
+      await deleteRecipe(recipe._id);
+      await getRecipes().then(data => setRecipes(data));
+      setShowModal(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function handleEditClick(recipe) {
+    setShowEdit(true);
+    setEditRecipe(recipe);
+  }
+
+  function handleBackClick() {
+    setShowEdit(false);
   }
 
   function handleBookClick() {
@@ -40,6 +74,7 @@ function App() {
 
   function handleAddClick() {
     setCurrentPageTitle("Create A New Recipe");
+    setShowEdit(false);
   }
 
   function handleClickOnRecipe(title) {
@@ -63,15 +98,26 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => (
-              <RecipePreviewPage
-                recipes={recipes}
-                onClick={handleClickOnRecipe}
-                onDeleteClick={recipe => deleteRecipeOnClick(recipe)}
-                onOpenModal={handleOpenModal}
-                onCloseModal={handleCloseModal}
-                showModal={showModal}
-              />
+            render={({ history }) => (
+              <>
+                {showEdit ? (
+                  <EditPage
+                    editRecipe={editRecipe}
+                    onBackClick={handleBackClick}
+                    onButtonClickToEdit={data => editedRecipe(data, history)}
+                  />
+                ) : (
+                  <RecipePreviewPage
+                    recipes={recipes}
+                    onClick={handleClickOnRecipe}
+                    onDeleteClick={recipe => deleteRecipeOnClick(recipe)}
+                    onEditClick={recipe => handleEditClick(recipe)}
+                    onOpenModal={handleOpenModal}
+                    onCloseModal={handleCloseModal}
+                    showModal={showModal}
+                  />
+                )}
+              </>
             )}
           />
           <Route
