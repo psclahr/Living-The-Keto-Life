@@ -18,7 +18,7 @@ const StyledAmountInput = styled.input`
   border-right: 0;
   border-bottom: 2px solid rgba(120, 218, 172, 0.3);
 
-  width: 70px;
+  width: 90px;
   transition: all 1s ease;
 
   &:focus {
