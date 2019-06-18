@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.header``;
-
 const StyledHeader = styled.h1`
   margin-left: 5%;
   margin-bottom: 0;
@@ -21,11 +19,11 @@ const Flex = styled.div`
 
 export default function Header() {
   return (
-    <Container>
+    <header>
       <StyledHeader>Living The Keto Life</StyledHeader>
       <Flex>
         <Line />
       </Flex>
-    </Container>
+    </header>
   );
 }
