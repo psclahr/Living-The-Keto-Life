@@ -7,21 +7,23 @@ import EditIcon from "../icons/EditIcon";
 import MoreIcon from "../icons/MoreIcon";
 import ReactModal from "react-modal";
 
+ReactModal.setAppElement("#root");
+
+const StyledRecipeList = styled.section`
+  overflow-y: scroll;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+`;
+
 const Container = styled.div`
   position: relative;
 `;
 
-const StyledRecipeList = styled.section`
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  overflow-y: scroll;
-`;
-
 const StyledMoreButton = styled.button`
   outline: none;
-  height: 30px;
   background: none;
   border: none;
+  height: 30px;
   position: absolute;
   right: 11%;
   top: 22px;
@@ -69,11 +71,11 @@ const StyledReactModal = styled(ReactModal)`
 `;
 
 const StyledQuestion = styled.div`
+  padding: 20px;
+  text-align: center;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  text-align: center;
-  padding: 20px;
 `;
 
 const Flex = styled.div`
@@ -82,25 +84,23 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-const StyledCancelButtonModal = styled.button`
+const StyledCancelButtonInModal = styled.button`
   border: 1px solid lightgray;
   border-radius: 25px;
   width: 75px;
   height: 30px;
 `;
 
-const StyledDeleteButtonModal = styled.button`
+const StyledDeleteButtonInModal = styled.button`
+  border: none;
   background: red;
   color: white;
-  border: none;
-  border-radius: 25px;
   width: 75px;
   height: 30px;
+  border-radius: 25px;
 `;
 
-ReactModal.setAppElement("#root");
-
-export default function RecipeList({
+export default function RecipePreviewPage({
   recipes,
   onClick,
   onDeleteClick,
@@ -153,22 +153,20 @@ export default function RecipeList({
                     Do you really want to delete "{recipe.title}" as a recipe?
                   </StyledQuestion>
                   <Flex>
-                    <StyledCancelButtonModal onClick={onCloseModal}>
+                    <StyledCancelButtonInModal onClick={onCloseModal}>
                       Cancel
-                    </StyledCancelButtonModal>
-                    <StyledDeleteButtonModal
+                    </StyledCancelButtonInModal>
+                    <StyledDeleteButtonInModal
                       onClick={() => onDeleteClick(recipe)}
                     >
                       Delete
-                    </StyledDeleteButtonModal>
+                    </StyledDeleteButtonInModal>
                   </Flex>
                 </StyledReactModal>
               </>
             ) : null}
             {showMore ? (
               <RecipePreview
-                title={recipe.title}
-                image={recipe.image}
                 recipe={recipe}
                 showMore={showMore}
                 onPreviewClick={() => onClick(recipe.title)}
@@ -176,11 +174,9 @@ export default function RecipeList({
             ) : (
               <Link to={target}>
                 <RecipePreview
-                  title={recipe.title}
-                  image={recipe.image}
                   recipe={recipe}
                   showMore={showMore}
-                  onClick={() => onClick(recipe.title)}
+                  onPreviewClick={() => onClick(recipe.title)}
                 />
               </Link>
             )}

@@ -39,28 +39,22 @@ const StyledRecipePreviewOpacity = styled(StyledRecipePreview)`
   opacity: 0.3;
 `;
 
-export default function RecipePreview({
-  title,
-  image,
-  recipe,
-  showMore,
-  onPreviewClick
-}) {
+export default function RecipePreview({ recipe, showMore, onPreviewClick }) {
   return (
-    <Container title={title} image={image} onClick={onPreviewClick}>
+    <Container onClick={onPreviewClick}>
       {recipe === showMore ? (
         <Grid>
           <StyledHead>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>{recipe.title}</StyledTitle>
           </StyledHead>
-          <StyledRecipePreviewOpacity url={image} />
+          <StyledRecipePreviewOpacity url={recipe.image} />
         </Grid>
       ) : (
         <Grid>
           <StyledHead>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>{recipe.title}</StyledTitle>
           </StyledHead>
-          <StyledRecipePreview url={image} />
+          <StyledRecipePreview url={recipe.image} />
         </Grid>
       )}
     </Container>
