@@ -57,6 +57,8 @@ export default function AddIngredient({
   ingredientRef,
   ingredientAmountRef
 }) {
+  let listItemNumber = 1;
+
   return (
     <StyledAddIngredient>
       <InputIngredient
@@ -73,7 +75,7 @@ export default function AddIngredient({
         <StyledList>
           {ingredients.map(ingredient => {
             return (
-              <ListItemGrid key={ingredient.name}>
+              <ListItemGrid key={listItemNumber++}>
                 <StyledListItem>
                   {ingredient.amount} {ingredient.unit} {ingredient.name}
                 </StyledListItem>
