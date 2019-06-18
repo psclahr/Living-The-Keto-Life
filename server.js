@@ -11,7 +11,10 @@ app.get("/recipes", (req, res) => {
 
 app.post("/recipes", (req, res) => {
   Recipe.create(req.body)
-    .then(recipe => res.json(recipe))
+    .then(recipe => {
+      console.log(recipe);
+      res.json(recipe);
+    })
     .catch(err => res.json(err));
 });
 
