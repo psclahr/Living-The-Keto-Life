@@ -5,10 +5,7 @@ const Recipe = require("./models/Recipe");
 
 app.get("/recipes", (req, res) => {
   Recipe.find()
-    .then(recipes => {
-      console.log(recipes);
-      res.json(recipes);
-    })
+    .then(recipes => res.json(recipes))
     .catch(err => res.json(err));
 });
 
@@ -34,5 +31,3 @@ app.patch("/recipes/:id", (req, res) => {
     .then(recipe => res.json(recipe))
     .catch(err => res.json(err));
 });
-
-//heroku setup
