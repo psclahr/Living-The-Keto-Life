@@ -31,7 +31,7 @@ module.exports = function() {
     err ? console.log(err) : console.log("Server ready");
   });
 
-  app.get(["/", "/recipes", "/recipes/*", "/create"], function(req, res) {
+  app.get(["/", "/recipes/*", "/create"], function(req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
   });
 
