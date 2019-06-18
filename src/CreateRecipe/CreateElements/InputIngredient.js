@@ -101,7 +101,6 @@ export default function InputIngredient({
           autoComplete="off"
           required
         />
-
         <datalist id="ingredients">
           <option value={options[0]} />
           <option value={options[1]} />
