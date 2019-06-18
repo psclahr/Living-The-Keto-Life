@@ -24,7 +24,7 @@ function App() {
   async function createRecipe(data, history) {
     try {
       const newRecipe = await postRecipe(data);
-      setRecipes([...recipes, newRecipe]);
+      setRecipes([newRecipe, ...recipes]);
       history.push(`/recipes/${newRecipe._id}`);
     } catch (err) {
       console.log(err);
