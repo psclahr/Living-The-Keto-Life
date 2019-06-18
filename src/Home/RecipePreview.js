@@ -25,42 +25,42 @@ const StyledTitle = styled.h3`
   align-items: center;
 `;
 
+const StyledRecipePreview = styled.div`
+  background-image: url(${props => props.url});
+  height: 157px;
+  background-size: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+`;
+
+const StyledRecipePreviewOpacity = styled(StyledRecipePreview)`
+  opacity: 0.3;
+`;
+
 export default function RecipePreview({
   title,
   image,
   recipe,
   showMore,
-  onClick
+  onPreviewClick
 }) {
-  const StyledRecipePreview = styled.div`
-    background-image: url(${image});
-    background-size: 100%;
-    height: 157px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  `;
-
-  const StyledRecipePreviewOpacity = styled(StyledRecipePreview)`
-    opacity: 0.3;
-  `;
-
   return (
-    <Container title={title} image={image} onClick={onClick}>
+    <Container title={title} image={image} onClick={onPreviewClick}>
       {recipe === showMore ? (
         <Grid>
           <StyledHead>
             <StyledTitle>{title}</StyledTitle>
           </StyledHead>
-          <StyledRecipePreviewOpacity />
+          <StyledRecipePreviewOpacity url={image} />
         </Grid>
       ) : (
         <Grid>
           <StyledHead>
             <StyledTitle>{title}</StyledTitle>
           </StyledHead>
-          <StyledRecipePreview />
+          <StyledRecipePreview url={image} />
         </Grid>
       )}
     </Container>

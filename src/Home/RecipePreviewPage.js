@@ -171,7 +171,7 @@ export default function RecipeList({
                 image={recipe.image}
                 recipe={recipe}
                 showMore={showMore}
-                onClick={() => onClick(recipe.title)}
+                onPreviewClick={() => onClick(recipe.title)}
               />
             ) : (
               <Link to={target}>
