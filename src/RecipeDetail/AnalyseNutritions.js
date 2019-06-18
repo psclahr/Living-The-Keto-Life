@@ -1,17 +1,18 @@
 import React from "react";
-import { PieChart, Pie, Cell, Legend } from "recharts";
 import styled from "styled-components";
+import { PieChart, Pie, Cell, Legend } from "recharts";
 import { Hints } from "./Hints";
 
 const Container = styled.section`
   padding-left: 5%;
   padding-right: 5%;
+
   & h4 {
     margin-bottom: 0;
   }
 `;
 
-const Box = styled.div`
+const StyledAbsoluteNutritionBox = styled.div`
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(169, 171, 170, 1);
   margin-top: 30px;
@@ -22,6 +23,10 @@ const Box = styled.div`
 const Flex = styled.div`
   display: flex;
   justify-content: space-around;
+`;
+
+const Bold = styled.p`
+  font-weight: bold;
 `;
 
 const Light = styled.div`
@@ -41,6 +46,10 @@ const RedLight = styled(Light)`
   background: red;
 `;
 
+const Italic = styled.p`
+  font-style: italic;
+`;
+
 export default function AnalyseNutritions({ recipe }) {
   const totalCalories = Math.round(recipe.totalCalories);
   const totalFats = Math.round(recipe.totalFats);
@@ -51,11 +60,12 @@ export default function AnalyseNutritions({ recipe }) {
   const percentageCarbs = totalCarbsInCalories / totalCalories;
   const totalProteinsInCalories = totalProteins * 4.1;
   const percentageProteins = totalProteinsInCalories / totalCalories;
+  const RADIAN = Math.PI / 180;
 
   let evaluationCarbs = "";
   let evaluationProteins = "";
   let ketoLight = "";
-  let portions = 0;
+  let portions = 1;
 
   if (totalCalories / 800 <= 0.5) {
     portions = 1;
@@ -101,8 +111,6 @@ export default function AnalyseNutritions({ recipe }) {
     "rgb(60, 136, 208)"
   ];
 
-  const RADIAN = Math.PI / 180;
-
   const renderCustomizedLabel = ({
     cx,
     cy,
@@ -131,22 +139,17 @@ export default function AnalyseNutritions({ recipe }) {
   return (
     <Container>
       <h4>Keto Analyse</h4>
-
-      <Box>
+      <StyledAbsoluteNutritionBox>
         <Flex>
-          <p>
-            <b>Portions: {portions}</b>
-          </p>
-          <p>
-            <b>Calories: {totalCalories}cal</b>
-          </p>
+          <Bold>Portions: {portions}</Bold>
+          <Bold>Calories: {totalCalories}cal</Bold>
         </Flex>
         <Flex>
           <span>Fats: {totalFats}g</span>
           <span>Carbs: {totalCarbs}g</span>
           <span>Proteins: {totalProteins}g</span>
         </Flex>
-      </Box>
+      </StyledAbsoluteNutritionBox>
       <Flex>
         <PieChart width={300} height={300}>
           <Legend height={40} />
@@ -172,24 +175,16 @@ export default function AnalyseNutritions({ recipe }) {
         {ketoLight === "red" ? <RedLight /> : null}
       </Flex>
       {evaluationCarbs === "Everthing good" ? (
-        <p>
-          <i>"{Hints[0].hint}"</i>
-        </p>
+        <Italic>"{Hints[0].hint}"</Italic>
       ) : null}
       {evaluationCarbs === "Little bit to much carbs" ? (
-        <p>
-          <i>"{Hints[1].hint}"</i>
-        </p>
+        <Italic>"{Hints[1].hint}"</Italic>
       ) : null}
       {evaluationCarbs === "Too much carbs" ? (
-        <p>
-          <i>"{Hints[2].hint}"</i>
-        </p>
+        <Italic>"{Hints[2].hint}"</Italic>
       ) : null}
       {evaluationProteins === "Too much proteins" ? (
-        <p>
-          <i>"{Hints[3].hint}"</i>
-        </p>
+        <Italic>"{Hints[3].hint}"</Italic>
       ) : null}
     </Container>
   );
