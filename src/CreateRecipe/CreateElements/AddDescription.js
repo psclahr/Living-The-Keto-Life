@@ -74,7 +74,7 @@ export default function AddDescription({
   descriptionInputRef
 }) {
   let stepNumber = 1;
-  let keyNumber = 1;
+  let StepNumberForKey = 1;
 
   return (
     <section>
@@ -93,7 +93,7 @@ export default function AddDescription({
       <StyledList>
         {stepList.map(step => {
           return (
-            <StyledListItemGrid key={keyNumber++}>
+            <StyledListItemGrid key={StepNumberForKey++}>
               <StyledListNumber>{stepNumber++}</StyledListNumber>
               <StyledListItem>{step}</StyledListItem>
               <StyledDeleteButton onClick={() => onDeleteClick(step)}>
