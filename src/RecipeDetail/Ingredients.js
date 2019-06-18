@@ -36,16 +36,16 @@ const StyledNutritionList = styled.ul`
 `;
 
 const StyledLine = styled.div`
-  height: 1px;
-  width: 70%;
   background: linear-gradient(90deg, rgb(214, 232, 117), rgb(120, 218, 172));
+  width: 70%;
+  height: 1px;
   margin-top: 4px;
   margin-bottom: 4px;
 `;
 
 const StyledListItem = styled.li`
-  font-size: 16px;
   list-style: none;
+  font-size: 16px;
   margin-top: 3px;
 
   & b {
