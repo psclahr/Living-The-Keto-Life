@@ -16,6 +16,12 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
 
+    h1 {
+        src: font-url("https://fonts.googleapis.com/css?family=Dancing+Script&display=swap");
+        font-family: "Dancing Script", cursive;
+        font-size: 28px;
+    }
+
     h2 {
         font-family: "Dancing Script", cursive;
         font-size: 22px;
@@ -31,7 +37,6 @@ const GlobalStyle = createGlobalStyle`
 
     h4 {
         font-size: 20px;
-        color: #434644;
     }
 
     a {
