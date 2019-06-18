@@ -9,12 +9,6 @@ const GlobalStyle = createGlobalStyle`
         background: #FBFFFD;
         color: #434644;
     }
-    
-    body {
-        height: 100vh;
-        margin: 0; 
-        padding: 0;
-    }
 
     h1 {
         src: font-url("https://fonts.googleapis.com/css?family=Dancing+Script&display=swap");
