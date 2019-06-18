@@ -6,7 +6,7 @@ const fs = require("fs");
 dotenv.config();
 
 try {
-  const localConfig = dotenv.parse(fs.readFileSync(".env.local"));
+  const localConfig = dotenv.parse(fs.readFileSync(".env"));
   process.env = {
     ...process.env,
     ...localConfig
