@@ -39,9 +39,11 @@ const Light = styled.div`
 const GreenLight = styled(Light)`
   background: green;
 `;
+
 const YellowLight = styled(Light)`
   background: yellow;
 `;
+
 const RedLight = styled(Light)`
   background: red;
 `;
