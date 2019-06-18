@@ -3,7 +3,7 @@ const app = setupServer();
 
 const Recipe = require("./models/Recipe");
 
-app.get("/recipes", (req, res) => {
+app.get("/recipelist", (req, res) => {
   Recipe.find()
     .then(recipes => res.json(recipes))
     .catch(err => res.json(err));

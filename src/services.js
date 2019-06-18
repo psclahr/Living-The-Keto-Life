@@ -1,5 +1,5 @@
 export function getRecipes() {
-  return fetch("/recipes").then(res => res.json());
+  return fetch("/recipelist").then(res => res.json());
 }
 
 export function postRecipe(data) {
