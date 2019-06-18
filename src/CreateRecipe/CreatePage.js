@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
 import AddTitle from "./CreateElements/AddTitle";
+import { uploadImage } from "../services";
 
-const CreatePageGrid = styled.div`
-  display: grid;
-  grid-template-rows: 40px 187px auto auto 30px;
+const CreatePageContainer = styled.div`
   margin-top: 20px;
   padding-left: 10px;
   padding-right: 10px;
   overflow-y: scroll;
+  display: grid;
+  grid-template-rows: 40px 187px auto auto 30px;
 `;
 
 const Flex = styled.div`
@@ -32,9 +32,6 @@ const StyledSubmitButton = styled.button`
 const DisabledButton = styled(StyledSubmitButton)`
   opacity: 0.3;
 `;
-
-const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
-const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
 
 export default function CreatePage({ onButtonClick }) {
   const [title, setTitle] = useState(
@@ -60,6 +57,9 @@ export default function CreatePage({ onButtonClick }) {
   const ingredientRef = React.createRef();
   const ingredientAmountRef = React.createRef();
 
+  const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
+  const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
+
   useEffect(() => {
     localStorage.setItem(
       "ingredientsInLocalStorage",
@@ -74,21 +74,18 @@ export default function CreatePage({ onButtonClick }) {
   function handleButtonClick(event) {
     event.preventDefault();
 
-    const totalCalories = ingredients
-      .map(ingredient => ingredient.calories)
-      .reduce(getSum);
+    const totalCalories = total(ingredient => ingredient.calories);
+    const totalFats = total(ingredient => ingredient.fats);
+    const totalCarbs = total(ingredient => ingredient.carbs);
+    const totalProteins = total(ingredient => ingredient.proteins);
 
-    const totalFats = ingredients
-      .map(ingredient => ingredient.fats)
-      .reduce(getSum);
+    function total(nutrition) {
+      return ingredients.map(nutrition).reduce(getSum);
+    }
 
-    const totalCarbs = ingredients
-      .map(ingredient => ingredient.carbs)
-      .reduce(getSum);
-
-    const totalProteins = ingredients
-      .map(ingredient => ingredient.proteins)
-      .reduce(getSum);
+    function getSum(total, num) {
+      return total + num;
+    }
 
     onButtonClick({
       title,
@@ -103,13 +100,20 @@ export default function CreatePage({ onButtonClick }) {
 
     localStorage.clear();
   }
+
   function handleTitleChange(event) {
     localStorage.setItem("titleInLocalStorage", event.target.value);
     setTitle(event.target.value);
   }
 
-  function handleDescriptionChange(event) {
-    setStep(event.target.value);
+  async function handleImageUpload(file) {
+    try {
+      const url = await uploadImage(file);
+      localStorage.setItem("imageUrlInLocalStorage", url);
+      setImage(url);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function handleAmountChange(event) {
@@ -123,6 +127,10 @@ export default function CreatePage({ onButtonClick }) {
   function handleIngredientChange(event) {
     setIngredient(event.target.value);
     searchForIngredients();
+  }
+
+  function handleDescriptionChange(event) {
+    setStep(event.target.value);
   }
 
   function handleSubmitStep(event) {
@@ -209,36 +217,10 @@ export default function CreatePage({ onButtonClick }) {
     setStepList([...stepList.slice(0, index - 1), ...stepList.slice(index)]);
   }
 
-  function upload(event) {
-    const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
-
-    const formData = new FormData();
-    formData.append("file", event.target.files[0]);
-    formData.append("upload_preset", PRESET);
-
-    axios
-      .post(url, formData, {
-        headers: {
-          "Content-type": "multipart/form-data"
-        }
-      })
-      .then(onImageSave)
-      .catch(err => console.error(err));
-  }
-
-  function onImageSave(response) {
-    localStorage.setItem("imageUrlInLocalStorage", response.data.url);
-    setImage(response.data.url);
-  }
-
-  function getSum(total, num) {
-    return total + num;
-  }
-
   return (
-    <CreatePageGrid>
+    <CreatePageContainer>
       <AddTitle value={title} onChange={handleTitleChange} />
-      <AddImage image={image} onChangeImageUpload={upload} />
+      <AddImage image={image} onChangeImageUpload={handleImageUpload} />
       <AddIngredient
         ingredients={ingredients}
         options={options}
@@ -267,6 +249,6 @@ export default function CreatePage({ onButtonClick }) {
           <DisabledButton disabled>Create Recipe!</DisabledButton>
         )}
       </Flex>
-    </CreatePageGrid>
+    </CreatePageContainer>
   );
 }
