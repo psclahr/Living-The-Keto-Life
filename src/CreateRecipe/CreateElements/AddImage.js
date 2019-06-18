@@ -7,6 +7,17 @@ const Flex = styled.section`
   align-items: center;
 `;
 
+const StyledImage = styled.div`
+  background-image: url(${props => props.url});
+  background-size: 100%;
+  width: 90%;
+  height: 187px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid rgba(120, 218, 172, 0.3);
+  border-radius: 10px;
+`;
+
 const Container = styled.div`
   border: 1px solid rgba(120, 218, 172, 0.3);
   border-radius: 10px;
@@ -33,21 +44,10 @@ const StyledImageInput = styled.input`
 `;
 
 export default function AddImage({ image, onChangeImageUpload }) {
-  const StyledImage = styled.div`
-    background-image: url(${image});
-    background-size: 100%;
-    width: 90%;
-    height: 187px;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 1px solid rgba(120, 218, 172, 0.3);
-    border-radius: 10px;
-  `;
-
   return (
     <Flex image={image}>
       {image ? (
-        <StyledImage />
+        <StyledImage url={image} />
       ) : (
         <Container>
           <StyledImageLabel htmlFor="file">

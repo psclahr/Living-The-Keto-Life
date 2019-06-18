@@ -13,21 +13,21 @@ const StyledListItemGrid = styled.div`
   grid-template-columns: 30px auto;
 `;
 
-const StyledNumber = styled.span`
+const StyledListNumber = styled.span`
   color: rgb(120 218 172);
   font-weight: bold;
   font-size: 20px;
 `;
 
 const StyledListItem = styled.li`
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   list-style: none;
 `;
 
 export default function Steps({ recipe }) {
   const steps = recipe.steps;
-
   let stepNumber = 1;
+  let stepNumberForKey = 1;
 
   return (
     <Container>
@@ -35,8 +35,8 @@ export default function Steps({ recipe }) {
       <ol>
         {steps.map(step => {
           return (
-            <StyledListItemGrid key={step}>
-              <StyledNumber>{stepNumber++}</StyledNumber>
+            <StyledListItemGrid key={stepNumberForKey++}>
+              <StyledListNumber>{stepNumber++}</StyledListNumber>
               <StyledListItem>{step}</StyledListItem>
             </StyledListItemGrid>
           );

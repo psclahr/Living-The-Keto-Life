@@ -39,21 +39,21 @@ const StyledList = styled.ol`
 `;
 
 const StyledListItemGrid = styled.div`
+  margin-right: 18px;
   display: grid;
   grid-template-columns: 30px auto 90px;
-  margin-right: 18px;
 `;
 
 const StyledListNumber = styled.span`
-  margin-top: 10px;
   color: rgb(120 218 172);
+  margin-top: 10px;
   font-weight: bold;
   font-size: 20px;
 `;
 
-const StyledListItems = styled.li`
-  margin-top: 10px;
+const StyledListItem = styled.li`
   list-style: none;
+  margin-top: 10px;
 `;
 
 const StyledDeleteButton = styled.button`
@@ -74,7 +74,7 @@ export default function AddDescription({
   descriptionInputRef
 }) {
   let stepNumber = 1;
-  let keyNumber = 1;
+  let StepNumberForKey = 1;
 
   return (
     <section>
@@ -93,9 +93,9 @@ export default function AddDescription({
       <StyledList>
         {stepList.map(step => {
           return (
-            <StyledListItemGrid key={keyNumber++}>
+            <StyledListItemGrid key={StepNumberForKey++}>
               <StyledListNumber>{stepNumber++}</StyledListNumber>
-              <StyledListItems>{step}</StyledListItems>
+              <StyledListItem>{step}</StyledListItem>
               <StyledDeleteButton onClick={() => onDeleteClick(step)}>
                 <TrashIcon />
               </StyledDeleteButton>

@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import AddImage from "./CreateElements/AddImage";
 import AddDescription from "./CreateElements/AddDescription";
 import AddIngredient from "./CreateElements/AddIngredient";
 import AddTitle from "./CreateElements/AddTitle";
 import BackIcon from "../icons/BackIcon";
+import {
+  uploadImage,
+  nutritionQuery,
+  settingNutritions,
+  searchForIngredients
+} from "../services";
 
-const CreatePageGrid = styled.div`
+const CreatePageContainer = styled.div`
   display: grid;
   grid-template-rows: 50px 50px 187px 50px auto auto 30px;
   margin-top: 20px;
@@ -66,8 +71,10 @@ const DisabledButton = styled(StyledSubmitButton)`
   opacity: 0.3;
 `;
 
-const CLOUDNAME = process.env.REACT_APP_CLOUDINARY_CLOUDNAME;
-const PRESET = process.env.REACT_APP_CLOUDINARY_PRESET;
+const descriptionRef = React.createRef();
+const descriptionInputRef = React.createRef();
+const ingredientRef = React.createRef();
+const ingredientAmountRef = React.createRef();
 
 export default function EditPage({
   editRecipe,
@@ -84,29 +91,21 @@ export default function EditPage({
   const [options, setOptions] = useState([]);
   const [image, setImage] = useState(editRecipe.image);
 
-  const descriptionRef = React.createRef();
-  const descriptionInputRef = React.createRef();
-  const ingredientRef = React.createRef();
-  const ingredientAmountRef = React.createRef();
-
   function handleEditClick(event) {
     event.preventDefault();
 
-    const totalCalories = ingredients
-      .map(ingredient => ingredient.calories)
-      .reduce(getSum);
+    const totalCalories = total(ingredient => ingredient.calories);
+    const totalFats = total(ingredient => ingredient.fats);
+    const totalCarbs = total(ingredient => ingredient.carbs);
+    const totalProteins = total(ingredient => ingredient.proteins);
 
-    const totalFats = ingredients
-      .map(ingredient => ingredient.fats)
-      .reduce(getSum);
+    function total(nutrition) {
+      return ingredients.map(nutrition).reduce(getSum);
+    }
 
-    const totalCarbs = ingredients
-      .map(ingredient => ingredient.carbs)
-      .reduce(getSum);
-
-    const totalProteins = ingredients
-      .map(ingredient => ingredient.proteins)
-      .reduce(getSum);
+    function getSum(total, num) {
+      return total + num;
+    }
 
     onButtonClickToEdit({
       _id: editRecipe._id,
@@ -124,8 +123,14 @@ export default function EditPage({
     setTitle(event.target.value);
   }
 
-  function handleDescriptionChange(event) {
-    setStep(event.target.value);
+  async function handleImageUpload(file) {
+    try {
+      const url = await uploadImage(file);
+      localStorage.setItem("imageUrlInLocalStorage", url);
+      setImage(url);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function handleAmountChange(event) {
@@ -138,7 +143,11 @@ export default function EditPage({
 
   function handleIngredientChange(event) {
     setIngredient(event.target.value);
-    searchForIngredients();
+    startSearchingForIngredients();
+  }
+
+  function handleDescriptionChange(event) {
+    setStep(event.target.value);
   }
 
   function handleSubmitStep(event) {
@@ -148,49 +157,14 @@ export default function EditPage({
     descriptionInputRef.current.focus();
   }
 
-  function handleSubmitIngredient(event) {
+  async function handleSubmitIngredient(event) {
     event.preventDefault();
     try {
-      const nutritionQuery = async () => {
-        await fetch(
-          `https://api.edamam.com/api/nutrition-data?app_id=4bb611c5&app_key=8b9a2b559e7693bf21f151e736db51cc&ingr=${amount}%20${unit}%20${ingredientValue}`
-        )
-          .then(res => res.json())
-          .then(data =>
-            setIngredients([
-              ...ingredients,
-              {
-                amount,
-                unit,
-                name: ingredientValue,
-                calories: data.totalNutrients.ENERC_KCAL
-                  ? data.totalNutrients.ENERC_KCAL.quantity
-                  : 0,
-                proteins: data.totalNutrients.PROCNT
-                  ? data.totalNutrients.PROCNT.quantity
-                  : 0,
-                carbs: data.totalNutrients.CHOCDF
-                  ? data.totalNutrients.CHOCDF.quantity
-                  : 0,
-                fats: data.totalNutrients.FAT
-                  ? data.totalNutrients.FAT.quantity
-                  : 0,
-                fatsDivided: {
-                  saturatedFats: data.totalNutrients.FASAT
-                    ? data.totalNutrients.FASAT.quantity
-                    : 0,
-                  monounsaturatedFats: data.totalNutrients.FAMS
-                    ? data.totalNutrients.FAMS.quantity
-                    : 0,
-                  polyunsaturatedFats: data.totalNutrients.FAPU
-                    ? data.totalNutrients.FAPU.quantity
-                    : 0
-                }
-              }
-            ])
-          );
-      };
-      nutritionQuery();
+      const newIngredient = await nutritionQuery(amount, unit, ingredientValue);
+      setIngredients([
+        ...ingredients,
+        settingNutritions(amount, unit, ingredientValue, newIngredient)
+      ]);
       ingredientRef.current.reset();
       setUnit("gr");
       ingredientAmountRef.current.focus();
@@ -199,11 +173,8 @@ export default function EditPage({
     }
   }
 
-  function searchForIngredients() {
-    fetch(
-      `https://api.edamam.com/auto-complete?q=${ingredientValue}&limit=10&app_id=$702bbe7d&app_key=7470d6e6a4439eb58cae84ec6ebc10a7`
-    )
-      .then(res => res.json())
+  function startSearchingForIngredients() {
+    searchForIngredients(ingredientValue)
       .then(data => setOptions(data))
       .catch(err => console.log(err));
   }
@@ -221,34 +192,8 @@ export default function EditPage({
     setStepList([...stepList.slice(0, index - 1), ...stepList.slice(index)]);
   }
 
-  function upload(event) {
-    const url = `https://api.cloudinary.com/v1_1/${CLOUDNAME}/upload`;
-
-    const formData = new FormData();
-    formData.append("file", event.target.files[0]);
-    formData.append("upload_preset", PRESET);
-
-    axios
-      .post(url, formData, {
-        headers: {
-          "Content-type": "multipart/form-data"
-        }
-      })
-      .then(onImageSave)
-      .catch(err => console.error(err));
-  }
-
-  function onImageSave(response) {
-    localStorage.setItem("imageUrlInLocalStorage", response.data.url);
-    setImage(response.data.url);
-  }
-
-  function getSum(total, num) {
-    return total + num;
-  }
-
   return (
-    <CreatePageGrid>
+    <CreatePageContainer>
       <Flex>
         <StyledBackButton onClick={onBackClick}>
           <BackIcon />
@@ -261,7 +206,7 @@ export default function EditPage({
         <StyledImageLabel htmlFor="file">
           New Image
           <StyledImageInput
-            onChange={upload}
+            onChange={handleImageUpload}
             type="file"
             name="file"
             id="file"
@@ -296,6 +241,6 @@ export default function EditPage({
           <DisabledButton disabled>Save Changes</DisabledButton>
         )}
       </Flex>
-    </CreatePageGrid>
+    </CreatePageContainer>
   );
 }

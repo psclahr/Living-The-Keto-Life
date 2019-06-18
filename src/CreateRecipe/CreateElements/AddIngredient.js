@@ -14,26 +14,26 @@ const Flex = styled.div`
 `;
 
 const StyledList = styled.ul`
+  list-style: none;
   min-height: 100px;
   width: 90%;
-  list-style: none;
-`;
-
-const StyledListItems = styled.li`
-  margin-top: 10px;
-
-  &::before {
-    content: "•";
-    color: rgb(120 218 172);
-    display: inline-block;
-    width: 1em;
-    margin-left: -1em;
-  }
 `;
 
 const ListItemGrid = styled.div`
   display: grid;
   grid-template-columns: auto 90px;
+`;
+
+const StyledListItem = styled.li`
+  margin-top: 10px;
+
+  &::before {
+    content: "•";
+    display: inline-block;
+    color: rgb(120 218 172);
+    width: 1em;
+    margin-left: -1em;
+  }
 `;
 
 const StyledDeleteButton = styled.button`
@@ -53,9 +53,12 @@ export default function AddIngredient({
   onChangeIngredient,
   onDeleteClick,
   options,
+  amount,
   ingredientRef,
   ingredientAmountRef
 }) {
+  let listItemNumber = 1;
+
   return (
     <StyledAddIngredient>
       <InputIngredient
@@ -64,6 +67,7 @@ export default function AddIngredient({
         onChangeUnit={onChangeUnit}
         onChangeIngredient={onChangeIngredient}
         options={options}
+        amount={amount}
         ingredientRef={ingredientRef}
         ingredientAmountRef={ingredientAmountRef}
       />
@@ -71,10 +75,10 @@ export default function AddIngredient({
         <StyledList>
           {ingredients.map(ingredient => {
             return (
-              <ListItemGrid key={ingredient.name}>
-                <StyledListItems>
+              <ListItemGrid key={listItemNumber++}>
+                <StyledListItem>
                   {ingredient.amount} {ingredient.unit} {ingredient.name}
-                </StyledListItems>
+                </StyledListItem>
                 <StyledDeleteButton onClick={() => onDeleteClick(ingredient)}>
                   <TrashIcon />
                 </StyledDeleteButton>

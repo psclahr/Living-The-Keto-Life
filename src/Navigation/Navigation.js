@@ -14,16 +14,17 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const StyledNavLinkBook = styled(NavLink)`
-  box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.5);
-`;
 
-const StyledNavLinkAdd = styled(NavLink)`
+const StyledNavLinkBook = styled(NavLink)`
   box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.5);
 `;
 
 const StyledCurrentPage = styled.h2`
   text-align: center;
+`;
+
+const StyledNavLinkAdd = styled(NavLink)`
+  box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.5);
 `;
 
 export default function Navigation({

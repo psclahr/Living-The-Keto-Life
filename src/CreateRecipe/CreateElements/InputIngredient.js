@@ -2,24 +2,23 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
+  margin-left: 5%;
+  margin-right: 5%;
   display: grid;
   grid-template-areas:
     "a u"
     "i i";
   gap: 10px;
-  margin-left: 5%;
-  margin-right: 5%;
 `;
 
 const StyledAmountInput = styled.input`
-  grid-area: a;
   border-top: 0;
   border-left: 0;
   border-right: 0;
   border-bottom: 2px solid rgba(120, 218, 172, 0.3);
-
   width: 90px;
   transition: all 1s ease;
+  grid-area: a;
 
   &:focus {
     outline: none;
@@ -27,11 +26,11 @@ const StyledAmountInput = styled.input`
   }
 `;
 const StyledUnitSelect = styled.select`
-  grid-area: u;
   background: white;
   border: 2px solid rgba(120, 218, 172, 0.3);
   width: 90px;
   transition: all 1s ease;
+  grid-area: u;
 
   &:focus {
     outline: none;
@@ -102,7 +101,6 @@ export default function InputIngredient({
           autoComplete="off"
           required
         />
-
         <datalist id="ingredients">
           <option value={options[0]} />
           <option value={options[1]} />
@@ -115,7 +113,7 @@ export default function InputIngredient({
           <option value={options[8]} />
           <option value={options[9]} />
         </datalist>
-        <StyledButton type="submit">+</StyledButton>
+        <StyledButton type="submit" />
       </StyledForm>
     </>
   );
