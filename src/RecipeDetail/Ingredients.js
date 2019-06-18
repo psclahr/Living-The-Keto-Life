@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import InfoButton from "./InfoButton";
+import InfoIcon from "../icons/InfoIcon";
 
 const Container = styled.section`
   padding-left: 5%;
@@ -21,6 +21,13 @@ const StyledIngredientListItem = styled.li`
   margin-bottom: 10px;
   display: grid;
   grid-template-columns: 40px auto;
+`;
+
+const StyledInfoButton = styled.button`
+  outline: none;
+  background: none;
+  border: none;
+  height: 30px;
 `;
 
 const StyledNutritionList = styled.ul`
@@ -60,7 +67,9 @@ export default function Ingredients({ recipe }) {
         {recipe.ingredients.map(ingredient => {
           return (
             <StyledIngredientListItem key={ingredient._id}>
-              <InfoButton onClick={() => toggle(ingredient)} />
+              <StyledInfoButton onClick={() => toggle(ingredient)}>
+                <InfoIcon />
+              </StyledInfoButton>
               <div>
                 <span>{ingredient.amount}</span>&nbsp;
                 <span>{ingredient.unit}</span>&nbsp;

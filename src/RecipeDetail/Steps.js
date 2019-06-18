@@ -20,7 +20,7 @@ const StyledNumber = styled.span`
 `;
 
 const StyledListItem = styled.li`
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   list-style: none;
 `;
 
