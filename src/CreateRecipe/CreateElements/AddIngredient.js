@@ -53,6 +53,7 @@ export default function AddIngredient({
   onChangeIngredient,
   onDeleteClick,
   options,
+  amount,
   ingredientRef,
   ingredientAmountRef
 }) {
@@ -64,6 +65,7 @@ export default function AddIngredient({
         onChangeUnit={onChangeUnit}
         onChangeIngredient={onChangeIngredient}
         options={options}
+        amount={amount}
         ingredientRef={ingredientRef}
         ingredientAmountRef={ingredientAmountRef}
       />
