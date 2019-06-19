@@ -29,6 +29,7 @@ export default function AddTitle({ onChange, value }) {
         maxLength="45"
         placeholder="Title..."
         onChange={onChange}
+        autoFocus
         required
       />
     </Flex>

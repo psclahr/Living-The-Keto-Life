@@ -34,8 +34,7 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "server": "nodemon -w server.js -w models/* server.js",
-    "docz:dev": "docz dev",
-    "docz:build": "docz build"
+    "cypress": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
