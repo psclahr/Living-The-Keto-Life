@@ -16,7 +16,7 @@ const StyledAmountInput = styled.input`
   border-left: 0;
   border-right: 0;
   border-bottom: 2px solid rgba(120, 218, 172, 0.3);
-  width: 90px;
+  width: 100px;
   transition: all 1s ease;
   grid-area: a;
 
@@ -25,10 +25,11 @@ const StyledAmountInput = styled.input`
     border-color: rgba(120, 218, 172, 1);
   }
 `;
+
 const StyledUnitSelect = styled.select`
   background: white;
   border: 2px solid rgba(120, 218, 172, 0.3);
-  width: 90px;
+  width: 100px;
   transition: all 1s ease;
   grid-area: u;
 
@@ -72,6 +73,8 @@ export default function InputIngredient({
         <StyledAmountInput
           name="amount"
           type="number"
+          min="0"
+          step=".01"
           placeholder="Amount"
           autoComplete="off"
           onChange={onChangeAmount}
