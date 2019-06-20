@@ -44,8 +44,8 @@ const StyledMenu = styled.div`
   justify-content: space-between;
 `;
 
-const StyledMenuOpacity = styled(StyledMenu)`
-  opacity: 0.2;
+const StyledMenuNone = styled(StyledMenu)`
+  display: none;
 `;
 
 const StyledEditButton = styled.button`
@@ -127,14 +127,14 @@ export default function RecipePreviewPage({
             {recipe === showMore ? (
               <>
                 {showModal ? (
-                  <StyledMenuOpacity>
+                  <StyledMenuNone>
                     <StyledEditButton>
                       <EditIcon />
                     </StyledEditButton>
                     <StyledDeleteButton>
                       <BigTrashIcon />
                     </StyledDeleteButton>
-                  </StyledMenuOpacity>
+                  </StyledMenuNone>
                 ) : (
                   <StyledMenu>
                     <StyledEditButton onClick={() => onEditClick(recipe)}>

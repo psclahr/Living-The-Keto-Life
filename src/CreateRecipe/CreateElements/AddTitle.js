@@ -25,10 +25,12 @@ export default function AddTitle({ onChange, value }) {
     <Flex>
       <StyledInputTitle
         value={value}
+        className="titleInput"
         type="text"
         maxLength="45"
         placeholder="Title..."
         onChange={onChange}
+        autoFocus
         required
       />
     </Flex>

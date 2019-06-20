@@ -75,10 +75,10 @@ export default function AnalyseNutritions({ recipe }) {
     portions = Math.round(totalCalories / 800);
   }
 
-  if (percentageCarbs <= 0.05) {
+  if (percentageCarbs <= 0.1) {
     evaluationCarbs = "Everthing good";
     ketoLight = "green";
-  } else if (percentageCarbs > 0.05 && percentageCarbs <= 0.15) {
+  } else if (percentageCarbs > 0.1 && percentageCarbs <= 0.15) {
     evaluationCarbs = "Little bit to much carbs";
     ketoLight = "yellow";
   } else {
